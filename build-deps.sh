@@ -116,6 +116,6 @@ echo "*** Building PCL ***"
 cd $BUILD_DIR/pcl*
 mkdir build && \
 cd build/ && \
-cmake -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${TARGET_DIR} .. && \
+cmake -DWITH_VTK=OFF -DWITH_QT=OFF -DBUILD_visualization=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${TARGET_DIR} .. && \
 make -j $jval && \
 make install
