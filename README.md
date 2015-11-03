@@ -15,5 +15,5 @@ Usage
 ```bash
 git clone git@code.vis.uky.edu:seales-research/vc-deps.git  
 cd vc-deps/  
-./build-deps.sh  
+./build-deps.sh (-qt4/-qt5)
 ```
