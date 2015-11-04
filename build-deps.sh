@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -e
 set -u
@@ -30,15 +30,22 @@ done
 shift $((OPTIND-1))
 
 # Determine platform type
-platform="platform"
+platform="unknown"
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
     platform='linux'
 elif [[ "$OSTYPE" == "darwin"* ]]; then
     platform='macosx'
 fi
-if [[ ${platform} == "unknown" ]]; then
+if [[ "$platform" == "unknown" ]]; then
     echo "Could not determine platform, exiting"
     exit
+fi
+
+jval=4
+if [[ "$platform" == "linux" ]]; then
+    jval=$(nproc)
+elif [[ "$platform" == "macosx" ]]; then
+    jval=$(sysctl -n hw.ncpu)
 fi
 
 cd `dirname $0`
@@ -87,8 +94,6 @@ fi
 ../fetchurl "http://bitbucket.org/eigen/eigen/get/3.2.6.tar.bz2"
 ../fetchurl "https://github.com/mariusmuja/flann/archive/1.8.0-src.tar.gz"
 ../fetchurl "https://github.com/PointCloudLibrary/pcl/archive/pcl-1.7.2.tar.gz"
-
-jval=$((${platform} == "linux" ? $(nproc) : $(sysctl -n hw.ncpu)))
 
 echo "*** Building boost ***"
 cd $BUILD_DIR/boost*
