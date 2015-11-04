@@ -29,7 +29,17 @@ while getopts "q:s:" o; do
 done
 shift $((OPTIND-1))
 
-jval=8
+# Determine platform type
+platform="platform"
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+    platform='linux'
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    platform='macosx'
+fi
+if [[ ${platform} == "unknown" ]]; then
+    echo "Could not determine platform, exiting"
+    exit
+fi
 
 cd `dirname $0`
 ENV_ROOT="$PWD"
@@ -78,10 +88,12 @@ fi
 ../fetchurl "https://github.com/mariusmuja/flann/archive/1.8.0-src.tar.gz"
 ../fetchurl "https://github.com/PointCloudLibrary/pcl/archive/pcl-1.7.2.tar.gz"
 
+jval=$((${platform} == "linux" ? $(nproc) : $(sysctl -n hw.ncpu)))
+
 echo "*** Building boost ***"
 cd $BUILD_DIR/boost*
 ./bootstrap.sh --prefix=${TARGET_DIR} && \
-./b2 variant=release link=static install
+./b2 variant=release link=static install -j ${jval}
 
 echo "*** Building VTK ***"
 cd $BUILD_DIR/VTK*
