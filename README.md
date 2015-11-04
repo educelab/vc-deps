@@ -8,6 +8,7 @@ Requirements
  * C++ Build System and GNU Make tools
  * pkg-config
  * cmake
+ * XCode (Required if building Qt5 on OSX)
 
 Usage
 -----
