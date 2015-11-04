@@ -61,7 +61,7 @@ export PATH="${TARGET_DIR}/bin:${PATH}"
 
 echo "#### VC Dependencies ####"
 cd $BUILD_DIR
-../fetchurl "http://downloads.sourceforge.net/project/boost/boost/1.59.0/boost_1_59_0.tar.gz?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fboost%2Ffiles%2Fboost%2F1.59.0%2F&ts=1446500152&use_mirror=skylineservers"
+../fetchurl "https://downloads.sourceforge.net/project/boost/boost/1.58.0/boost_1_58_0.tar.bz2"
 ../fetchurl "http://www.vtk.org/files/release/6.3/VTK-6.3.0.tar.gz"
 ../fetchurl "https://github.com/valette/ACVD/archive/vtk6.tar.gz"
 
@@ -72,7 +72,7 @@ elif [[ ${qt_version} == "qt5" ]]; then
 fi
 
 ../fetchurl "https://github.com/Itseez/opencv/archive/3.0.0.tar.gz"
-../fetchurl "http://downloads.sourceforge.net/project/itk/itk/4.8/InsightToolkit-4.8.1.tar.gz?r=http%3A%2F%2Fwww.itk.org%2FITK%2Fresources%2Fsoftware.html&ts=1446500569&use_mirror=iweb"
+../fetchurl "https://downloads.sourceforge.net/project/itk/itk/4.8/InsightToolkit-4.8.1.tar.gz"
 ../fetchurl "https://github.com/bulletphysics/bullet3/archive/2.83.6.tar.gz"
 ../fetchurl "http://bitbucket.org/eigen/eigen/get/3.2.6.tar.bz2"
 ../fetchurl "https://github.com/mariusmuja/flann/archive/1.8.0-src.tar.gz"
