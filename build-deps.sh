@@ -4,9 +4,10 @@ set -e
 set -u
 
 usage() { echo "Usage: $0" 1>&2; echo; exit 1; }
-qt_version="none"
+qt_version="qt5"
+local_target=true
 
-while getopts "q:" o; do
+while getopts "q:s:" o; do
     case "${o}" in
         q)
 			status="$OPTARG"
@@ -15,6 +16,11 @@ while getopts "q:" o; do
 				t5) qt_version="qt5" ;;
 				*)  qt_version="qt5" ;;
 			esac
+			;;
+        s)
+			if [[ ${OPTARG} == "ystem" ]]; then
+				local_target=false
+			fi
 			;;
         *)
             usage
@@ -29,6 +35,17 @@ cd `dirname $0`
 ENV_ROOT="$PWD"
 BUILD_DIR="${ENV_ROOT}/build"
 TARGET_DIR="${ENV_ROOT}/target"
+CMAKE_PREFIX=""
+CONFIGURE_PREFIX=""
+QT4_PREFIX=""
+QT5_PREFIX=""
+
+if [[ ${local_target} == true ]]; then
+	CMAKE_PREFIX="-DCMAKE_INSTALL_PREFIX=${TARGET_DIR}"
+	CONFIGURE_PREFIX="-prefix ${TARGET_DIR}"
+	QT4_PREFIX="${CONFIGURE_PREFIX}/qt4"
+	QT5_PREFIX="${CONFIGURE_PREFIX}/qt5"
+fi
 
 rm -rf "$BUILD_DIR" "$TARGET_DIR"
 mkdir -p "$BUILD_DIR" "$TARGET_DIR"
@@ -70,7 +87,7 @@ echo "*** Building VTK ***"
 cd $BUILD_DIR/VTK*
 mkdir build && \
 cd build/ && \
-cmake -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${TARGET_DIR} .. && \
+cmake -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} .. && \
 make -j${jval} && \
 make install
 
@@ -78,7 +95,7 @@ echo "*** Building ACVD ***"
 cd $BUILD_DIR/ACVD*
 mkdir build && \
 cd build/ && \
-cmake -DBUILD_EXAMPLES=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${TARGET_DIR} .. && \
+cmake -DBUILD_EXAMPLES=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} .. && \
 make -j${jval} && \
 make install
 
@@ -92,13 +109,13 @@ if [[ ${qt_version} == "qt4" ]]; then
 		patch src/gui/painting/qpaintengine_mac.cpp ${ENV_ROOT}/patches/qt4-elcapitan-fix.diff
 	fi
 	
-	./configure -developer-build -opensource -optimized-qmake -confirm-license -static -no-rpath -release -no-webkit -nomake examples -nomake tests -prefix ${TARGET_DIR}/qt4 && \
+	./configure -developer-build -opensource -optimized-qmake -confirm-license -static -no-rpath -release -no-webkit -nomake examples -nomake tests ${QT4_PREFIX} && \
 	make -j${jval} && \
 	make install
 elif [[ ${qt_version} == "qt5" ]]; then
 	echo "*** Building Qt5 ***"
 	cd $BUILD_DIR/qt*
-	./configure -developer-build -opensource -skip qtWebKit -confirm-license -static -system-zlib -securetransport -qt-libpng -qt-libjpeg -no-rpath -no-openssl -release -nomake examples -nomake tests -prefix ${TARGET_DIR}/qt5 && \
+	./configure -developer-build -opensource -skip qtWebKit -confirm-license -static -system-zlib -securetransport -qt-libpng -qt-libjpeg -no-rpath -no-openssl -release -nomake examples -nomake tests ${QT5_PREFIX} && \
 	make -j${jval} && \
 	make install
 fi
@@ -107,7 +124,7 @@ echo "*** Building OpenCV ***"
 cd $BUILD_DIR/opencv*
 mkdir build && \
 cd build/ && \
-cmake -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTS=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${TARGET_DIR} .. && \
+cmake -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} .. && \
 make -j $jval && \
 make install
 
@@ -115,7 +132,7 @@ echo "*** Building ITK ***"
 cd $BUILD_DIR/InsightToolkit*
 mkdir build && \
 cd build/ && \
-cmake -DBUILD_EXAMPLES=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${TARGET_DIR} .. && \
+cmake -DBUILD_EXAMPLES=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} .. && \
 make -j $jval && \
 make install
 
@@ -123,7 +140,7 @@ echo "*** Building Bullet Physics ***"
 cd $BUILD_DIR/bullet*
 mkdir build && \
 cd build/ && \
-cmake -DBUILD_BULLET2_DEMOS=OFF -DBUILD_CPU_DEMOS=OFF -DBUILD_OPENGL3_DEMOS=OFF -DBUILD_UNIT_TESTS=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${TARGET_DIR} .. && \
+cmake -DBUILD_BULLET2_DEMOS=OFF -DBUILD_CPU_DEMOS=OFF -DBUILD_OPENGL3_DEMOS=OFF -DBUILD_UNIT_TESTS=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} .. && \
 make -j $jval && \
 make install
 
@@ -131,14 +148,14 @@ echo "*** Building Eigen ***"
 cd $BUILD_DIR/eigen*
 mkdir build && \
 cd build/ && \
-cmake -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${TARGET_DIR} .. && \
+cmake -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} .. && \
 make install
 
 echo "*** Building FLANN ***"
 cd $BUILD_DIR/flann*
 mkdir build && \
 cd build/ && \
-cmake -DBUILD_MATLAB_BINDINGS=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${TARGET_DIR} .. && \
+cmake -DBUILD_MATLAB_BINDINGS=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} .. && \
 make -j $jval && \
 make install
 
@@ -146,6 +163,6 @@ echo "*** Building PCL ***"
 cd $BUILD_DIR/pcl*
 mkdir build && \
 cd build/ && \
-cmake -DWITH_VTK=OFF -DWITH_QT=OFF -DBUILD_visualization=OFF -DPCL_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${TARGET_DIR} .. && \
+cmake -DWITH_VTK=OFF -DWITH_QT=OFF -DBUILD_visualization=OFF -DPCL_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} .. && \
 make -j $jval && \
 make install
