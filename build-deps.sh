@@ -51,7 +51,7 @@ fi
 cd `dirname $0`
 ENV_ROOT="$PWD"
 BUILD_DIR="${ENV_ROOT}/build"
-TARGET_DIR="${ENV_ROOT}/target"
+TARGET_DIR="${ENV_ROOT}/deps"
 CMAKE_PREFIX=""
 CONFIGURE_PREFIX=""
 QT4_PREFIX=""
