@@ -9,14 +9,14 @@ local_target=true
 
 while getopts "q:s:" o; do
     case "${o}" in
-        q)
-			status="$OPTARG"
-            case "$status" in
-				t4) qt_version="qt4" ;;
-				t5) qt_version="qt5" ;;
-				*)  qt_version="qt5" ;;
-			esac
-			;;
+   #      q)
+			# status="$OPTARG"
+   #          case "$status" in
+			# 	t4) qt_version="qt4" ;;
+			# 	t5) qt_version="qt5" ;;
+			# 	*)  qt_version="qt5" ;;
+			# esac
+			# ;;
         s)
 			if [[ ${OPTARG} == "ystem" ]]; then
 				local_target=false
@@ -82,11 +82,11 @@ cd $BUILD_DIR
 ../fetchurl "http://www.vtk.org/files/release/6.3/VTK-6.3.0.tar.gz"
 ../fetchurl "https://github.com/valette/ACVD/archive/vtk6.tar.gz"
 
-if [[ ${qt_version} == "qt4" ]]; then
-	../fetchurl "https://download.qt.io/official_releases/qt/4.8/4.8.7/qt-everywhere-opensource-src-4.8.7.tar.gz"
-elif [[ ${qt_version} == "qt5" ]]; then
-	../fetchurl "https://download.qt.io/official_releases/qt/5.5/5.5.1/single/qt-everywhere-opensource-src-5.5.1.tar.gz"
-fi
+# if [[ ${qt_version} == "qt4" ]]; then
+# 	../fetchurl "https://download.qt.io/official_releases/qt/4.8/4.8.7/qt-everywhere-opensource-src-4.8.7.tar.gz"
+# elif [[ ${qt_version} == "qt5" ]]; then
+# 	../fetchurl "https://download.qt.io/official_releases/qt/5.5/5.5.1/single/qt-everywhere-opensource-src-5.5.1.tar.gz"
+# fi
 
 ../fetchurl "https://github.com/Itseez/opencv/archive/3.0.0.tar.gz"
 ../fetchurl "https://downloads.sourceforge.net/project/itk/itk/4.8/InsightToolkit-4.8.1.tar.gz"
@@ -116,26 +116,28 @@ cmake -DBUILD_EXAMPLES=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${
 make -j${jval} && \
 make install
 
-if [[ ${qt_version} == "qt4" ]]; then
-	echo "*** Building Qt4 ***"
-	cd $BUILD_DIR/qt*
+# if [[ ${qt_version} == "qt4" ]]; then
+# 	echo "*** Building Qt4 ***"
+# 	cd $BUILD_DIR/qt*
 	
-	# apply patch to fix Qt4 on El Capitan
-	if [[ $(uname -s) == "Darwin" ]] && [[ $(uname -r) == 15* ]]; then
-		echo "Patching Qt4..."
-		patch src/gui/painting/qpaintengine_mac.cpp ${ENV_ROOT}/patches/qt4-elcapitan-fix.diff
-	fi
+# 	# apply patch to fix Qt4 on El Capitan
+# 	if [[ $(uname -s) == "Darwin" ]] && [[ $(uname -r) == 15* ]]; then
+# 		echo "Patching Qt4..."
+# 		patch src/gui/painting/qpaintengine_mac.cpp ${ENV_ROOT}/patches/qt4-elcapitan-fix.diff
+# 	fi
 	
-	./configure -developer-build -opensource -optimized-qmake -confirm-license -static -no-rpath -release -no-webkit -nomake examples -nomake tests ${QT4_PREFIX} && \
-	make -j${jval} && \
-	make install
-elif [[ ${qt_version} == "qt5" ]]; then
-	echo "*** Building Qt5 ***"
-	cd $BUILD_DIR/qt*
-	./configure -developer-build -opensource -skip qtWebKit -confirm-license -static -system-zlib -securetransport -qt-libpng -qt-libjpeg -no-rpath -no-openssl -release -nomake examples -nomake tests ${QT5_PREFIX} && \
-	make -j${jval} && \
-	make install
-fi
+# 	./configure -developer-build -opensource -confirm-license -static -no-rpath -release -no-webkit -nomake examples -nomake tests ${QT4_PREFIX} && \
+# 	make -j${jval} && \
+# 	make install
+# elif [[ ${qt_version} == "qt5" ]]; then
+# 	echo "*** Building Qt5 ***"
+# 	cd $BUILD_DIR/qt*
+# 	./configure -developer-build -opensource -confirm-license -static -no-rpath -release -skip qtWebKit -nomake examples -nomake tests -securetransport -no-openssl ${QT5_PREFIX} && \
+# 	make -j${jval} && \
+# 	make install
+# fi
+# # add a configuration so that cmake can find this version in the future
+# cp ${ENV_ROOT}/patches/qt.conf ${TARGET_DIR}/${qt_version}/bin/
 
 echo "*** Building OpenCV ***"
 cd $BUILD_DIR/opencv*
