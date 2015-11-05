@@ -143,7 +143,7 @@ echo "*** Building OpenCV ***"
 cd $BUILD_DIR/opencv*
 mkdir build && \
 cd build/ && \
-cmake -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} .. && \
+cmake -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTS=OFF -DBUILD_ZLIB=OFF -DBUILD_TIFF=OFF -DBUILD_PNG=OFF -DBUILD_OPENEXR=OFF -DBUILD_JASPER=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} .. && \
 make -j $jval && \
 make install
 
