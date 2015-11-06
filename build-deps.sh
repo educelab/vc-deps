@@ -88,7 +88,7 @@ cd $BUILD_DIR
 # 	../fetchurl "https://download.qt.io/official_releases/qt/5.5/5.5.1/single/qt-everywhere-opensource-src-5.5.1.tar.gz"
 # fi
 
-../fetchurl "https://github.com/Itseez/opencv/archive/3.0.0.tar.gz"
+../fetchurl "https://github.com/Itseez/opencv/archive/2.4.12.tar.gz"
 ../fetchurl "https://downloads.sourceforge.net/project/itk/itk/4.8/InsightToolkit-4.8.1.tar.gz"
 ../fetchurl "https://github.com/bulletphysics/bullet3/archive/2.83.6.tar.gz"
 ../fetchurl "http://bitbucket.org/eigen/eigen/get/3.2.6.tar.bz2"
@@ -143,7 +143,7 @@ echo "*** Building OpenCV ***"
 cd $BUILD_DIR/opencv*
 mkdir build && \
 cd build/ && \
-cmake -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTS=OFF -DBUILD_ZLIB=OFF -DBUILD_TIFF=OFF -DBUILD_PNG=OFF -DBUILD_OPENEXR=OFF -DBUILD_JASPER=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} .. && \
+cmake -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} .. && \
 make -j $jval && \
 make install
 
