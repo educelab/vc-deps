@@ -7,21 +7,13 @@ usage() { echo "Usage: $0" 1>&2; echo; exit 1; }
 qt_version="qt5"
 local_target=true
 
-while getopts "q:s:" o; do
+while getopts "s:" o; do
     case "${o}" in
-   #      q)
-			# status="$OPTARG"
-   #          case "$status" in
-			# 	t4) qt_version="qt4" ;;
-			# 	t5) qt_version="qt5" ;;
-			# 	*)  qt_version="qt5" ;;
-			# esac
-			# ;;
         s)
-			if [[ ${OPTARG} == "ystem" ]]; then
-				local_target=false
-			fi
-			;;
+            if [[ ${OPTARG} == "ystem" ]]; then
+                local_target=false
+            fi
+            ;;
         *)
             usage
             ;;
@@ -54,14 +46,10 @@ BUILD_DIR="${ENV_ROOT}/build"
 TARGET_DIR="${ENV_ROOT}/deps"
 CMAKE_PREFIX=""
 CONFIGURE_PREFIX=""
-QT4_PREFIX=""
-QT5_PREFIX=""
 
 if [[ ${local_target} == true ]]; then
-	CMAKE_PREFIX="-DCMAKE_INSTALL_PREFIX=${TARGET_DIR}"
-	CONFIGURE_PREFIX="-prefix ${TARGET_DIR}"
-	QT4_PREFIX="${CONFIGURE_PREFIX}/qt4"
-	QT5_PREFIX="${CONFIGURE_PREFIX}/qt5"
+    CMAKE_PREFIX="-DCMAKE_INSTALL_PREFIX=${TARGET_DIR}"
+    CONFIGURE_PREFIX="-prefix ${TARGET_DIR}"
 fi
 
 rm -rf "$BUILD_DIR" "$TARGET_DIR"
@@ -78,22 +66,18 @@ export PATH="${TARGET_DIR}/bin:${PATH}"
 
 echo "#### VC Dependencies ####"
 cd $BUILD_DIR
-../fetchurl "https://downloads.sourceforge.net/project/boost/boost/1.58.0/boost_1_58_0.tar.bz2"
-../fetchurl "http://www.vtk.org/files/release/6.3/VTK-6.3.0.tar.gz"
-../fetchurl "https://github.com/valette/ACVD/archive/vtk6.tar.gz"
 
-# if [[ ${qt_version} == "qt4" ]]; then
-# 	../fetchurl "https://download.qt.io/official_releases/qt/4.8/4.8.7/qt-everywhere-opensource-src-4.8.7.tar.gz"
-# elif [[ ${qt_version} == "qt5" ]]; then
-# 	../fetchurl "https://download.qt.io/official_releases/qt/5.5/5.5.1/single/qt-everywhere-opensource-src-5.5.1.tar.gz"
-# fi
 
-../fetchurl "https://github.com/Itseez/opencv/archive/2.4.12.tar.gz"
-../fetchurl "https://downloads.sourceforge.net/project/itk/itk/4.8/InsightToolkit-4.8.1.tar.gz"
-../fetchurl "https://github.com/bulletphysics/bullet3/archive/2.83.6.tar.gz"
-../fetchurl "http://bitbucket.org/eigen/eigen/get/3.2.6.tar.bz2"
-../fetchurl "https://github.com/mariusmuja/flann/archive/1.8.0-src.tar.gz"
-../fetchurl "https://github.com/PointCloudLibrary/pcl/archive/pcl-1.7.2.tar.gz"
+${ENV_ROOT}/fetchurl "https://downloads.sourceforge.net/project/boost/boost/1.58.0/boost_1_58_0.tar.bz2"
+${ENV_ROOT}/fetchurl "http://www.vtk.org/files/release/6.3/VTK-6.3.0.tar.gz"
+${ENV_ROOT}/fetchurl "https://github.com/valette/ACVD/archive/vtk6.tar.gz"
+${ENV_ROOT}/fetchurl "http://download.osgeo.org/libtiff/tiff-4.0.6.tar.gz"
+${ENV_ROOT}/fetchurl "https://github.com/Itseez/opencv/archive/2.4.12.tar.gz"
+${ENV_ROOT}/fetchurl "https://downloads.sourceforge.net/project/itk/itk/4.8/InsightToolkit-4.8.1.tar.gz"
+${ENV_ROOT}/fetchurl "https://github.com/bulletphysics/bullet3/archive/2.83.6.tar.gz"
+${ENV_ROOT}/fetchurl "http://bitbucket.org/eigen/eigen/get/3.2.6.tar.bz2"
+${ENV_ROOT}/fetchurl "https://github.com/mariusmuja/flann/archive/1.8.0-src.tar.gz"
+${ENV_ROOT}/fetchurl "https://github.com/PointCloudLibrary/pcl/archive/pcl-1.7.2.tar.gz"
 
 echo "*** Building boost ***"
 cd $BUILD_DIR/boost*
@@ -115,29 +99,6 @@ cd build/ && \
 cmake -DBUILD_EXAMPLES=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} .. && \
 make -j${jval} && \
 make install
-
-# if [[ ${qt_version} == "qt4" ]]; then
-# 	echo "*** Building Qt4 ***"
-# 	cd $BUILD_DIR/qt*
-	
-# 	# apply patch to fix Qt4 on El Capitan
-# 	if [[ $(uname -s) == "Darwin" ]] && [[ $(uname -r) == 15* ]]; then
-# 		echo "Patching Qt4..."
-# 		patch src/gui/painting/qpaintengine_mac.cpp ${ENV_ROOT}/patches/qt4-elcapitan-fix.diff
-# 	fi
-	
-# 	./configure -developer-build -opensource -confirm-license -static -no-rpath -release -no-webkit -nomake examples -nomake tests ${QT4_PREFIX} && \
-# 	make -j${jval} && \
-# 	make install
-# elif [[ ${qt_version} == "qt5" ]]; then
-# 	echo "*** Building Qt5 ***"
-# 	cd $BUILD_DIR/qt*
-# 	./configure -developer-build -opensource -confirm-license -static -no-rpath -release -skip qtWebKit -nomake examples -nomake tests -securetransport -no-openssl ${QT5_PREFIX} && \
-# 	make -j${jval} && \
-# 	make install
-# fi
-# # add a configuration so that cmake can find this version in the future
-# cp ${ENV_ROOT}/patches/qt.conf ${TARGET_DIR}/${qt_version}/bin/
 
 echo "*** Building OpenCV ***"
 cd $BUILD_DIR/opencv*
