@@ -67,6 +67,13 @@ export PATH="${TARGET_DIR}/bin:${PATH}"
 echo "#### VC Dependencies ####"
 cd $BUILD_DIR
 
+# Target a specific OSX version
+if [[ "$platform" == "macosx" ]]; then
+    OSX_SDK_VERSION="10.9"
+    export MACOSX_DEPLOYMENT_TARGET="${OSX_SDK_VERSION}"
+    OSX_CMAKE_SDK="-DCMAKE_OSX_DEPLOYMENT_TARGET=${OSX_SDK_VERSION}"
+    OSX_BOOST_SDK="macosx-version=${OSX_SDK_VERSION} macosx-version-min=${OSX_SDK_VERSION}"
+fi
 
 ${ENV_ROOT}/fetchurl "https://downloads.sourceforge.net/project/boost/boost/1.58.0/boost_1_58_0.tar.bz2"
 ${ENV_ROOT}/fetchurl "http://www.vtk.org/files/release/6.3/VTK-6.3.0.tar.gz"
@@ -81,68 +88,74 @@ ${ENV_ROOT}/fetchurl "https://github.com/PointCloudLibrary/pcl/archive/pcl-1.7.2
 
 echo "*** Building boost ***"
 cd $BUILD_DIR/boost*
-./bootstrap.sh --prefix=${TARGET_DIR} && \
-./b2 variant=release link=static install -j ${jval}
+
+# Help boost find the OSX SDK
+if [[ "$platform" == "macosx" ]]; then
+XCODE_ROOT=`xcode-select -print-path`
+        cat >> tools/build/src/user-config.jam <<EOF
+using darwin : ${OSX_SDK_VERSION}
+: g++ -arch x86_64
+: <striper> <root>${XCODE_ROOT}/Platforms/MacOSX.platform/Developer
+: <target-os>darwin
+;
+EOF
+fi
+BOOST_LIBS="atomic,chrono,date_time,exception,iostreams,filesystem,program_options,random,signals,system,test,thread"
+./bootstrap.sh --prefix=${TARGET_DIR} --with-libraries=$BOOST_LIBS && \
+./b2 -j ${jval} cxxflags="-arch x86_64" variant=release link=static ${OSX_BOOST_SDK} install
 
 echo "*** Building VTK ***"
 cd $BUILD_DIR/VTK*
 mkdir build && \
 cd build/ && \
-cmake -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} .. && \
-make -j${jval} && \
-make install
+cmake -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
+make -j${jval} install
 
 echo "*** Building ACVD ***"
 cd $BUILD_DIR/ACVD*
 mkdir build && \
 cd build/ && \
-cmake -DBUILD_EXAMPLES=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} .. && \
-make -j${jval} && \
-make install
+cmake -DBUILD_EXAMPLES=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
+make -j${jval} install
 
 echo "*** Building OpenCV ***"
 cd $BUILD_DIR/opencv*
 mkdir build && \
 cd build/ && \
-cmake -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} .. && \
-make -j $jval && \
-make install
+cmake -DBUILD_TESTS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
+make -j${jval} install
 
 echo "*** Building ITK ***"
 cd $BUILD_DIR/InsightToolkit*
 mkdir build && \
 cd build/ && \
-cmake -DBUILD_EXAMPLES=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} .. && \
-make -j $jval && \
-make install
+cmake -DBUILD_EXAMPLES=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
+make -j${jval} install
 
 echo "*** Building Bullet Physics ***"
 cd $BUILD_DIR/bullet*
 mkdir build && \
 cd build/ && \
-cmake -DBUILD_BULLET2_DEMOS=OFF -DBUILD_CPU_DEMOS=OFF -DBUILD_OPENGL3_DEMOS=OFF -DBUILD_UNIT_TESTS=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} .. && \
-make -j $jval && \
-make install
+cmake -DBUILD_BULLET2_DEMOS=OFF -DBUILD_CPU_DEMOS=OFF -DBUILD_OPENGL3_DEMOS=OFF -DBUILD_UNIT_TESTS=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
+make -j${jval} install
 
 echo "*** Building Eigen ***"
 cd $BUILD_DIR/eigen*
 mkdir build && \
 cd build/ && \
-cmake -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} .. && \
+cmake -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
 make install
 
 echo "*** Building FLANN ***"
 cd $BUILD_DIR/flann*
 mkdir build && \
 cd build/ && \
-cmake -DBUILD_MATLAB_BINDINGS=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} .. && \
-make -j $jval && \
-make install
+cmake -DBUILD_MATLAB_BINDINGS=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
+make -j${jval} install
 
 echo "*** Building PCL ***"
 cd $BUILD_DIR/pcl*
 mkdir build && \
 cd build/ && \
-cmake -DWITH_VTK=OFF -DWITH_QT=OFF -DBUILD_visualization=OFF -DPCL_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} .. && \
-make -j $jval && \
-make install
+cmake -DWITH_VTK=OFF -DWITH_QT=OFF -DBUILD_visualization=OFF -DBUILD_tools=OFF -DPCL_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
+make -j${jval} install
