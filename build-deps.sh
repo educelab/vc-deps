@@ -69,9 +69,13 @@ cd $BUILD_DIR
 
 # Target a specific OSX version
 if [[ "$platform" == "macosx" ]]; then
+    mkdir -p SDKs
+    cd SDKs/
+    ${ENV_ROOT}/fetchurl "https://7bba5af52f57be309d65f0be55832483b029b4bd.googledrive.com/host/0BxjtEz6no21sSnZtNVItcEFwaTA/MacOSX10.9.sdk.tar.gz"
+    cd $BUILD_DIR
+
     OSX_SDK_VERSION="10.9"
-    export MACOSX_DEPLOYMENT_TARGET="${OSX_SDK_VERSION}"
-    OSX_CMAKE_SDK="-DCMAKE_OSX_DEPLOYMENT_TARGET=${OSX_SDK_VERSION}"
+    OSX_CMAKE_SDK="-DCMAKE_OSX_SYSROOT=${BUILD_DIR}/SDKs/MacOSX10.9.sdk/ -DCMAKE_OSX_DEPLOYMENT_TARGET=${OSX_SDK_VERSION}"
     OSX_BOOST_SDK="macosx-version=${OSX_SDK_VERSION} macosx-version-min=${OSX_SDK_VERSION}"
 fi
 
@@ -91,16 +95,16 @@ cd $BUILD_DIR/boost*
 
 # Help boost find the OSX SDK
 if [[ "$platform" == "macosx" ]]; then
-XCODE_ROOT=`xcode-select -print-path`
+XCODE_ROOT=${BUILD_DIR}/
         cat >> tools/build/src/user-config.jam <<EOF
 using darwin : ${OSX_SDK_VERSION}
 : g++ -arch x86_64
-: <striper> <root>${XCODE_ROOT}/Platforms/MacOSX.platform/Developer
+: <striper> <root>${XCODE_ROOT}
 : <target-os>darwin
 ;
 EOF
 fi
-BOOST_LIBS="atomic,chrono,date_time,exception,iostreams,filesystem,program_options,random,signals,system,test,thread"
+BOOST_LIBS="atomic,chrono,date_time,exception,iostreams,filesystem,program_options,random,serialization,signals,system,test,thread"
 ./bootstrap.sh --prefix=${TARGET_DIR} --with-libraries=$BOOST_LIBS && \
 ./b2 -j ${jval} cxxflags="-arch x86_64" variant=release link=static ${OSX_BOOST_SDK} install
 
