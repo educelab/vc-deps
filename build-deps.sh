@@ -110,56 +110,56 @@ BOOST_LIBS="atomic,chrono,date_time,exception,iostreams,filesystem,program_optio
 
 echo "*** Building VTK ***"
 cd $BUILD_DIR/VTK*
-mkdir build && \
+mkdir -p build && \
 cd build/ && \
 cmake -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
 make -j${jval} install
 
 echo "*** Building ACVD ***"
 cd $BUILD_DIR/ACVD*
-mkdir build && \
+mkdir -p build && \
 cd build/ && \
 cmake -DBUILD_EXAMPLES=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
 make -j${jval} install
 
 echo "*** Building OpenCV ***"
 cd $BUILD_DIR/opencv*
-mkdir build && \
+mkdir -p build && \
 cd build/ && \
 cmake -DBUILD_TESTS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
 make -j${jval} install
 
 echo "*** Building ITK ***"
 cd $BUILD_DIR/InsightToolkit*
-mkdir build && \
+mkdir -p build && \
 cd build/ && \
 cmake -DBUILD_EXAMPLES=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
 make -j${jval} install
 
 echo "*** Building Bullet Physics ***"
 cd $BUILD_DIR/bullet*
-mkdir build && \
+mkdir -p build && \
 cd build/ && \
 cmake -DBUILD_BULLET2_DEMOS=OFF -DBUILD_CPU_DEMOS=OFF -DBUILD_OPENGL3_DEMOS=OFF -DBUILD_UNIT_TESTS=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
 make -j${jval} install
 
 echo "*** Building Eigen ***"
 cd $BUILD_DIR/eigen*
-mkdir build && \
+mkdir -p build && \
 cd build/ && \
 cmake -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
 make install
 
 echo "*** Building FLANN ***"
 cd $BUILD_DIR/flann*
-mkdir build && \
+mkdir -p build && \
 cd build/ && \
 cmake -DBUILD_MATLAB_BINDINGS=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
 make -j${jval} install
 
 echo "*** Building PCL ***"
 cd $BUILD_DIR/pcl*
-mkdir build && \
+mkdir -p build && \
 cd build/ && \
 cmake -DWITH_VTK=OFF -DWITH_QT=OFF -DBUILD_visualization=OFF -DBUILD_tools=OFF -DPCL_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
 make -j${jval} install
