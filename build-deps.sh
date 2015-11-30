@@ -6,9 +6,15 @@ set -u
 usage() { echo "Usage: $0" 1>&2; echo; exit 1; }
 qt_version="qt5"
 local_target=true
+universal=false
 
-while getopts "s:" o; do
+while getopts "u:s:" o; do
     case "${o}" in
+        u)
+            if [[ ${OPTARG} == "niversal" ]]; then
+                universal=true
+            fi
+            ;;
         s)
             if [[ ${OPTARG} == "ystem" ]]; then
                 local_target=false
@@ -46,6 +52,9 @@ BUILD_DIR="${ENV_ROOT}/build"
 TARGET_DIR="${ENV_ROOT}/deps"
 CMAKE_PREFIX=""
 CONFIGURE_PREFIX=""
+OSX_SDK_VERSION=""
+OSX_CMAKE_SDK=""
+OSX_BOOST_SDK=""
 
 if [[ ${local_target} == true ]]; then
     CMAKE_PREFIX="-DCMAKE_INSTALL_PREFIX=${TARGET_DIR}"
@@ -65,10 +74,11 @@ export CFLAGS="-I${TARGET_DIR}/include $LDFLAGS"
 export PATH="${TARGET_DIR}/bin:${PATH}"
 
 echo "#### VC Dependencies ####"
+echo "Building universal binaries: $universal"
 cd $BUILD_DIR
 
 # Target a specific OSX version
-if [[ "$platform" == "macosx" ]]; then
+if [[ "$platform" == "macosx" ]] && [[ $universal == true ]]; then
     mkdir -p SDKs
     cd SDKs/
     ${ENV_ROOT}/fetchurl "https://7bba5af52f57be309d65f0be55832483b029b4bd.googledrive.com/host/0BxjtEz6no21sSnZtNVItcEFwaTA/MacOSX10.9.sdk.tar.gz"
@@ -94,7 +104,7 @@ echo "*** Building boost ***"
 cd $BUILD_DIR/boost*
 
 # Help boost find the OSX SDK
-if [[ "$platform" == "macosx" ]]; then
+if [[ "$platform" == "macosx" ]] && [[ ${universal} == true ]]; then
 XCODE_ROOT=${BUILD_DIR}/
         cat >> tools/build/src/user-config.jam <<EOF
 using darwin : ${OSX_SDK_VERSION}
