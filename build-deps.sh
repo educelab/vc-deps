@@ -82,7 +82,6 @@ fi
 ${ENV_ROOT}/fetchurl "https://downloads.sourceforge.net/project/boost/boost/1.58.0/boost_1_58_0.tar.bz2"
 ${ENV_ROOT}/fetchurl "http://www.vtk.org/files/release/6.3/VTK-6.3.0.tar.gz"
 ${ENV_ROOT}/fetchurl "https://github.com/valette/ACVD/archive/vtk6.tar.gz"
-${ENV_ROOT}/fetchurl "http://download.osgeo.org/libtiff/tiff-4.0.6.tar.gz"
 ${ENV_ROOT}/fetchurl "https://github.com/Itseez/opencv/archive/2.4.12.tar.gz"
 ${ENV_ROOT}/fetchurl "https://downloads.sourceforge.net/project/itk/itk/4.8/InsightToolkit-4.8.1.tar.gz"
 ${ENV_ROOT}/fetchurl "https://github.com/bulletphysics/bullet3/archive/2.83.6.tar.gz"
@@ -126,7 +125,7 @@ echo "*** Building OpenCV ***"
 cd $BUILD_DIR/opencv*
 mkdir build && \
 cd build/ && \
-cmake -DBUILD_TESTS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
+cmake -DBUILD_TESTS=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
 make -j${jval} install
 
 echo "*** Building ITK ***"
