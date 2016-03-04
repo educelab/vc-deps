@@ -8,6 +8,8 @@ qt_version="qt5"
 local_target=true
 universal=false
 
+export VERBOSE=1
+
 while getopts "u:s:" o; do
     case "${o}" in
         u)
