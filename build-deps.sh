@@ -56,6 +56,11 @@ cd `dirname $0`
 ENV_ROOT="$PWD"
 BUILD_DIR="${ENV_ROOT}/build"
 TARGET_DIR="${ENV_ROOT}/deps"
+if [[ ${local_target} == false ]]; then
+    TARGET_DIR="${ENV_ROOT}/deps"  
+fi
+
+
 CMAKE_PREFIX=""
 CONFIGURE_PREFIX=""
 BOOST_BOOTSTRAP_CLANG=""
@@ -74,12 +79,12 @@ mkdir -p "$BUILD_DIR" "$TARGET_DIR"
 
 # NOTE: this is a fetchurl parameter, nothing to do with the current script
 #export TARGET_DIR_DIR="$BUILD_DIR"
-
 export LDFLAGS="-L${TARGET_DIR}/lib"
 export DYLD_LIBRARY_PATH="${TARGET_DIR}/lib"
 export PKG_CONFIG_PATH="$TARGET_DIR/lib/pkgconfig"
 export CFLAGS="-I${TARGET_DIR}/include $LDFLAGS"
 export PATH="${TARGET_DIR}/bin:${PATH}"
+
 
 echo "#### VC Dependencies ####"
 echo "Building universal binaries: $universal"
