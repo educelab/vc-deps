@@ -120,7 +120,6 @@ if [[ ${build_cmake} == true ]]; then
 
     ./bootstrap && \
     make -j${jval} install
-
 fi
 
 echo "*** Building boost ***"
