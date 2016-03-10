@@ -7,9 +7,15 @@ usage() { echo "Usage: $0" 1>&2; echo; exit 1; }
 qt_version="qt5"
 local_target=true
 universal=false
+build_cmake=false
 
-while getopts "u:s:" o; do
+while getopts "c:u:s:" o; do
     case "${o}" in
+        c)
+            if [[ ${OPTARG} == "make" ]]; then
+                build_cmake=true
+            fi
+            ;; 
         u)
             if [[ ${OPTARG} == "niversal" ]]; then
                 universal=true
@@ -77,6 +83,7 @@ export PATH="${TARGET_DIR}/bin:${PATH}"
 
 echo "#### VC Dependencies ####"
 echo "Building universal binaries: $universal"
+echo "Building CMake: $build_cmake"
 cd $BUILD_DIR
 
 # Target a specific OSX version
@@ -103,6 +110,17 @@ if [[ "$platform" == "linux" ]]; then
     ${ENV_ROOT}/fetchurl "https://github.com/PointCloudLibrary/pcl/archive/pcl-1.8.0rc2.tar.gz"
 else
     ${ENV_ROOT}/fetchurl "https://github.com/PointCloudLibrary/pcl/archive/pcl-1.7.2.tar.gz"
+fi
+
+# Optionally build cmake
+if [[ ${build_cmake} == true ]]; then
+    ${ENV_ROOT}/fetchurl "https://cmake.org/files/v3.5/cmake-3.5.0.tar.gz"
+    echo "*** Building CMake ***"
+    cd $BUILD_DIR/cmake*
+
+    ./bootstrap && \
+    make -j${jval} install
+
 fi
 
 echo "*** Building boost ***"
