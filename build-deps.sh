@@ -57,7 +57,7 @@ ENV_ROOT="$PWD"
 BUILD_DIR="${ENV_ROOT}/build"
 TARGET_DIR="${ENV_ROOT}/deps"
 if [[ ${local_target} == false ]]; then
-    TARGET_DIR="${ENV_ROOT}/deps"  
+    TARGET_DIR="/usr/local"  
 fi
 
 
@@ -144,7 +144,7 @@ elif [[ "$platform" == "linux" ]]; then
     BOOST_BOOTSTRAP_CLANG="--with-toolset=clang"
     BOOST_B2_CLANG="toolset=clang"
 fi
-BOOST_LIBS="atomic,chrono,date_time,exception,iostreams,filesystem,program_options,random,serialization,signals,system,test,thread"
+BOOST_LIBS="atomic,chrono,date_time,exception,iostreams,filesystem,program_options,random,regex,serialization,signals,system,test,thread"
 ./bootstrap.sh --prefix=${TARGET_DIR} --with-libraries=$BOOST_LIBS ${BOOST_BOOTSTRAP_CLANG} && \
 ./b2 -j ${jval} cxxflags="-arch x86_64 -std=c++11" variant=release link=static ${BOOST_B2_CLANG} ${OSX_BOOST_SDK} install
 
