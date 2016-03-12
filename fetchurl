@@ -84,7 +84,7 @@ find "$CACHE_DIR" ! -path "$CACHE_DIR" -type d -maxdepth 1 -mtime +15 -exec rm -
 # Fetch
 if [ "$CACHE" -eq 0 ] || [ ! -f "$cache_file" ]; then
   rm -rf "$tmp_file"
-  dl curl -L -# -o "$tmp_file" "$URL"
+  sh curl -L -# -o "$tmp_file" "$URL"
   sh mv "$tmp_file" "$cache_file"
 fi
 
