@@ -1,0 +1,30 @@
+stages:
+    - build
+
+build_it_debian:
+    image: debian:8
+    stage: build
+    script:
+        - echo $CI_BUILD_REF_NAME   $CI_BUILD_STAGE
+        - ./build-deps.sh -cmake
+    tags:
+        - build
+        - linux
+
+build_it_osx:
+    stage: build
+    script:
+        - echo $CI_BUILD_REF_NAME   $CI_BUILD_STAGE
+        - ./build-deps.sh -cmake
+    tags:
+        - build
+        - osx
+
+build_it_osx_universal:
+    stage: build
+    script:
+        - echo $CI_BUILD_REF_NAME   $CI_BUILD_STAGE
+        - ./build-deps.sh -cmake -universal
+    tags:
+        - build
+        - osx
