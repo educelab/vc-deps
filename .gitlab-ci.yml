@@ -15,16 +15,16 @@ build_it_osx:
     stage: build
     script:
         - echo $CI_BUILD_REF_NAME   $CI_BUILD_STAGE
-        - ./build-deps.sh -cmake
+        - ./build-deps.sh -cmake -universal
     tags:
-        - build
+        - prebuilt
         - osx
 
-build_it_osx_universal:
+build_it_osx_deploy:
     stage: build
     script:
         - echo $CI_BUILD_REF_NAME   $CI_BUILD_STAGE
         - ./build-deps.sh -cmake -universal
     tags:
-        - build
+        - deploy
         - osx
