@@ -6,6 +6,8 @@ build_it_debian:
     stage: build
     script:
         - echo $CI_BUILD_REF_NAME   $CI_BUILD_STAGE
+        - apt-get update
+        - apt-get -y install build-essential clang curl libbz2-dev libgl1-mesa-dev libusb-1.0-0-dev pkg-config
         - ./build-deps.sh -cmake
     tags:
         - build
