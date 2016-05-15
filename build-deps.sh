@@ -15,7 +15,7 @@ while getopts "c:u:s:" o; do
             if [[ ${OPTARG} == "make" ]]; then
                 build_cmake=true
             fi
-            ;; 
+            ;;
         u)
             if [[ ${OPTARG} == "niversal" ]]; then
                 universal=true
@@ -57,7 +57,7 @@ ENV_ROOT="$PWD"
 BUILD_DIR="${ENV_ROOT}/build"
 TARGET_DIR="${ENV_ROOT}/deps"
 if [[ ${local_target} == false ]]; then
-    TARGET_DIR="/usr/local"  
+    TARGET_DIR="/usr/local"
 fi
 
 
@@ -103,6 +103,8 @@ if [[ "$platform" == "macosx" ]] && [[ $universal == true ]]; then
     OSX_BOOST_SDK="macosx-version=${OSX_SDK_VERSION} macosx-version-min=${OSX_SDK_VERSION}"
 fi
 
+${ENV_ROOT}/fetchurl "http://zlib.net/zlib-1.2.8.tar.gz"
+${ENV_ROOT}/fetchurl "http://download.osgeo.org/libtiff/tiff-4.0.6.tar.gz"
 ${ENV_ROOT}/fetchurl "https://downloads.sourceforge.net/project/boost/boost/1.58.0/boost_1_58_0.tar.gz"
 ${ENV_ROOT}/fetchurl "http://www.vtk.org/files/release/6.3/VTK-6.3.0.tar.gz"
 ${ENV_ROOT}/fetchurl "https://github.com/valette/ACVD/archive/vtk6.tar.gz"
@@ -126,6 +128,18 @@ if [[ ${build_cmake} == true ]]; then
     ./bootstrap && \
     make -j${jval} install
 fi
+
+echo "*** Building zlib ***"
+cd $BUILD_DIR/zlib*
+mkdir -p build && \
+cd build/ && \
+cmake -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
+make -j${jval} install
+
+echo "*** Building libtiff ***"
+cd $BUILD_DIR/tiff*
+cmake -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} . && \
+make -j${jval} install
 
 echo "*** Building boost ***"
 cd $BUILD_DIR/boost*
@@ -152,7 +166,7 @@ echo "*** Building VTK ***"
 cd $BUILD_DIR/VTK*
 mkdir -p build && \
 cd build/ && \
-cmake -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
+cmake -DBUILD_SHARED_LIBS=OFF -DVTK_USE_SYSTEM_TIFF=ON -DVTK_USE_SYSTEM_ZLIB=ON -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
 make -j${jval} install
 
 echo "*** Building ACVD ***"
@@ -166,14 +180,14 @@ echo "*** Building OpenCV ***"
 cd $BUILD_DIR/opencv*
 mkdir -p build && \
 cd build/ && \
-cmake -DBUILD_TESTS=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
+cmake -DBUILD_TIFF=OFF -DBUILD_ZLIB=OFF -DBUILD_TESTS=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
 make -j${jval} install
 
 echo "*** Building ITK ***"
 cd $BUILD_DIR/InsightToolkit*
 mkdir -p build && \
 cd build/ && \
-cmake -DBUILD_EXAMPLES=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
+cmake -DITK_USE_SYSTEM_TIFF=ON -DITK_USE_SYSTEM_ZLIB=ON -DBUILD_EXAMPLES=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
 make -j${jval} install
 
 echo "*** Building Bullet Physics ***"
