@@ -109,7 +109,7 @@ ${ENV_ROOT}/fetchurl "https://downloads.sourceforge.net/project/boost/boost/1.61
 ${ENV_ROOT}/fetchurl "http://www.vtk.org/files/release/6.3/VTK-6.3.0.tar.gz"
 ${ENV_ROOT}/fetchurl "https://github.com/valette/ACVD/archive/master.tar.gz"
 ${ENV_ROOT}/fetchurl "https://github.com/Itseez/opencv/archive/2.4.12.tar.gz"
-${ENV_ROOT}/fetchurl "https://downloads.sourceforge.net/project/itk/itk/4.8/InsightToolkit-4.8.1.tar.gz"
+${ENV_ROOT}/fetchurl "https://downloads.sourceforge.net/project/itk/itk/4.10/InsightToolkit-4.10.0.tar.gz"
 ${ENV_ROOT}/fetchurl "https://github.com/bulletphysics/bullet3/archive/2.83.7.tar.gz"
 ${ENV_ROOT}/fetchurl "http://bitbucket.org/eigen/eigen/get/3.2.8.tar.bz2"
 ${ENV_ROOT}/fetchurl "https://github.com/mariusmuja/flann/archive/1.8.0-src.tar.gz"
