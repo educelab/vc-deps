@@ -72,10 +72,12 @@ OSX_BOOST_SDK=""
 if [[ ${local_target} == true ]]; then
     CMAKE_PREFIX="-DCMAKE_INSTALL_PREFIX=${TARGET_DIR}"
     CONFIGURE_PREFIX="-prefix ${TARGET_DIR}"
+    rm -rf "$TARGET_DIR"
+    mkdir -p "$TARGET_DIR"
 fi
 
-rm -rf "$BUILD_DIR" "$TARGET_DIR"
-mkdir -p "$BUILD_DIR" "$TARGET_DIR"
+rm -rf "$BUILD_DIR"
+mkdir -p "$BUILD_DIR"
 
 # NOTE: this is a fetchurl parameter, nothing to do with the current script
 #export TARGET_DIR_DIR="$BUILD_DIR"
