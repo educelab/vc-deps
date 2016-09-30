@@ -17,9 +17,9 @@ build_it_osx:
     stage: build
     script:
         - echo $CI_BUILD_REF_NAME   $CI_BUILD_STAGE
-        - ./build-deps.sh -cmake -universal
+        - ./build-deps.sh
     tags:
-        - prebuilt
+        - homebrew
         - osx
 
 build_it_osx_deploy:
