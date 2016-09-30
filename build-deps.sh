@@ -120,7 +120,7 @@ ${ENV_ROOT}/fetchurl "https://github.com/PointCloudLibrary/pcl/archive/pcl-1.8.0
 
 # Optionally build cmake
 if [[ ${build_cmake} == true ]]; then
-    ${ENV_ROOT}/fetchurl "https://cmake.org/files/v3.6/cmake-3.6.1.tar.gz"
+    ${ENV_ROOT}/fetchurl "https://cmake.org/files/v3.6/cmake-3.6.2.tar.gz"
     echo "*** Building CMake ***"
     cd $BUILD_DIR/cmake*
 
@@ -137,7 +137,7 @@ make -j${jval} install
 
 echo "*** Building libtiff ***"
 cd $BUILD_DIR/tiff*
-cmake -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} . && \
+cmake -Dlzma=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} . && \
 make -j${jval} install
 
 echo "*** Building boost ***"
