@@ -107,7 +107,7 @@ fi
 
 ${ENV_ROOT}/fetchurl "http://zlib.net/zlib-1.2.8.tar.gz"
 ${ENV_ROOT}/fetchurl "http://download.osgeo.org/libtiff/tiff-4.0.6.tar.gz"
-${ENV_ROOT}/fetchurl "https://downloads.sourceforge.net/project/boost/boost/1.61.0/boost_1_61_0.tar.gz"
+${ENV_ROOT}/fetchurl "https://downloads.sourceforge.net/project/boost/boost/1.62.0/boost_1_62_0.tar.gz"
 ${ENV_ROOT}/fetchurl "http://www.vtk.org/files/release/7.0/VTK-7.0.0.tar.gz"
 ${ENV_ROOT}/fetchurl "https://github.com/valette/ACVD/archive/master.tar.gz"
 ${ENV_ROOT}/fetchurl "https://github.com/Itseez/opencv/archive/2.4.13.tar.gz"
