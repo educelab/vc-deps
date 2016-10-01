@@ -108,18 +108,19 @@ fi
 ${ENV_ROOT}/fetchurl "http://zlib.net/zlib-1.2.8.tar.gz"
 ${ENV_ROOT}/fetchurl "http://download.osgeo.org/libtiff/tiff-4.0.6.tar.gz"
 ${ENV_ROOT}/fetchurl "https://downloads.sourceforge.net/project/boost/boost/1.61.0/boost_1_61_0.tar.gz"
-${ENV_ROOT}/fetchurl "http://www.vtk.org/files/release/6.3/VTK-6.3.0.tar.gz"
+${ENV_ROOT}/fetchurl "http://www.vtk.org/files/release/7.0/VTK-7.0.0.tar.gz"
 ${ENV_ROOT}/fetchurl "https://github.com/valette/ACVD/archive/master.tar.gz"
-${ENV_ROOT}/fetchurl "https://github.com/Itseez/opencv/archive/2.4.12.tar.gz"
+${ENV_ROOT}/fetchurl "https://github.com/Itseez/opencv/archive/2.4.13.tar.gz"
 ${ENV_ROOT}/fetchurl "https://downloads.sourceforge.net/project/itk/itk/4.10/InsightToolkit-4.10.0.tar.gz"
 ${ENV_ROOT}/fetchurl "https://github.com/bulletphysics/bullet3/archive/2.83.7.tar.gz"
 ${ENV_ROOT}/fetchurl "http://bitbucket.org/eigen/eigen/get/3.2.8.tar.bz2"
-${ENV_ROOT}/fetchurl "https://github.com/mariusmuja/flann/archive/1.8.0-src.tar.gz"
+${ENV_ROOT}/fetchurl "https://github.com/mariusmuja/flann/archive/1.9.1.tar.gz"
+${ENV_ROOT}/fetchurl "https://github.com/cnr-isti-vclab/vcglib/archive/v1.0.0.tar.gz"
 ${ENV_ROOT}/fetchurl "https://github.com/PointCloudLibrary/pcl/archive/pcl-1.8.0.tar.gz"
 
 # Optionally build cmake
 if [[ ${build_cmake} == true ]]; then
-    ${ENV_ROOT}/fetchurl "https://cmake.org/files/v3.6/cmake-3.6.1.tar.gz"
+    ${ENV_ROOT}/fetchurl "https://cmake.org/files/v3.6/cmake-3.6.2.tar.gz"
     echo "*** Building CMake ***"
     cd $BUILD_DIR/cmake*
 
@@ -136,7 +137,7 @@ make -j${jval} install
 
 echo "*** Building libtiff ***"
 cd $BUILD_DIR/tiff*
-cmake -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} . && \
+cmake -Dlzma=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} . && \
 make -j${jval} install
 
 echo "*** Building boost ***"
@@ -178,7 +179,7 @@ echo "*** Building OpenCV ***"
 cd $BUILD_DIR/opencv*
 mkdir -p build && \
 cd build/ && \
-cmake -DBUILD_TIFF=OFF -DBUILD_ZLIB=OFF -DBUILD_TESTS=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
+cmake -DWITH_VTK=OFF -DBUILD_TIFF=OFF -DBUILD_ZLIB=OFF -DBUILD_TESTS=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
 make -j${jval} install
 
 echo "*** Building ITK ***"
@@ -208,6 +209,11 @@ mkdir -p build && \
 cd build/ && \
 cmake -DBUILD_MATLAB_BINDINGS=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
 make -j${jval} install
+
+echo "*** Building VCG Library ***"
+cd $BUILD_DIR/vcg*
+mkdir -p "${TARGET_DIR}/include/vcg"
+cp -R * "${TARGET_DIR}/include/vcg"
 
 echo "*** Building PCL ***"
 cd $BUILD_DIR/pcl*
