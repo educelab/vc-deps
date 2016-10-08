@@ -60,7 +60,6 @@ if [[ ${local_target} == false ]]; then
     TARGET_DIR="/usr/local"
 fi
 
-
 CMAKE_PREFIX=""
 CONFIGURE_PREFIX=""
 BOOST_BOOTSTRAP_CLANG=""
@@ -79,8 +78,6 @@ fi
 rm -rf "$BUILD_DIR"
 mkdir -p "$BUILD_DIR"
 
-# NOTE: this is a fetchurl parameter, nothing to do with the current script
-#export TARGET_DIR_DIR="$BUILD_DIR"
 export LDFLAGS="-L${TARGET_DIR}/lib"
 export DYLD_LIBRARY_PATH="${TARGET_DIR}/lib"
 export PKG_CONFIG_PATH="$TARGET_DIR/lib/pkgconfig"
@@ -124,7 +121,7 @@ if [[ ${build_cmake} == true ]]; then
     echo "*** Building CMake ***"
     cd $BUILD_DIR/cmake*
 
-    ./bootstrap && \
+    ./bootstrap --prefix=${TARGET_DIR} && \
     make -j${jval} install
 fi
 
