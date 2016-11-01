@@ -23,6 +23,8 @@ build_it_osx:
         - osx
 
 build_it_osx_deploy:
+    only:
+        - master
     stage: build
     script:
         - echo $CI_BUILD_REF_NAME   $CI_BUILD_STAGE
