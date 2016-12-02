@@ -107,13 +107,12 @@ ${ENV_ROOT}/fetchurl "http://download.osgeo.org/libtiff/tiff-4.0.6.tar.gz"
 ${ENV_ROOT}/fetchurl "https://downloads.sourceforge.net/project/boost/boost/1.61.0/boost_1_61_0.tar.gz"
 ${ENV_ROOT}/fetchurl "http://www.vtk.org/files/release/7.0/VTK-7.0.0.tar.gz"
 ${ENV_ROOT}/fetchurl "https://github.com/valette/ACVD/archive/master.tar.gz"
-${ENV_ROOT}/fetchurl "https://github.com/Itseez/opencv/archive/2.4.13.tar.gz"
+${ENV_ROOT}/fetchurl "https://github.com/Itseez/opencv/archive/3.1.0.tar.gz"
 ${ENV_ROOT}/fetchurl "https://downloads.sourceforge.net/project/itk/itk/4.10/InsightToolkit-4.10.0.tar.gz"
 ${ENV_ROOT}/fetchurl "https://github.com/bulletphysics/bullet3/archive/2.83.7.tar.gz"
 ${ENV_ROOT}/fetchurl "http://bitbucket.org/eigen/eigen/get/3.2.8.tar.bz2"
 ${ENV_ROOT}/fetchurl "https://github.com/mariusmuja/flann/archive/1.9.1.tar.gz"
 ${ENV_ROOT}/fetchurl "https://github.com/cnr-isti-vclab/vcglib/archive/v1.0.0.tar.gz"
-${ENV_ROOT}/fetchurl "https://github.com/PointCloudLibrary/pcl/archive/pcl-1.8.0.tar.gz"
 
 # Optionally build cmake
 if [[ ${build_cmake} == true ]]; then
@@ -204,7 +203,7 @@ echo "*** Building FLANN ***"
 cd $BUILD_DIR/flann*
 mkdir -p build && \
 cd build/ && \
-cmake -DBUILD_MATLAB_BINDINGS=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
+cmake -DBUILD_MATLAB_BINDINGS=OFF -DBUILD_PYTHON_BINDINGS=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
 make -j${jval} install
 
 echo "*** Building VCG Library ***"
@@ -212,9 +211,4 @@ cd $BUILD_DIR/vcg*
 mkdir -p "${TARGET_DIR}/include/vcg"
 cp -R * "${TARGET_DIR}/include/vcg"
 
-echo "*** Building PCL ***"
-cd $BUILD_DIR/pcl*
-mkdir -p build && \
-cd build/ && \
-cmake -DWITH_VTK=OFF -DWITH_QT=OFF -DBUILD_visualization=OFF -DBUILD_tools=OFF -DPCL_SHARED_LIBS=OFF -DWITH_OPENGL=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
-make -j${jval} install
+echo "Build Complete"
