@@ -116,7 +116,7 @@ ${ENV_ROOT}/fetchurl "https://github.com/cnr-isti-vclab/vcglib/archive/v1.0.0.ta
 
 # Optionally build cmake
 if [[ ${build_cmake} == true ]]; then
-    ${ENV_ROOT}/fetchurl "https://cmake.org/files/v3.6/cmake-3.6.2.tar.gz"
+    ${ENV_ROOT}/fetchurl "https://cmake.org/files/v3.7/cmake-3.7.1.tar.gz"
     echo "*** Building CMake ***"
     cd $BUILD_DIR/cmake*
 
@@ -199,16 +199,9 @@ cd build/ && \
 cmake -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
 make install
 
-echo "*** Building FLANN ***"
-cd $BUILD_DIR/flann*
-mkdir -p build && \
-cd build/ && \
-cmake -DBUILD_MATLAB_BINDINGS=OFF -DBUILD_PYTHON_BINDINGS=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
-make -j${jval} install
-
 echo "*** Building VCG Library ***"
 cd $BUILD_DIR/vcg*
 mkdir -p "${TARGET_DIR}/include/vcg"
 cp -R * "${TARGET_DIR}/include/vcg"
 
-echo "Build Complete"
+echo "*** Build Complete ***"
