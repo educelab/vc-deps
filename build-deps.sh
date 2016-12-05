@@ -175,7 +175,7 @@ echo "*** Building OpenCV ***"
 cd $BUILD_DIR/opencv*
 mkdir -p build && \
 cd build/ && \
-cmake -DWITH_VTK=OFF -DBUILD_TIFF=OFF -DBUILD_ZLIB=OFF -DBUILD_TESTS=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
+cmake -DWITH_IPP=OFF -DWITH_VTK=OFF -DBUILD_TIFF=OFF -DBUILD_ZLIB=OFF -DBUILD_TESTS=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
 make -j${jval} install
 
 echo "*** Building ITK ***"
