@@ -105,14 +105,14 @@ fi
 ${ENV_ROOT}/fetchurl "http://zlib.net/zlib-1.2.8.tar.gz"
 ${ENV_ROOT}/fetchurl "http://download.osgeo.org/libtiff/tiff-4.0.6.tar.gz"
 ${ENV_ROOT}/fetchurl "https://downloads.sourceforge.net/project/boost/boost/1.61.0/boost_1_61_0.tar.gz"
-${ENV_ROOT}/fetchurl "http://www.vtk.org/files/release/7.0/VTK-7.0.0.tar.gz"
-${ENV_ROOT}/fetchurl "https://github.com/valette/ACVD/archive/f481b0b.tar.gz"
-${ENV_ROOT}/fetchurl "https://github.com/opencv/opencv/archive/c48d7f8.tar.gz"
+${ENV_ROOT}/fetchurl "http://www.vtk.org/files/release/7.1/VTK-7.1.0.tar.gz"
+${ENV_ROOT}/fetchurl "https://github.com/valette/ACVD/archive/e9d4f49.tar.gz"
+${ENV_ROOT}/fetchurl "https://github.com/opencv/opencv/archive/3.2.0.tar.gz"
 ${ENV_ROOT}/fetchurl "https://downloads.sourceforge.net/project/itk/itk/4.10/InsightToolkit-4.10.0.tar.gz"
-${ENV_ROOT}/fetchurl "https://github.com/bulletphysics/bullet3/archive/2.83.7.tar.gz"
+${ENV_ROOT}/fetchurl "https://github.com/bulletphysics/bullet3/archive/2.85.1.tar.gz"
 ${ENV_ROOT}/fetchurl "http://bitbucket.org/eigen/eigen/get/3.2.8.tar.bz2"
 ${ENV_ROOT}/fetchurl "https://github.com/mariusmuja/flann/archive/1.9.1.tar.gz"
-${ENV_ROOT}/fetchurl "https://github.com/cnr-isti-vclab/vcglib/archive/v1.0.0.tar.gz"
+${ENV_ROOT}/fetchurl "https://github.com/cnr-isti-vclab/vcglib/archive/v1.0.1.tar.gz"
 
 # Optionally build cmake
 if [[ ${build_cmake} == true ]]; then
