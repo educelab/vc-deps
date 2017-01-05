@@ -2,7 +2,7 @@ stages:
     - build
 
 build_it_debian:
-    image: debian:8
+    image: debian:testing
     stage: build
     script:
         - echo $CI_BUILD_REF_NAME   $CI_BUILD_STAGE
