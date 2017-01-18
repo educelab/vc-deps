@@ -102,7 +102,7 @@ if [[ "$platform" == "macosx" ]] && [[ $universal == true ]]; then
     OSX_BOOST_SDK="macosx-version=${OSX_SDK_VERSION} macosx-version-min=${OSX_SDK_VERSION}"
 fi
 
-${ENV_ROOT}/fetchurl "http://zlib.net/zlib-1.2.10.tar.gz"
+${ENV_ROOT}/fetchurl "http://zlib.net/zlib-1.2.11.tar.gz"
 ${ENV_ROOT}/fetchurl "http://download.osgeo.org/libtiff/tiff-4.0.6.tar.gz"
 ${ENV_ROOT}/fetchurl "https://downloads.sourceforge.net/project/boost/boost/1.61.0/boost_1_61_0.tar.gz"
 ${ENV_ROOT}/fetchurl "http://www.vtk.org/files/release/7.1/VTK-7.1.0.tar.gz"
