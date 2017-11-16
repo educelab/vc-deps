@@ -182,7 +182,7 @@ echo "*** Building ITK ***"
 cd $BUILD_DIR/InsightToolkit*
 mkdir -p build && \
 cd build/ && \
-cmake -DITK_USE_SYSTEM_TIFF=ON -DITK_USE_SYSTEM_ZLIB=ON -DBUILD_EXAMPLES=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
+cmake -DITK_USE_SYSTEM_TIFF=ON -DITK_USE_SYSTEM_ZLIB=ON -DModule_ITKVideoBridgeOpenCV=ON -DBUILD_EXAMPLES=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
 make -j${jval} install
 
 echo "*** Building Bullet Physics ***"
