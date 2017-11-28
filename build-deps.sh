@@ -103,20 +103,20 @@ if [[ "$platform" == "macosx" ]] && [[ $universal == true ]]; then
 fi
 
 ${ENV_ROOT}/fetchurl "https://downloads.sourceforge.net/project/libpng/zlib/1.2.11/zlib-1.2.11.tar.gz"
-${ENV_ROOT}/fetchurl "http://download.osgeo.org/libtiff/tiff-4.0.6.tar.gz"
-${ENV_ROOT}/fetchurl "https://downloads.sourceforge.net/project/boost/boost/1.61.0/boost_1_61_0.tar.gz"
-${ENV_ROOT}/fetchurl "http://www.vtk.org/files/release/7.1/VTK-7.1.0.tar.gz"
-${ENV_ROOT}/fetchurl "https://github.com/valette/ACVD/archive/e9d4f49.tar.gz"
-${ENV_ROOT}/fetchurl "https://github.com/opencv/opencv/archive/3.2.0.tar.gz"
-${ENV_ROOT}/fetchurl "https://downloads.sourceforge.net/project/itk/itk/4.10/InsightToolkit-4.10.0.tar.gz"
-${ENV_ROOT}/fetchurl "https://github.com/bulletphysics/bullet3/archive/2.85.1.tar.gz"
-${ENV_ROOT}/fetchurl "http://bitbucket.org/eigen/eigen/get/3.2.8.tar.bz2"
+${ENV_ROOT}/fetchurl "http://download.osgeo.org/libtiff/tiff-4.0.8.tar.gz"
+${ENV_ROOT}/fetchurl "https://downloads.sourceforge.net/project/boost/boost/1.65.1/boost_1_65_1.tar.gz"
+${ENV_ROOT}/fetchurl "http://www.vtk.org/files/release/8.0/VTK-8.0.1.tar.gz"
+${ENV_ROOT}/fetchurl "https://github.com/valette/ACVD/archive/d5d8c16.tar.gz"
+${ENV_ROOT}/fetchurl "https://github.com/opencv/opencv/archive/3.3.1.tar.gz"
+${ENV_ROOT}/fetchurl "https://downloads.sourceforge.net/project/itk/itk/4.12/InsightToolkit-4.12.2.tar.gz"
+${ENV_ROOT}/fetchurl "https://github.com/bulletphysics/bullet3/archive/2.87.tar.gz"
+${ENV_ROOT}/fetchurl "http://bitbucket.org/eigen/eigen/get/3.3.3.tar.gz"
 ${ENV_ROOT}/fetchurl "https://github.com/mariusmuja/flann/archive/1.9.1.tar.gz"
-${ENV_ROOT}/fetchurl "https://github.com/cnr-isti-vclab/vcglib/archive/v1.0.1.tar.gz"
+${ENV_ROOT}/fetchurl "https://github.com/cnr-isti-vclab/vcglib/archive/38ca45f.tar.gz"
 
 # Optionally build cmake
 if [[ ${build_cmake} == true ]]; then
-    ${ENV_ROOT}/fetchurl "https://cmake.org/files/v3.7/cmake-3.7.1.tar.gz"
+    ${ENV_ROOT}/fetchurl "https://cmake.org/files/v3.9/cmake-3.9.6.tar.gz"
     echo "*** Building CMake ***"
     cd $BUILD_DIR/cmake*
 
@@ -175,14 +175,14 @@ echo "*** Building OpenCV ***"
 cd $BUILD_DIR/opencv*
 mkdir -p build && \
 cd build/ && \
-cmake -DWITH_IPP=OFF -DWITH_VTK=OFF -DBUILD_TIFF=OFF -DBUILD_ZLIB=OFF -DBUILD_TESTS=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
+cmake -DWITH_IPP=OFF -DWITH_VTK=OFF -DWITH_CUDA=OFF -DBUILD_TIFF=OFF -DBUILD_ZLIB=OFF -DBUILD_TESTS=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
 make -j${jval} install
 
 echo "*** Building ITK ***"
 cd $BUILD_DIR/InsightToolkit*
 mkdir -p build && \
 cd build/ && \
-cmake -DITK_USE_SYSTEM_TIFF=ON -DITK_USE_SYSTEM_ZLIB=ON -DBUILD_EXAMPLES=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
+cmake -DITK_USE_SYSTEM_TIFF=ON -DITK_USE_SYSTEM_ZLIB=ON -DModule_ITKVideoBridgeOpenCV=ON -DBUILD_EXAMPLES=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
 make -j${jval} install
 
 echo "*** Building Bullet Physics ***"
