@@ -113,6 +113,7 @@ ${ENV_ROOT}/fetchurl "https://github.com/bulletphysics/bullet3/archive/2.87.tar.
 ${ENV_ROOT}/fetchurl "http://bitbucket.org/eigen/eigen/get/3.3.3.tar.gz"
 ${ENV_ROOT}/fetchurl "https://github.com/mariusmuja/flann/archive/1.9.1.tar.gz"
 ${ENV_ROOT}/fetchurl "https://github.com/cnr-isti-vclab/vcglib/archive/38ca45f.tar.gz"
+${ENV_ROOT}/fetchurl "https://github.com/libigl/libigl/archive/d4b6726.tar.gz"
 
 # Optionally build cmake
 if [[ ${build_cmake} == true ]]; then
@@ -189,7 +190,7 @@ echo "*** Building Bullet Physics ***"
 cd $BUILD_DIR/bullet*
 mkdir -p build && \
 cd build/ && \
-cmake -DBUILD_BULLET2_DEMOS=OFF -DBUILD_CPU_DEMOS=OFF -DBUILD_OPENGL3_DEMOS=OFF -DBUILD_UNIT_TESTS=OFF -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
+cmake -DBUILD_BULLET2_DEMOS=OFF -DBUILD_CPU_DEMOS=OFF -DBUILD_OPENGL3_DEMOS=OFF -DBUILD_UNIT_TESTS=OFF -DBUILD_SHARED_LIBS=OFF -DBUILD_PYBULLET=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
 make -j${jval} install
 
 echo "*** Building Eigen ***"
@@ -199,9 +200,14 @@ cd build/ && \
 cmake -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release ${CMAKE_PREFIX} ${OSX_CMAKE_SDK} .. && \
 make install
 
-echo "*** Building VCG Library ***"
+echo "*** Installing VCG Library ***"
 cd $BUILD_DIR/vcg*
 mkdir -p "${TARGET_DIR}/include/vcg"
 cp -R * "${TARGET_DIR}/include/vcg"
+
+echo "*** Installing libigl ***"
+cd $BUILD_DIR/libigl*
+mkdir -p "${TARGET_DIR}/include/igl"
+cp -R include/ "${TARGET_DIR}/include/"
 
 echo "*** Build Complete ***"
