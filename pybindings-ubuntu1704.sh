@@ -49,7 +49,7 @@ tar -xzf 3.3.1.tar.gz
 cd opencv*/
 mkdir -p build
 cd build/
-cmake -GNinja .. && \
+cmake -DWITH_CUDA=OFF -GNinja .. && \
 ninja install
 
 # pybind11
