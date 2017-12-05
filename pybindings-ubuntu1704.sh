@@ -2,7 +2,7 @@
 
 # The only things we can get from apt
 apt-get update
-apt-get install ninja-build cmake python3 python3-pip qtbase5-dev \
+apt-get install -y ninja-build cmake python3 python3-pip qtbase5-dev \
                 build-essential libboost-all-dev libeigen3-dev libflann-dev \
                 git curl cmake-curses-gui
 pip3 install numpy
@@ -61,12 +61,3 @@ mkdir -p build
 cd build/
 cmake -GNinja ..
 ninja && ninja install
-
-# VC
-cd ~/source/
-git clone https://code.vis.uky.edu/seales-research/volume-cartographer.git
-git branch --all
-cd volume-cartographer/
-mkdir -p build
-cd build/
-cmake -DVC_BUILD_PYTHON_BINDINGS=ON -GNinja ..
