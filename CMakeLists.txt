@@ -25,7 +25,6 @@ endif()
 set(GLOBAL_CMAKE_ARGS
     "-DBUILD_SHARED_LIBS:STRING=${BUILD_SHARED_LIBS}"
     "-DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}"
-    "-DCMAKE_PREFIX_PATH:PATH=${CMAKE_INSTALL_PREFIX}"
     "-DCMAKE_CXX_STANDARD:STRING=${CMAKE_CXX_STANDARD}"
     "-DCMAKE_CXX_STANDARD_REQUIRED:BOOL=${CMAKE_CXX_STANDARD_REQUIRED}"
 )
@@ -61,12 +60,12 @@ if (BUILD_UNIVERSAL_LIBS)
         URL https://github.com/phracker/MacOSX-SDKs/releases/download/10.13/${MACOS_SDK_BASENAME}.tar.xz
         URL_HASH SHA1=f35ad1305939fcf14bb1fac036efb2b0c31ebd12
         DOWNLOAD_NO_PROGRESS true
-        CONFIGURE_COMMAND ""
-        BUILD_COMMAND mkdir -p SDKs/${MACOS_SDK_BASENAME}
-        INSTALL_COMMAND
-            mv System SDKs/${MACOS_SDK_BASENAME}/ &&
+        CONFIGURE_COMMAND mkdir -p SDKs/${MACOS_SDK_BASENAME}
+        BUILD_COMMAND mv System SDKs/${MACOS_SDK_BASENAME}/ &&
             mv usr SDKs/${MACOS_SDK_BASENAME}/ &&
             mv SDKSettings.plist SDKs/${MACOS_SDK_BASENAME}/
+        INSTALL_COMMAND
+            cp -R -H SDKs ${CMAKE_INSTALL_PREFIX}
         BUILD_IN_SOURCE true
     )
     list(APPEND GLOBAL_DEPENDS osx-sdk)
@@ -102,7 +101,7 @@ externalproject_add(
 # libtiff
 externalproject_add(
     libtiff
-    DEPENDS ${GLOBAL_DEPENDS}
+    DEPENDS zlib ${GLOBAL_DEPENDS}
     URL http://download.osgeo.org/libtiff/tiff-4.0.9.tar.gz
     URL_HASH SHA1=87d4543579176cc568668617c22baceccd568296
     DOWNLOAD_NO_PROGRESS true
@@ -147,6 +146,7 @@ externalproject_add(
     CONFIGURE_COMMAND ./bootstrap.sh --prefix=${CMAKE_INSTALL_PREFIX} --with-libraries=${BOOST_BUILD_LIBS}
     BUILD_COMMAND ./b2 cxxflags="-std=c++${CMAKE_CXX_STANDARD}" variant=${BOOST_LIB_TYPE} link=${BOOST_LINK_TYPE} ${BOOST_OSX_SDK} install
     BUILD_IN_SOURCE true
+    INSTALL_COMMAND ""
 )
 
 # Eigen
@@ -163,7 +163,7 @@ externalproject_add(
 # VTK
 externalproject_add(
     vtk
-    DEPENDS libtiff zlib ${GLOBAL_DEPENDS}
+    DEPENDS zlib libtiff ${GLOBAL_DEPENDS}
     URL https://www.vtk.org/files/release/8.1/VTK-8.1.0.tar.gz
     URL_HASH MD5=4fa5eadbc8723ba0b8d203f05376d932
     DOWNLOAD_NO_PROGRESS true
