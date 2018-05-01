@@ -1,0 +1,5 @@
+using darwin : ${OSX_SDK_VERSION}
+: clang++ -arch x86_64
+: <striper> <root>${OSX_SDK_SYSROOT}
+: <target-os>darwin
+;

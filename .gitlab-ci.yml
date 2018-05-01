@@ -1,34 +1,69 @@
 stages:
-    - build
+    - dynamic
+    - static
 
-build_it_debian:
-    image: debian:testing
-    stage: build
+build:debian:static:
+    image: debian:stretch-slim
+    stage: static
     script:
         - echo $CI_BUILD_REF_NAME   $CI_BUILD_STAGE
         - apt-get update
-        - apt-get -y install build-essential clang curl libbz2-dev libgl1-mesa-dev libusb-1.0-0-dev pkg-config
-        - ./build-deps.sh -cmake
+        - apt-get -y install build-essential clang curl libbz2-dev libgl1-mesa-dev libusb-1.0-0-dev libxt-dev pkg-config cmake ninja-build
+        - mkdir -p build/
+        - cd build/
+        - cmake -GNinja -DCMAKE_BUILD_TYPE=Release ..
+        - ninja
     tags:
         - build
         - linux
 
-build_it_osx:
-    stage: build
+build:debian:dynamic:
+    image: debian:stretch-slim
+    stage: dynamic
     script:
         - echo $CI_BUILD_REF_NAME   $CI_BUILD_STAGE
-        - ./build-deps.sh
+        - apt-get update
+        - apt-get -y install build-essential clang curl libbz2-dev libgl1-mesa-dev libusb-1.0-0-dev libxt-dev pkg-config cmake ninja-build
+        - mkdir -p build/
+        - cd build/
+        - cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON ..
+        - ninja
+    tags:
+        - build
+        - linux
+
+build:macos:static:
+    stage: static
+    script:
+        - echo $CI_BUILD_REF_NAME   $CI_BUILD_STAGE
+        - mkdir -p build/
+        - cd build/
+        - cmake -GNinja -DCMAKE_BUILD_TYPE=Release ..
+        - ninja
     tags:
         - homebrew
         - osx
 
-build_it_osx_deploy:
-    only:
-        - master
-    stage: build
+build:macos:dynamic:
+    stage: dynamic
     script:
         - echo $CI_BUILD_REF_NAME   $CI_BUILD_STAGE
-        - ./build-deps.sh -cmake -universal
+        - mkdir -p build/
+        - cd build/
+        - cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON ..
+        - ninja
+    tags:
+        - homebrew
+        - osx
+
+build:macos:universal:
+    stage: static
+    script:
+        - echo $CI_BUILD_REF_NAME   $CI_BUILD_STAGE
+        - mkdir -p build/
+        - cd build/
+        - cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DBUILD_UNIVERSAL_LIBS=ON ..
+        - ninja
     tags:
         - deploy
         - osx
