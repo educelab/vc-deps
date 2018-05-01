@@ -64,8 +64,7 @@ if (BUILD_UNIVERSAL_LIBS)
         BUILD_COMMAND mv System SDKs/${MACOS_SDK_BASENAME}/ &&
             mv usr SDKs/${MACOS_SDK_BASENAME}/ &&
             mv SDKSettings.plist SDKs/${MACOS_SDK_BASENAME}/
-        INSTALL_COMMAND
-            rsync -a SDKs ${CMAKE_INSTALL_PREFIX}
+        INSTALL_COMMAND ""
         BUILD_IN_SOURCE true
     )
     list(APPEND GLOBAL_DEPENDS osx-sdk)
