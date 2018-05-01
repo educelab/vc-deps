@@ -1,6 +1,6 @@
-cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 
-project(vc-deps)
+project(vc-deps VERSION 1.0)
 
 include(ExternalProject)
 
