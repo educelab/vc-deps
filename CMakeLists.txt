@@ -65,7 +65,7 @@ if (BUILD_UNIVERSAL_LIBS)
             mv usr SDKs/${MACOS_SDK_BASENAME}/ &&
             mv SDKSettings.plist SDKs/${MACOS_SDK_BASENAME}/
         INSTALL_COMMAND
-            cp -R -H SDKs ${CMAKE_INSTALL_PREFIX}
+            rsync -a SDKs ${CMAKE_INSTALL_PREFIX}
         BUILD_IN_SOURCE true
     )
     list(APPEND GLOBAL_DEPENDS osx-sdk)
@@ -143,8 +143,8 @@ externalproject_add(
     URL_HASH SHA1=c066ac5c2f42fa2b870362c3c931ef73ffc6f24f
     DOWNLOAD_NO_PROGRESS true
     PATCH_COMMAND ${BOOST_PATCH_CMD}
-    CONFIGURE_COMMAND ./bootstrap.sh --prefix=${CMAKE_INSTALL_PREFIX} --with-libraries=${BOOST_BUILD_LIBS}
-    BUILD_COMMAND ./b2 cxxflags="-std=c++${CMAKE_CXX_STANDARD}" variant=${BOOST_LIB_TYPE} link=${BOOST_LINK_TYPE} ${BOOST_OSX_SDK} install
+    CONFIGURE_COMMAND ./bootstrap.sh --prefix=${CMAKE_INSTALL_PREFIX} --with-libraries=${BOOST_BUILD_LIBS} --with-toolset=clang
+    BUILD_COMMAND ./b2 cxxflags="-std=c++${CMAKE_CXX_STANDARD}" variant=${BOOST_LIB_TYPE} link=${BOOST_LINK_TYPE} toolset=clang ${BOOST_OSX_SDK} install
     BUILD_IN_SOURCE true
     INSTALL_COMMAND ""
 )
