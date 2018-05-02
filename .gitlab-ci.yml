@@ -3,12 +3,10 @@ stages:
     - static
 
 build:debian:static:
-    image: debian:stretch-slim
+    image: volcart/vcbuilder-debian:9_v4.base
     stage: static
     script:
         - echo $CI_BUILD_REF_NAME   $CI_BUILD_STAGE
-        - apt-get update
-        - apt-get -y install build-essential clang curl libbz2-dev libgl1-mesa-dev libusb-1.0-0-dev libxt-dev pkg-config cmake ninja-build
         - mkdir -p build/
         - cd build/
         - cmake -GNinja -DCMAKE_BUILD_TYPE=Release ..
@@ -18,12 +16,10 @@ build:debian:static:
         - linux
 
 build:debian:dynamic:
-    image: debian:stretch-slim
+    image: volcart/vcbuilder-debian:9_v4.base
     stage: dynamic
     script:
         - echo $CI_BUILD_REF_NAME   $CI_BUILD_STAGE
-        - apt-get update
-        - apt-get -y install build-essential clang curl libbz2-dev libgl1-mesa-dev libusb-1.0-0-dev libxt-dev pkg-config cmake ninja-build
         - mkdir -p build/
         - cd build/
         - cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON ..
