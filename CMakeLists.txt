@@ -13,7 +13,7 @@ if(APPLE)
     option(BUILD_UNIVERSAL_LIBS "Build universal macOS libraries using an SDK" OFF)
 endif()
 if(BUILD_UNIVERSAL_LIBS)
-    set(OSX_SDK_VERSION 10.9 CACHE STRING "Universal macOS SDK Version")
+    set(CMAKE_OSX_DEPLOYMENT_TARGET 10.9 CACHE STRING "Universal macOS SDK Version" FORCE )
 endif()
 
 #### Setup output directory if not specified ####
@@ -51,10 +51,22 @@ else()
     set(BOOST_LINK_TYPE static)
 endif()
 
+# Set Boost toolset type based on the OS
+if(APPLE)
+    set(BOOST_TOOLSET_AUTO darwin)
+elseif(UNIX AND NOT APPLE)
+    set(BOOST_TOOLSET_AUTO clang)
+elseif(WIN32)
+    set(BOOST_TOOLSET_AUTO msvc)
+else()
+    set(BOOST_TOOLSET_AUTO gcc)
+endif()
+set(BOOST_TOOLSET ${BOOST_TOOLSET_AUTO} CACHE STRING "Boost Build toolset")
+
 #### Setup a legacy macOS build using an SDK ####
 if (BUILD_UNIVERSAL_LIBS)
     # SDK Dependency
-    set(MACOS_SDK_BASENAME MacOSX${OSX_SDK_VERSION}.sdk)
+    set(MACOS_SDK_BASENAME MacOSX${CMAKE_OSX_DEPLOYMENT_TARGET}.sdk)
     externalproject_add(
         osx-sdk
         URL https://github.com/phracker/MacOSX-SDKs/releases/download/10.13/${MACOS_SDK_BASENAME}.tar.xz
@@ -76,11 +88,11 @@ if (BUILD_UNIVERSAL_LIBS)
     # Append the new CMake args
     list(APPEND GLOBAL_CMAKE_ARGS
         -DCMAKE_OSX_SYSROOT:PATH=${OSX_SDK_SYSROOT}/SDKs/${MACOS_SDK_BASENAME}/
-        -DCMAKE_OSX_DEPLOYMENT_TARGET:STRING=${OSX_SDK_VERSION}
+        -DCMAKE_OSX_DEPLOYMENT_TARGET:STRING=${CMAKE_OSX_DEPLOYMENT_TARGET}
     )
 
     # Setup the Boost arguments and files
-    set(BOOST_OSX_SDK macosx-version=${OSX_SDK_VERSION} macosx-version-min=${OSX_SDK_VERSION})
+    set(BOOST_OSX_SDK macosx-version=${CMAKE_OSX_DEPLOYMENT_TARGET} macosx-version-min=${CMAKE_OSX_DEPLOYMENT_TARGET})
     configure_file(${CMAKE_CURRENT_SOURCE_DIR}/patches/boost-macOS-user-config.jam.in ${CMAKE_CURRENT_BINARY_DIR}/user-config.jam)
     set(BOOST_PATCH_CMD cp ${CMAKE_CURRENT_BINARY_DIR}/user-config.jam tools/build/src/)
 
@@ -142,8 +154,8 @@ externalproject_add(
     URL_HASH SHA1=c066ac5c2f42fa2b870362c3c931ef73ffc6f24f
     DOWNLOAD_NO_PROGRESS true
     PATCH_COMMAND ${BOOST_PATCH_CMD}
-    CONFIGURE_COMMAND ./bootstrap.sh --prefix=${CMAKE_INSTALL_PREFIX} --with-libraries=${BOOST_BUILD_LIBS} --with-toolset=clang
-    BUILD_COMMAND ./b2 cxxflags="-std=c++${CMAKE_CXX_STANDARD}" variant=${BOOST_LIB_TYPE} link=${BOOST_LINK_TYPE} toolset=clang ${BOOST_OSX_SDK} install
+    CONFIGURE_COMMAND ./bootstrap.sh --prefix=${CMAKE_INSTALL_PREFIX} --with-libraries=${BOOST_BUILD_LIBS}
+    BUILD_COMMAND ./b2 cxxflags="-std=c++${CMAKE_CXX_STANDARD}" variant=${BOOST_LIB_TYPE} link=${BOOST_LINK_TYPE} toolset=${BOOST_TOOLSET} ${BOOST_OSX_SDK} install
     BUILD_IN_SOURCE true
     INSTALL_COMMAND ""
 )
