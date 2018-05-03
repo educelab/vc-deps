@@ -205,7 +205,6 @@ externalproject_add(
     DOWNLOAD_NO_PROGRESS true
     CMAKE_CACHE_ARGS
         ${GLOBAL_CMAKE_ARGS}
-        -DWITH_IPP:BOOL=OFF
         -DWITH_VTK:BOOL=OFF
         -DWITH_CUDA:BOOL=OFF
         -DBUILD_TIFF:BOOL=OFF
