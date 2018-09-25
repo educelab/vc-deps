@@ -16,6 +16,6 @@ git clone git@code.vis.uky.edu:seales-research/vc-deps.git
 cd vc-deps/  
 mkdir -p build/
 cd build/
-cmake [ -CMAKE_BUILD_TYPE=Release ] [ -DBUILD_SHARED_LIBS=ON ] [ -DCMAKE_INSTALL_PREFIX=/usr/local/ ] ..
+cmake [ -DCMAKE_BUILD_TYPE=Release ] [ -DBUILD_SHARED_LIBS=ON ] [ -DCMAKE_INSTALL_PREFIX=/usr/local/ ] ..
 make
 ```
