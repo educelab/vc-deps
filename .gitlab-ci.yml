@@ -12,8 +12,7 @@ build:debian:static:
         - cmake -GNinja -DCMAKE_BUILD_TYPE=Release ..
         - ninja
     tags:
-        - build
-        - linux
+        - docker
 
 build:debian:dynamic:
     image: volcart/vcbuilder-debian:9_v4.base
@@ -25,8 +24,7 @@ build:debian:dynamic:
         - cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON ..
         - ninja
     tags:
-        - build
-        - linux
+        - docker
 
 build:macos:static:
     stage: static
