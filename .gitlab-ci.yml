@@ -9,7 +9,7 @@ build:debian:static:
         - echo $CI_BUILD_REF_NAME   $CI_BUILD_STAGE
         - mkdir -p build/
         - cd build/
-        - cmake -GNinja -DCMAKE_BUILD_TYPE=Release ..
+        - cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DWITH_FFMPEG=ON ..
         - ninja
     tags:
         - docker
@@ -21,7 +21,7 @@ build:debian:dynamic:
         - echo $CI_BUILD_REF_NAME   $CI_BUILD_STAGE
         - mkdir -p build/
         - cd build/
-        - cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON ..
+        - cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DWITH_FFMPEG=ON ..
         - ninja
     tags:
         - docker
@@ -32,7 +32,7 @@ build:macos:static:
         - echo $CI_BUILD_REF_NAME   $CI_BUILD_STAGE
         - mkdir -p build/
         - cd build/
-        - cmake -GNinja -DCMAKE_BUILD_TYPE=Release ..
+        - cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DWITH_FFMPEG=ON ..
         - ninja
     tags:
         - homebrew
@@ -44,7 +44,7 @@ build:macos:dynamic:
         - echo $CI_BUILD_REF_NAME   $CI_BUILD_STAGE
         - mkdir -p build/
         - cd build/
-        - cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON ..
+        - cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DWITH_FFMPEG=ON ..
         - ninja
     tags:
         - homebrew
@@ -56,7 +56,7 @@ build:macos:universal:
         - echo $CI_BUILD_REF_NAME   $CI_BUILD_STAGE
         - mkdir -p build/
         - cd build/
-        - cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DBUILD_UNIVERSAL_LIBS=ON ..
+        - cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DBUILD_UNIVERSAL_LIBS=ON -DWITH_FFMPEG=ON ..
         - ninja
     tags:
         - deploy
