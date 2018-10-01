@@ -210,6 +210,7 @@ externalproject_add(
         -DBUILD_TIFF:BOOL=OFF
         -DBUILD_ZLIB:BOOL=OFF
         -DBUILD_TESTS:BOOL=OFF
+        -DWITH_FFMPEG:BOOL=ON
 )
 
 # ITK
