@@ -9,13 +9,28 @@ Requirements
  * C++ build system (e.g. Make or Ninja)
  * CMake 3.9+
 
-Usage
------
+Get The Source
+--------------
 ```shell
-git clone git@code.vis.uky.edu:seales-research/vc-deps.git  
-cd vc-deps/  
+git clone git@code.cs.uky.edu:seales-research/vc-deps.git
+cd vc-deps/
+```
+
+Installation
+------------
+```shell
 mkdir -p build/
 cd build/
-cmake [ -DCMAKE_BUILD_TYPE=Release ] [ -DBUILD_SHARED_LIBS=ON ] [ -DCMAKE_INSTALL_PREFIX=/usr/local/ ] ..
+cmake ..
 make
+```
+By default, dependencies will be installed into the `vc-deps/deps/` subdirectory. To install to a different location, 
+set the `CMAKE_INSTALL_PREFIX` CMake flag to your desired installation prefix.
+
+Optional Arguments
+------------------
+Optionally, you can create Release/Debug builds and static/shared libraries by providing the corresponding CMake arguments:
+
+```shell
+cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON ..
 ```
