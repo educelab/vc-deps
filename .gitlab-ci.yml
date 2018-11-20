@@ -75,7 +75,7 @@ deploy:macos:
     dependencies:
         - build:macos:universal
     script:
-        - directory=v$(utils/scripts/version-gen.sh)
+        - directory=v$(utils/version-gen.sh)
         - mkdir -p ${directory}
         - tar -czf vcdeps-${directory}.tar.gz deps/
         - cp vcdeps-${directory}.tar.gz ${directory}
