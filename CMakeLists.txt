@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 
-project(vc-deps VERSION 1.0)
+project(vc-deps VERSION 1.2.0)
 
 include(ExternalProject)
 
@@ -121,6 +121,17 @@ externalproject_add(
         -Dlzma:BOOL=OFF
 )
 
+# spdlog
+externalproject_add(
+    spdlog
+    DEPENDS ${GLOBAL_DEPENDS}
+    URL https://github.com/gabime/spdlog/archive/v1.2.1.tar.gz
+    URL_HASH SHA256=867a4b7cedf9805e6f76d3ca41889679054f7e5a3b67722fe6d0eae41852a767
+    DOWNLOAD_NO_PROGRESS true
+    CMAKE_CACHE_ARGS
+        ${GLOBAL_CMAKE_ARGS}
+)
+
 # VCG library
 externalproject_add(
     vcglib
@@ -131,18 +142,6 @@ externalproject_add(
     CONFIGURE_COMMAND mkdir -p ${CMAKE_INSTALL_PREFIX}/include/vcg
     BUILD_COMMAND ""
     INSTALL_COMMAND cp -R . ${CMAKE_INSTALL_PREFIX}/include/vcg
-)
-
-# IGL
-externalproject_add(
-    libigl
-    URL https://github.com/libigl/libigl/archive/d4b6726.tar.gz
-    URL_HASH SHA1=0c2d637f445ad5eee5664a3381e670e9fd7b15da
-    DOWNLOAD_NO_PROGRESS true
-    BUILD_IN_SOURCE true
-    CONFIGURE_COMMAND mkdir -p ${CMAKE_INSTALL_PREFIX}/include/igl
-    BUILD_COMMAND ""
-    INSTALL_COMMAND cp -R include/ ${CMAKE_INSTALL_PREFIX}/include/
 )
 
 # Boost
@@ -164,8 +163,8 @@ externalproject_add(
 externalproject_add(
     eigen
     DEPENDS boost ${GLOBAL_DEPENDS}
-    URL http://bitbucket.org/eigen/eigen/get/3.3.3.tar.gz
-    URL_HASH SHA1=bd83b6a789ce73920e6b136663b38ab335b11f7a
+    URL http://bitbucket.org/eigen/eigen/get/3.3.5.tar.gz
+    URL_HASH SHA256=0454b6bacafd2bf641e0fb0f59572b9995728b77e41d1b8517f807334d07e68e
     DOWNLOAD_NO_PROGRESS true
     CMAKE_CACHE_ARGS
         ${GLOBAL_CMAKE_ARGS}

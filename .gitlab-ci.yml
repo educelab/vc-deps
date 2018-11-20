@@ -1,9 +1,10 @@
 stages:
     - dynamic
     - static
+    - deploy
 
 build:debian:static:
-    image: volcart/vcbuilder-debian:9_v4.base
+    image: volcart/vcbuilder-debian:9_v5.base
     stage: static
     script:
         - echo $CI_BUILD_REF_NAME   $CI_BUILD_STAGE
@@ -15,7 +16,7 @@ build:debian:static:
         - docker
 
 build:debian:dynamic:
-    image: volcart/vcbuilder-debian:9_v4.base
+    image: volcart/vcbuilder-debian:9_v5.base
     stage: dynamic
     script:
         - echo $CI_BUILD_REF_NAME   $CI_BUILD_STAGE
@@ -58,6 +59,29 @@ build:macos:universal:
         - cd build/
         - cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DBUILD_UNIVERSAL_LIBS=ON ..
         - ninja
+    artifacts:
+      name: "${CI_BUILD_STAGE}_${CI_BUILD_REF_NAME}"
+      paths:
+        - deps/
+      expire_in: 1 day
     tags:
         - deploy
         - osx
+
+deploy:macos:
+    only:
+        - master
+    stage: deploy
+    dependencies:
+        - build:macos:universal
+    script:
+        - directory=v$(utils/scripts/version-gen.sh)
+        - mkdir -p ${directory}
+        - tar -czf vcdeps-${directory}.tar.gz deps/
+        - cp vcdeps-${directory}.tar.gz ${directory}
+        - cp vcdeps-${directory}.tar.gz vcdeps-latest.tar.gz
+        - rclone -v copy ${directory}/ vc-deps:releases/${directory}/
+        - rclone -v copy vcdeps-latest.tar.gz vc-deps:releases/
+    environment: production
+    tags:
+        - rclone
