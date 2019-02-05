@@ -193,6 +193,7 @@ externalproject_add(
     CMAKE_CACHE_ARGS
         ${GLOBAL_CMAKE_ARGS}
         -DBUILD_EXAMPLES:BOOL=OFF
+        -DCMAKE_BUILD_TYPE:STRING=Release
 )
 
 # OpenCV
