@@ -25,6 +25,7 @@ endif()
 set(GLOBAL_CMAKE_ARGS
     "-DBUILD_SHARED_LIBS:STRING=${BUILD_SHARED_LIBS}"
     "-DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_INSTALL_PREFIX}"
+    "-DCMAKE_PREFIX_PATH:PATH=${CMAKE_PREFIX_PATH}"
     "-DCMAKE_CXX_STANDARD:STRING=${CMAKE_CXX_STANDARD}"
     "-DCMAKE_CXX_STANDARD_REQUIRED:BOOL=${CMAKE_CXX_STANDARD_REQUIRED}"
 )
@@ -119,6 +120,19 @@ externalproject_add(
     CMAKE_CACHE_ARGS
         ${GLOBAL_CMAKE_ARGS}
         -Dlzma:BOOL=OFF
+)
+
+# exiv2
+externalproject_add(
+    exiv2
+    DEPENDS ${GLOBAL_DEPENDS}
+    URL http://www.exiv2.org/builds/exiv2-0.27.0a-Source.tar.gz
+    URL_HASH SHA256=a4adfa7aaf295b0383adead476f8e0493b9d6c6c7570d5884d2ebf8a2871902f
+    DOWNLOAD_NO_PROGRESS true
+    PATCH_COMMAND patch -p1 -i ${CMAKE_SOURCE_DIR}/patches/exiv2.0.27.0-cmake-libintl.diff
+    CMAKE_CACHE_ARGS
+        ${GLOBAL_CMAKE_ARGS}
+        -DEXIV2_BUILD_SAMPLES:BOOL=OFF
 )
 
 # spdlog

@@ -33,10 +33,9 @@ build:macos:static:
         - echo $CI_BUILD_REF_NAME   $CI_BUILD_STAGE
         - mkdir -p build/
         - cd build/
-        - cmake -GNinja -DCMAKE_BUILD_TYPE=Release ..
+        - cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=/usr/local/opt/gettext/ ..
         - ninja
     tags:
-        - homebrew
         - osx
 
 build:macos:dynamic:
@@ -45,10 +44,9 @@ build:macos:dynamic:
         - echo $CI_BUILD_REF_NAME   $CI_BUILD_STAGE
         - mkdir -p build/
         - cd build/
-        - cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON ..
+        - cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCMAKE_PREFIX_PATH=/usr/local/opt/gettext/ ..
         - ninja
     tags:
-        - homebrew
         - osx
 
 build:macos:universal:
@@ -57,7 +55,7 @@ build:macos:universal:
         - echo $CI_BUILD_REF_NAME   $CI_BUILD_STAGE
         - mkdir -p build/
         - cd build/
-        - cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DBUILD_UNIVERSAL_LIBS=ON ..
+        - cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DBUILD_UNIVERSAL_LIBS=ON -DCMAKE_PREFIX_PATH=/usr/local/opt/gettext/ ..
         - ninja
     artifacts:
       name: "${CI_BUILD_STAGE}_${CI_BUILD_REF_NAME}"
