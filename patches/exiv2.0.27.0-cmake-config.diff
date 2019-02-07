@@ -1,0 +1,125 @@
+diff --git a/cmake/exiv2Config.cmake.in b/cmake/exiv2Config.cmake.in
+new file mode 100644
+index 00000000..f2426840
+--- /dev/null
++++ b/cmake/exiv2Config.cmake.in
+@@ -0,0 +1,45 @@
++@PACKAGE_INIT@
++
++# Setup for dependency management
++include(CMakeFindDependencyMacro)
++### Setup search path for custom FindXXX.cmake modules ###
++set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_LIST_DIR}/Modules/")
++
++#####################################################################
++# Dependencies: This section should mirror findDependencies.cmake   #
++# Problems with this described here: https://cmake.org/pipermail/cmake-developers/2015-April/025034.html
++#####################################################################
++find_dependency(Threads)
++
++if( @EXIV2_ENABLE_PNG@ )
++    find_dependency( ZLIB )
++endif( )
++
++if( @EXIV2_ENABLE_WEBREADY@ )
++    if( @EXIV2_ENABLE_CURL@ )
++        find_dependency(CURL)
++    endif()
++
++    if( @EXIV2_ENABLE_SSH@ )
++        find_dependency( SSH )
++    endif( )
++endif( )
++
++if (@EXIV2_ENABLE_XMP@)
++    find_dependency(EXPAT)
++elseif (@EXIV2_ENABLE_EXTERNAL_XMP@)
++    find_dependency(XmpSdk)
++endif ()
++
++
++if (@EXIV2_ENABLE_NLS@)
++    find_dependency(Intl)
++endif( )
++
++find_dependency(Iconv)
++
++#####################################################################
++
++### Include VC targets ###
++include("${CMAKE_CURRENT_LIST_DIR}/exiv2Targets.cmake")
++check_required_components("@PROJECT_NAME@")
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index ca24006e..b53b36b9 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -219,7 +219,7 @@ if( ICONV_FOUND )
+ endif()
+ 
+ 
+-install(TARGETS exiv2lib EXPORT exiv2Config
++install(TARGETS exiv2lib EXPORT exiv2Targets
+     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+@@ -234,7 +234,25 @@ install(FILES
+     ${CMAKE_BINARY_DIR}/exiv2lib_export.h
+     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/exiv2)
+ 
+-install(EXPORT exiv2Config DESTINATION "share/exiv2/cmake")
++# CMake configs
++set(export_dir "${CMAKE_BINARY_DIR}/export")
++include(CMakePackageConfigHelpers)
++write_basic_package_version_file(
++    "${export_dir}/exiv2ConfigVersion.cmake" COMPATIBILITY AnyNewerVersion
++)
++
++configure_package_config_file(
++    "${CMAKE_SOURCE_DIR}/cmake/exiv2Config.cmake.in"
++    "${export_dir}/exiv2Config.cmake"
++    INSTALL_DESTINATION "share/exiv2/cmake"
++)
++
++install(
++    FILES "${export_dir}/exiv2Config.cmake" "${export_dir}/exiv2ConfigVersion.cmake"
++    DESTINATION "share/exiv2/cmake"
++)
++
++install(EXPORT exiv2Targets DESTINATION "share/exiv2/cmake")
+ 
+ # ******************************************************************************
+ # exiv2 application
+diff --git a/xmpsdk/CMakeLists.txt b/xmpsdk/CMakeLists.txt
+index a4c1fe6c..94df82cc 100644
+--- a/xmpsdk/CMakeLists.txt
++++ b/xmpsdk/CMakeLists.txt
+@@ -52,7 +52,7 @@ if (BUILD_SHARED_LIBS)
+ endif()
+ 
+ # 1119  Install libxmp.a for use by third party applications (Thanks, Emmanuel)
+-install(TARGETS xmp EXPORT exiv2Config
++install(TARGETS xmp EXPORT exiv2Targets
+         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+ )
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index b53b36b9..ce717265 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -210,6 +210,7 @@ endif()
+ if( EXIV2_ENABLE_NLS )
+     target_link_libraries(exiv2lib PRIVATE ${Intl_LIBRARIES})
+     target_include_directories(exiv2lib PRIVATE ${Intl_INCLUDE_DIRS})
++    target_include_directories(exiv2lib_int PRIVATE ${Intl_INCLUDE_DIRS})
+     # Definition needed for translations
+     target_compile_definitions(exiv2lib PUBLIC EXV_LOCALEDIR="/../${CMAKE_INSTALL_LOCALEDIR}")
+ endif()
+@@ -275,7 +276,7 @@ if(EXIV2_BUILD_EXIV2_COMMAND)
+ 
+     if( EXIV2_ENABLE_NLS )
+         target_link_libraries(exiv2 PRIVATE ${Intl_LIBRARIES})
+-        target_include_directories(exiv2lib PRIVATE ${Intl_INCLUDE_DIRS})
++        target_include_directories(exiv2 PRIVATE ${Intl_INCLUDE_DIRS})
+     endif()
+ 
+     if (USING_CONAN AND WIN32 AND EXISTS ${PROJECT_BINARY_DIR}/conanDlls)
