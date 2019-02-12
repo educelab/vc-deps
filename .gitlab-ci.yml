@@ -1,11 +1,11 @@
 stages:
-    - dynamic
-    - static
+    - build
+    - collect
     - deploy
 
 build:debian:static:
-    image: volcart/vcbuilder-debian:9_v6.base
-    stage: static
+    image: volcart/vcbuilder-debian:9_v7.base
+    stage: build
     script:
         - echo $CI_BUILD_REF_NAME   $CI_BUILD_STAGE
         - mkdir -p build/
@@ -16,8 +16,8 @@ build:debian:static:
         - docker
 
 build:debian:dynamic:
-    image: volcart/vcbuilder-debian:9_v6.base
-    stage: dynamic
+    image: volcart/vcbuilder-debian:9_v7.base
+    stage: build
     script:
         - echo $CI_BUILD_REF_NAME   $CI_BUILD_STAGE
         - mkdir -p build/
@@ -28,7 +28,7 @@ build:debian:dynamic:
         - docker
 
 build:macos:static:
-    stage: static
+    stage: build
     script:
         - echo $CI_BUILD_REF_NAME   $CI_BUILD_STAGE
         - mkdir -p build/
@@ -40,7 +40,7 @@ build:macos:static:
         - osx
 
 build:macos:dynamic:
-    stage: dynamic
+    stage: build
     script:
         - echo $CI_BUILD_REF_NAME   $CI_BUILD_STAGE
         - mkdir -p build/
@@ -51,8 +51,8 @@ build:macos:dynamic:
         - deploy
         - osx
 
-build:macos:universal:
-    stage: static
+collect:macos:universal:
+    stage: collect
     script:
         - echo $CI_BUILD_REF_NAME   $CI_BUILD_STAGE
         - mkdir -p build/
@@ -73,7 +73,7 @@ deploy:macos:
         - master
     stage: deploy
     dependencies:
-        - build:macos:universal
+        - collect:macos:universal
     script:
         - directory=v$(utils/version-gen.sh)
         - mkdir -p ${directory}
