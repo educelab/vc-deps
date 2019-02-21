@@ -38,7 +38,6 @@ set(VCDEPS_BOOST_COMPONENTS
     random
     regex
     serialization
-    signals
     system
     unit_test_framework
     thread
@@ -50,8 +49,8 @@ string(REPLACE "unit_test_framework" "test" BOOST_BUILD_LIBS ${BOOST_BUILD_LIBS}
 externalproject_add(
     boost
     DEPENDS ${GLOBAL_DEPENDS}
-    URL https://downloads.sourceforge.net/project/boost/boost/1.65.1/boost_1_65_1.tar.gz
-    URL_HASH SHA1=c066ac5c2f42fa2b870362c3c931ef73ffc6f24f
+    URL https://dl.bintray.com/boostorg/release/1.69.0/source/boost_1_69_0.tar.gz
+    URL_HASH SHA256=9a2c2819310839ea373f42d69e733c339b4e9a19deab6bfec448281554aa4dbb
     DOWNLOAD_NO_PROGRESS true
     PATCH_COMMAND ${BOOST_PATCH_CMD}
     CONFIGURE_COMMAND ./bootstrap.sh --prefix=${CMAKE_INSTALL_PREFIX} --with-libraries=${BOOST_BUILD_LIBS} --with-toolset=${BOOST_TOOLSET}
@@ -60,6 +59,6 @@ externalproject_add(
     INSTALL_COMMAND ""
 )
 else()
-  find_package(Boost 1.58 REQUIRED COMPONENTS ${VCDEPS_BOOST_COMPONENTS})
+  find_package(Boost 1.69 REQUIRED COMPONENTS ${VCDEPS_BOOST_COMPONENTS})
   add_custom_target(boost)
 endif()
