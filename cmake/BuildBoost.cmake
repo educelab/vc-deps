@@ -46,6 +46,7 @@ set(VCDEPS_BOOST_COMPONENTS
 if(VCDEPS_BUILD_BOOST)
 string(REPLACE ";" "," BOOST_BUILD_LIBS "${VCDEPS_BOOST_COMPONENTS}")
 string(REPLACE "unit_test_framework" "test" BOOST_BUILD_LIBS ${BOOST_BUILD_LIBS})
+set(BOOST_CXX_FLAGS "cxxflags=-std=c++${CMAKE_CXX_STANDARD} -fPIC")
 externalproject_add(
     boost
     DEPENDS ${GLOBAL_DEPENDS}
@@ -54,7 +55,7 @@ externalproject_add(
     DOWNLOAD_NO_PROGRESS true
     PATCH_COMMAND ${BOOST_PATCH_CMD}
     CONFIGURE_COMMAND ./bootstrap.sh --prefix=${CMAKE_INSTALL_PREFIX} --with-libraries=${BOOST_BUILD_LIBS} --with-toolset=${BOOST_TOOLSET}
-    BUILD_COMMAND ./b2 cxxflags="-std=c++${CMAKE_CXX_STANDARD}" variant=${BOOST_LIB_TYPE} link=${BOOST_LINK_TYPE} toolset=${BOOST_TOOLSET} ${BOOST_OSX_SDK} install
+    BUILD_COMMAND ./b2 ${BOOST_CXX_FLAGS} variant=${BOOST_LIB_TYPE} link=${BOOST_LINK_TYPE} toolset=${BOOST_TOOLSET} ${BOOST_OSX_SDK} install
     BUILD_IN_SOURCE true
     INSTALL_COMMAND ""
 )
