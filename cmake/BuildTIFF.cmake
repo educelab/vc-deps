@@ -9,7 +9,7 @@ externalproject_add(
     CMAKE_CACHE_ARGS
         ${GLOBAL_CMAKE_ARGS}
         -Dlzma:BOOL=OFF
-	-Djbig:BOOL=OFF
+        -Djbig:BOOL=OFF
 )
 else()
   find_package(TIFF REQUIRED)
