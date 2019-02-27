@@ -43,13 +43,23 @@ To see a full list of available build options, use `ccmake` or run:
 cmake -L ..
 ```
 
-Optional Arguments
-------------------
+Build Types and Static or Shared Libraries
+------------------------------------------
 Optionally, you can create Release/Debug builds and static/shared libraries by providing the corresponding CMake arguments:
 
 ```shell
 cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON ..
 ```
+
+Position Independent Code
+-------------------------
+To build libraries with position independent code (PIC), set the `CMAKE_POSITION_INDEPENDENT_CODE` flag:
+
+```shell
+cmake -DCMAKE_POSITION_INDEPENDENT_CODE=ON ..
+```
+
+PIC is `ON` by default when building shared libraries, so this flag will only affect static builds. This flag must be enabled to successfully link Volume Cartographer's Python bindings against statically built dependencies.
 
 (macOS) Building Exiv2 with Native language support
 ---------------------------------------------------

@@ -34,6 +34,12 @@ if(CMAKE_BUILD_TYPE)
   )
 endif()
 
+if(CMAKE_POSITION_INDEPENDENT_CODE)
+  list(APPEND GLOBAL_CMAKE_ARGS
+    "-DCMAKE_POSITION_INDEPENDENT_CODE:BOOL=${CMAKE_POSITION_INDEPENDENT_CODE}"
+  )
+endif()
+
 #### Setup a legacy macOS build using an SDK ####
 include(InstallSDK-macOS)
 

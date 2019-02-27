@@ -46,7 +46,15 @@ set(VCDEPS_BOOST_COMPONENTS
 if(VCDEPS_BUILD_BOOST)
 string(REPLACE ";" "," BOOST_BUILD_LIBS "${VCDEPS_BOOST_COMPONENTS}")
 string(REPLACE "unit_test_framework" "test" BOOST_BUILD_LIBS ${BOOST_BUILD_LIBS})
-set(BOOST_CXX_FLAGS "cxxflags=-std=c++${CMAKE_CXX_STANDARD} -fPIC")
+
+# Compiler flags
+set(BOOST_CXX_FLAGS "cxxflags=-std=c++${CMAKE_CXX_STANDARD}")
+
+# Mimic project PIC flag
+if(CMAKE_POSITION_INDEPENDENT_CODE)
+  string(APPEND BOOST_CXX_FLAGS " -fPIC")
+endif(CMAKE_POSITION_INDEPENDENT_CODE)
+
 externalproject_add(
     boost
     DEPENDS ${GLOBAL_DEPENDS}
