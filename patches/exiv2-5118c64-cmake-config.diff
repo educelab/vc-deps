@@ -1,0 +1,101 @@
+diff --git a/cmake/exiv2Config.cmake.in b/cmake/exiv2Config.cmake.in
+new file mode 100644
+index 00000000..cac74a55
+--- /dev/null
++++ b/cmake/exiv2Config.cmake.in
+@@ -0,0 +1,20 @@
++@PACKAGE_INIT@
++
++# Setup for dependency management
++include(CMakeFindDependencyMacro)
++### Setup search path for custom FindXXX.cmake modules ###
++set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_LIST_DIR}/Modules/")
++
++###
++# Dependencies: This section should mirror findDependencies.cmake
++# Reasoning about this described here:
++# https://cmake.org/pipermail/cmake-developers/2015-April/025034.html
++
++find_dependency(Threads)
++find_dependency(Iconv)
++
++#####################################################################
++
++### Include exiv2 targets ###
++include("${CMAKE_CURRENT_LIST_DIR}/exiv2Targets.cmake")
++check_required_components("@PROJECT_NAME@")
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index a73b437c..18b11b10 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -210,9 +210,16 @@ if( ICONV_FOUND )
+     target_link_libraries( exiv2lib PRIVATE Iconv::Iconv )
+ endif()
+ 
++include(CMakePackageConfigHelpers)
+ write_basic_package_version_file(exiv2ConfigVersion.cmake COMPATIBILITY ExactVersion)
+ 
+-install(TARGETS exiv2lib EXPORT exiv2Config
++configure_package_config_file(
++    "${CMAKE_SOURCE_DIR}/cmake/exiv2Config.cmake.in"
++    exiv2Config.cmake
++    INSTALL_DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/exiv2"
++)
++
++install(TARGETS exiv2lib EXPORT exiv2Targets
+     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+@@ -223,9 +230,14 @@ install(FILES
+     ${CMAKE_BINARY_DIR}/exiv2lib_export.h
+     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/exiv2)
+ 
+-install(EXPORT exiv2Config DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/exiv2")
++install(EXPORT exiv2Targets DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/exiv2")
+ 
+-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/exiv2ConfigVersion.cmake DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/exiv2")
++install(
++  FILES
++    ${CMAKE_CURRENT_BINARY_DIR}/exiv2Config.cmake
++    ${CMAKE_CURRENT_BINARY_DIR}/exiv2ConfigVersion.cmake
++  DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/exiv2"
++)
+ 
+ # ******************************************************************************
+ # exiv2 application
+@@ -270,4 +282,3 @@ if(EXIV2_BUILD_EXIV2_COMMAND)
+         set_target_properties(exiv2 PROPERTIES LINK_FLAGS "/ignore:4099")
+     endif()
+ endif()
+-
+diff --git a/xmpsdk/CMakeLists.txt b/xmpsdk/CMakeLists.txt
+index ae011dc3..5666e4e1 100644
+--- a/xmpsdk/CMakeLists.txt
++++ b/xmpsdk/CMakeLists.txt
+@@ -27,14 +27,14 @@ add_library(exiv2-xmp STATIC
+ )
+ 
+ target_link_libraries(exiv2-xmp
+-    PRIVATE 
++    PRIVATE
+         ${EXPAT_LIBRARY}
+ )
+ 
+ target_include_directories(exiv2-xmp
+-    PUBLIC 
++    PUBLIC
+         $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/xmpsdk/include>
+-    PRIVATE 
++    PRIVATE
+         ${EXPAT_INCLUDE_DIR}
+ )
+ 
+@@ -56,7 +56,7 @@ if (BUILD_SHARED_LIBS)
+ endif()
+ 
+ # 1119  Install libxmp.a for use by third party applications (Thanks, Emmanuel)
+-install(TARGETS exiv2-xmp EXPORT exiv2Config
++install(TARGETS exiv2-xmp EXPORT exiv2Targets
+         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+ )
