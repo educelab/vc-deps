@@ -4,25 +4,25 @@ stages:
     - deploy
 
 build:debian:static:
-    image: volcart/vcbuilder-debian:9_v7.base
+    image: volcart/vcbuilder-debian:9_v8.base
     stage: build
     script:
         - echo $CI_BUILD_REF_NAME   $CI_BUILD_STAGE
         - mkdir -p build/
         - cd build/
-        - cmake -GNinja -DCMAKE_BUILD_TYPE=Release ..
+        - cmake -GNinja -DBUILD_WITH_QT5=ON -DCMAKE_BUILD_TYPE=Release ..
         - ninja
     tags:
         - docker
 
 build:debian:dynamic:
-    image: volcart/vcbuilder-debian:9_v7.base
+    image: volcart/vcbuilder-debian:9_v8.base
     stage: build
     script:
         - echo $CI_BUILD_REF_NAME   $CI_BUILD_STAGE
         - mkdir -p build/
         - cd build/
-        - cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON ..
+        - cmake -GNinja -DBUILD_WITH_QT5=ON -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON ..
         - ninja
     tags:
         - docker
@@ -33,7 +33,7 @@ build:macos:static:
         - echo $CI_BUILD_REF_NAME   $CI_BUILD_STAGE
         - mkdir -p build/
         - cd build/
-        - cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=/usr/local/opt/gettext/ ..
+        - cmake -GNinja -DBUILD_WITH_QT5=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=/usr/local/opt/gettext/ -DQt5_DIR=/usr/local/opt/qt/lib/cmake/Qt5/ ..
         - ninja
     tags:
         - deploy
@@ -45,7 +45,7 @@ build:macos:dynamic:
         - echo $CI_BUILD_REF_NAME   $CI_BUILD_STAGE
         - mkdir -p build/
         - cd build/
-        - cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCMAKE_PREFIX_PATH=/usr/local/opt/gettext/ ..
+        - cmake -GNinja -DBUILD_WITH_QT5=ON -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCMAKE_PREFIX_PATH=/usr/local/opt/gettext/ -DQt5_DIR=/usr/local/opt/qt/lib/cmake/Qt5/ ..
         - ninja
     tags:
         - deploy

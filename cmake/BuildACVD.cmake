@@ -3,8 +3,8 @@ if(VCDEPS_BUILD_ACVD)
 externalproject_add(
     acvd
     DEPENDS vtk ${GLOBAL_DEPENDS}
-    URL https://github.com/csparker247/ACVD/archive/v1.0.1.tar.gz
-    URL_HASH SHA256=eb6ef33a56f8086f208bf39ebc85f5f970c24d48fb6a304e94bc08f6c2c1eaf3
+    URL https://github.com/csparker247/ACVD/archive/v1.1.0.tar.gz
+    URL_HASH SHA256=6c9b36f7b595e2ec3763b9f11ac1902f05477ba12a76f0230bd3c886aac7585e
     DOWNLOAD_NO_PROGRESS true
     CMAKE_CACHE_ARGS
         ${GLOBAL_CMAKE_ARGS}

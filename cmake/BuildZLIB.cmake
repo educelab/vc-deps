@@ -10,6 +10,6 @@ externalproject_add(
         ${GLOBAL_CMAKE_ARGS}
 )
 else()
-  find_package(zlib REQUIRED)
+  find_package(ZLIB REQUIRED)
   add_custom_target(zlib)
 endif()
