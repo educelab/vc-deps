@@ -1,0 +1,71 @@
+diff --git a/contrib/dbs/CMakeLists.txt b/contrib/dbs/CMakeLists.txt
+index b2e809b2..1d16d0b5 100644
+--- a/contrib/dbs/CMakeLists.txt
++++ b/contrib/dbs/CMakeLists.txt
+@@ -30,13 +30,13 @@ add_executable(tiff-bi tiff-bi.c)
+ target_link_libraries(tiff-bi tiff port)
+ 
+ add_executable(tiff-grayscale tiff-grayscale.c)
+-target_link_libraries(tiff-grayscale tiff port)
++target_link_libraries(tiff-grayscale tiff port ${M_LIBRARY})
+ 
+ add_executable(tiff-palette tiff-palette.c)
+ target_link_libraries(tiff-palette tiff port)
+ 
+ add_executable(tiff-rgb tiff-rgb.c)
+-target_link_libraries(tiff-rgb tiff port)
++target_link_libraries(tiff-rgb tiff port ${M_LIBRARY})
+ 
+ add_subdirectory(xtiff)
+ 
+diff --git a/libtiff/CMakeLists.txt b/libtiff/CMakeLists.txt
+index 1cf1b759..7db24244 100644
+--- a/libtiff/CMakeLists.txt
++++ b/libtiff/CMakeLists.txt
+@@ -120,7 +120,7 @@ target_include_directories(tiff
+         $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+         ${TIFF_INCLUDES}
+ )
+-target_link_libraries(tiff ${TIFF_LIBRARY_DEPS})
++target_link_libraries(tiff PRIVATE ${TIFF_LIBRARY_DEPS})
+ set_target_properties(tiff PROPERTIES SOVERSION ${SO_COMPATVERSION})
+ if(NOT CYGWIN)
+     # This property causes shared libraries on Linux to have the full version
+diff --git a/tools/CMakeLists.txt b/tools/CMakeLists.txt
+index 886d4549..ea02ee85 100644
+--- a/tools/CMakeLists.txt
++++ b/tools/CMakeLists.txt
+@@ -42,13 +42,13 @@ add_executable(ppm2tiff ppm2tiff.c)
+ target_link_libraries(ppm2tiff tiff port)
+ 
+ add_executable(raw2tiff raw2tiff.c)
+-target_link_libraries(raw2tiff tiff port)
++target_link_libraries(raw2tiff tiff port ${M_LIBRARY})
+ 
+ add_executable(rgb2ycbcr rgb2ycbcr.c)
+ target_link_libraries(rgb2ycbcr tiff port)
+ 
+ add_executable(thumbnail thumbnail.c)
+-target_link_libraries(thumbnail tiff port)
++target_link_libraries(thumbnail tiff port ${M_LIBRARY})
+ 
+ add_executable(tiff2bw tiff2bw.c)
+ target_link_libraries(tiff2bw tiff port)
+@@ -57,7 +57,7 @@ add_executable(tiff2pdf tiff2pdf.c)
+ target_link_libraries(tiff2pdf tiff port)
+ 
+ add_executable(tiff2ps tiff2ps.c)
+-target_link_libraries(tiff2ps tiff port)
++target_link_libraries(tiff2ps tiff port ${M_LIBRARY})
+ 
+ add_executable(tiff2rgba tiff2rgba.c)
+ target_link_libraries(tiff2rgba tiff port)
+@@ -69,7 +69,7 @@ add_executable(tiffcp tiffcp.c)
+ target_link_libraries(tiffcp tiff port)
+ 
+ add_executable(tiffcrop tiffcrop.c)
+-target_link_libraries(tiffcrop tiff port)
++target_link_libraries(tiffcrop tiff port ${M_LIBRARY})
+ 
+ add_executable(tiffdither tiffdither.c)
+ target_link_libraries(tiffdither tiff port)
