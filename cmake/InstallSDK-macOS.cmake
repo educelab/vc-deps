@@ -2,29 +2,28 @@ if(APPLE)
     option(BUILD_UNIVERSAL_LIBS "Build universal macOS libraries using an SDK" OFF)
 endif()
 if(BUILD_UNIVERSAL_LIBS)
-    set(CMAKE_OSX_DEPLOYMENT_TARGET 10.9 CACHE STRING "Universal macOS SDK Version" FORCE )
+    set(CMAKE_OSX_DEPLOYMENT_TARGET 10.13 CACHE STRING "Universal macOS SDK Version" FORCE )
 endif()
 
 # macOS SDK Dependency
 if (BUILD_UNIVERSAL_LIBS)
   set(MACOS_SDK_BASENAME MacOSX${CMAKE_OSX_DEPLOYMENT_TARGET}.sdk)
+  set(MACOS_SDK_GIT_BRANCH ef9fe35)
   externalproject_add(
       osx-sdk
-      URL https://github.com/phracker/MacOSX-SDKs/releases/download/10.13/${MACOS_SDK_BASENAME}.tar.xz
-      URL_HASH SHA1=f35ad1305939fcf14bb1fac036efb2b0c31ebd12
+      URL https://github.com/phracker/MacOSX-SDKs/archive/${MACOS_SDK_GIT_BRANCH}.tar.gz
+      URL_HASH SHA256=e68a61f1c1f5fcd3fd81c93505828523e60964d4086caed4ca3fe8e45254e7c4
+      SOURCE_DIR osx-sdk-prefix/SDKs/
       DOWNLOAD_NO_PROGRESS true
-      CONFIGURE_COMMAND mkdir -p SDKs/${MACOS_SDK_BASENAME}
-      BUILD_COMMAND mv System SDKs/${MACOS_SDK_BASENAME}/ &&
-          mv usr SDKs/${MACOS_SDK_BASENAME}/ &&
-          mv SDKSettings.plist SDKs/${MACOS_SDK_BASENAME}/
+      CONFIGURE_COMMAND ""
+      BUILD_COMMAND ""
       INSTALL_COMMAND ""
       BUILD_IN_SOURCE true
   )
   list(APPEND GLOBAL_DEPENDS osx-sdk)
 
   # Get the SDK sysroot
-  ExternalProject_Get_property(osx-sdk SOURCE_DIR)
-  set(OSX_SDK_SYSROOT ${SOURCE_DIR})
+  set(OSX_SDK_SYSROOT "${CMAKE_CURRENT_BINARY_DIR}/osx-sdk-prefix/")
 
   # Append the new CMake args
   list(APPEND GLOBAL_CMAKE_ARGS
