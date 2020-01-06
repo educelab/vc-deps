@@ -3,8 +3,8 @@ if(VCDEPS_BUILD_EIGEN)
 externalproject_add(
     eigen
     DEPENDS boost ${GLOBAL_DEPENDS}
-    URL http://bitbucket.org/eigen/eigen/get/3.3.5.tar.gz
-    URL_HASH SHA256=0454b6bacafd2bf641e0fb0f59572b9995728b77e41d1b8517f807334d07e68e
+    URL http://bitbucket.org/eigen/eigen/get/3.3.7.tar.gz
+    URL_HASH SHA256=7e84ef87a07702b54ab3306e77cea474f56a40afa1c0ab245bb11725d006d0da
     DOWNLOAD_NO_PROGRESS true
     CMAKE_CACHE_ARGS
         ${GLOBAL_CMAKE_ARGS}
