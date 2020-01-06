@@ -4,7 +4,7 @@ stages:
     - deploy
 
 build:debian:static:
-    image: volcart/vcbuilder-debian:9_v8.base
+    image: volcart/vcbuilder-debian:9_v9.base
     stage: build
     script:
         - echo $CI_BUILD_REF_NAME   $CI_BUILD_STAGE
@@ -16,7 +16,7 @@ build:debian:static:
         - docker
 
 build:debian:dynamic:
-    image: volcart/vcbuilder-debian:9_v8.base
+    image: volcart/vcbuilder-debian:9_v9.base
     stage: build
     script:
         - echo $CI_BUILD_REF_NAME   $CI_BUILD_STAGE

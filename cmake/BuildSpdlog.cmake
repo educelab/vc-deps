@@ -10,5 +10,6 @@ externalproject_add(
         ${GLOBAL_CMAKE_ARGS}
 )
 else()
+  find_package(spdlog 1.4.2 CONFIG REQUIRED)
   add_custom_target(spdlog)
 endif()

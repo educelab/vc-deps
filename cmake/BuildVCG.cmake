@@ -2,8 +2,8 @@ option(VCDEPS_BUILD_VCG "Build VCG" ON)
 if(VCDEPS_BUILD_VCG)
 externalproject_add(
     vcglib
-    URL https://github.com/cnr-isti-vclab/vcglib/archive/38ca45f.tar.gz
-    URL_HASH SHA1=e1945ce59fb6a187b923844ba1a1a823f416afa8
+    URL https://github.com/cnr-isti-vclab/vcglib/archive/9fe918c.tar.gz
+    URL_HASH SHA256=61960afd876c145458e19483c7741c929c751027062c08244a9c9df7782ea7cf
     DOWNLOAD_NO_PROGRESS true
     BUILD_IN_SOURCE true
     CONFIGURE_COMMAND mkdir -p ${CMAKE_INSTALL_PREFIX}/include/vcg
