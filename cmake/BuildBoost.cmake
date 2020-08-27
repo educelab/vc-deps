@@ -55,13 +55,16 @@ if(CMAKE_POSITION_INDEPENDENT_CODE)
   string(APPEND BOOST_CXX_FLAGS " -fPIC")
 endif(CMAKE_POSITION_INDEPENDENT_CODE)
 
+configure_file(${PROJECT_SOURCE_DIR}/patches/boost-macOS-user-config.jam.in ${CMAKE_CURRENT_BINARY_DIR}/user-config.jam)
+set(BOOST_PATCH_CMD cp ${CMAKE_CURRENT_BINARY_DIR}/user-config.jam tools/build/src/)
+
 externalproject_add(
     boost
     DEPENDS ${GLOBAL_DEPENDS}
     URL https://dl.bintray.com/boostorg/release/1.69.0/source/boost_1_69_0.tar.gz
     URL_HASH SHA256=9a2c2819310839ea373f42d69e733c339b4e9a19deab6bfec448281554aa4dbb
     DOWNLOAD_NO_PROGRESS true
-    PATCH_COMMAND ${BOOST_PATCH_CMD}
+    PATCH_COMMAND cp ${CMAKE_CURRENT_BINARY_DIR}/user-config.jam tools/build/src/ && patch -p1 -i ${CMAKE_SOURCE_DIR}/patches/boost-1.69-macOS-catalina.diff
     CONFIGURE_COMMAND ./bootstrap.sh --prefix=${CMAKE_INSTALL_PREFIX} --with-libraries=${BOOST_BUILD_LIBS} --with-toolset=${BOOST_TOOLSET}
     BUILD_COMMAND ./b2 ${BOOST_CXX_FLAGS} variant=${BOOST_LIB_TYPE} link=${BOOST_LINK_TYPE} toolset=${BOOST_TOOLSET} ${BOOST_OSX_SDK} install
     BUILD_IN_SOURCE true
