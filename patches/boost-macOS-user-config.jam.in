@@ -1,5 +1,5 @@
-using darwin : ${OSX_SDK_VERSION}
+using darwin : ${CMAKE_OSX_DEPLOYMENT_TARGET}
 : clang++ -arch x86_64
-: <striper> <root>${OSX_SDK_SYSROOT}
+: <striper> <root>${OSX_SDK_SYSROOT}/
 : <target-os>darwin
 ;

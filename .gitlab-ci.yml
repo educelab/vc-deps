@@ -14,37 +14,30 @@ stages:
       - $CMAKE_CMD
       - ninja
 
-build:debian:9:static:
+build:debian:10:static:
     extends: .build
     stage: build
-    image: volcart/vcbuilder-debian:9_v9.base
+    image: volcart/vcbuilder-debian:10_v1.base
+    needs: []
     variables:
       EXTRA_CMAKE_FLAGS: "-DBUILD_WITH_QT5=ON"
     tags:
         - docker
 
-build:debian:9:dynamic:
+build:debian:10:dynamic:
     extends: .build
     stage: build
-    image: volcart/vcbuilder-debian:9_v9.base
+    image: volcart/vcbuilder-debian:10_v1.base
+    needs: []
     variables:
       EXTRA_CMAKE_FLAGS: "-DBUILD_WITH_QT5=ON -DBUILD_SHARED_LIBS=ON"
     tags:
         - docker
 
-build:debian:10:static:
-    extends: build:debian:9:static
-    stage: build
-    image: volcart/vcbuilder-debian:10_v1.base
-
-build:debian:10:dynamic:
-    extends: build:debian:9:dynamic
-    stage: build
-    image: volcart/vcbuilder-debian:10_v1.base
-
 build:macos:static:
     extends: .build
     stage: build
+    needs: []
     variables:
       EXTRA_CMAKE_FLAGS: "-DBUILD_WITH_QT5=ON -DCMAKE_PREFIX_PATH=/usr/local/opt/gettext/ -DQt5_DIR=/usr/local/opt/qt/lib/cmake/Qt5/"
     tags:
@@ -54,6 +47,7 @@ build:macos:static:
 build:macos:dynamic:
     extends: .build
     stage: build
+    needs: []
     variables:
       EXTRA_CMAKE_FLAGS: "-DBUILD_WITH_QT5=ON -DBUILD_SHARED_LIBS=ON -DCMAKE_PREFIX_PATH=/usr/local/opt/gettext/ -DQt5_DIR=/usr/local/opt/qt/lib/cmake/Qt5/"
     tags:
@@ -63,7 +57,9 @@ build:macos:dynamic:
 collect:macos:universal:
     extends: .build
     stage: collect
+    needs: []
     variables:
+      MACOSX_DEPLOYMENT_TARGET: "10.13"
       EXTRA_CMAKE_FLAGS: "-DBUILD_UNIVERSAL_LIBS=ON -DCMAKE_PREFIX_PATH=/usr/local/opt/gettext/"
     artifacts:
       name: "${CI_BUILD_STAGE}_${CI_BUILD_REF_NAME}"
