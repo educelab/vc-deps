@@ -13,6 +13,7 @@ externalproject_add(
         -Djbig:BOOL=OFF
         -Djpeg:BOOL=OFF
         -Dwebp:BOOL=OFF
+        -Dzstd:BOOL=OFF
 )
 else()
   find_package(TIFF REQUIRED)
