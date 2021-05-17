@@ -60,7 +60,7 @@ endif(CMAKE_POSITION_INDEPENDENT_CODE)
 externalproject_add(
     boost
     DEPENDS ${GLOBAL_DEPENDS}
-    URL https://dl.bintray.com/boostorg/release/1.69.0/source/boost_1_69_0.tar.gz
+    URL https://boostorg.jfrog.io/artifactory/main/release/1.69.0/source/boost_1_69_0.tar.gz
     URL_HASH SHA256=9a2c2819310839ea373f42d69e733c339b4e9a19deab6bfec448281554aa4dbb
     DOWNLOAD_NO_PROGRESS true
     PATCH_COMMAND ${BOOST_PATCH_CMD}
