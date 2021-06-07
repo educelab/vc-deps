@@ -1,0 +1,25 @@
+diff --git a/Modules/ThirdParty/GDCM/src/gdcm/Source/MediaStorageAndFileFormat/gdcmImage.h b/Modules/ThirdParty/GDCM/src/gdcm/Source/MediaStorageAndFileFormat/gdcmImage.h
+index 85f52cc..f57f621 100644
+--- a/Modules/ThirdParty/GDCM/src/gdcm/Source/MediaStorageAndFileFormat/gdcmImage.h
++++ b/Modules/ThirdParty/GDCM/src/gdcm/Source/MediaStorageAndFileFormat/gdcmImage.h
+@@ -17,6 +17,7 @@
+ #include "gdcmPixmap.h"
+ 
+ #include <vector>
++#include <limits>
+ 
+ namespace gdcm
+ {
+diff --git a/Modules/ThirdParty/GDCM/src/gdcm/Source/MediaStorageAndFileFormat/gdcmImageChangePhotometricInterpretation.h b/Modules/ThirdParty/GDCM/src/gdcm/Source/MediaStorageAndFileFormat/gdcmImageChangePhotometricInterpretation.h
+index d55a5ee..eb94f8a 100644
+--- a/Modules/ThirdParty/GDCM/src/gdcm/Source/MediaStorageAndFileFormat/gdcmImageChangePhotometricInterpretation.h
++++ b/Modules/ThirdParty/GDCM/src/gdcm/Source/MediaStorageAndFileFormat/gdcmImageChangePhotometricInterpretation.h
+@@ -17,6 +17,8 @@
+ #include "gdcmImageToImageFilter.h"
+ #include "gdcmPhotometricInterpretation.h"
+ 
++#include <limits>
++
+ namespace gdcm
+ {
+ 
