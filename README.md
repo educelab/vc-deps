@@ -59,17 +59,3 @@ cmake -DCMAKE_POSITION_INDEPENDENT_CODE=ON ..
 ```
 
 PIC is `ON` by default when building shared libraries, so this flag will only affect static builds. This flag must be enabled to successfully link Volume Cartographer's Python bindings against statically built dependencies.
-
-(macOS) Building Exiv2 with Native language support
----------------------------------------------------
-On macOS, exiv2 is automatically built with NLS support if the `gettext` libraries are found. This package is not provided by either `vc-deps` or by Apple. The easiest way to install it is via Homebrew:
-
-```shell
-brew install gettext
-```
-
-If installed in this way, you must additionally tell `vc-deps` where to find the `gettext` libraries by setting the `CMAKE_PREFIX_PATH` variable:
-
-```shell
-cmake -DCMAKE_PREFIX_PATH=/usr/local/opt/gettext ..
-```
