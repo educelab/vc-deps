@@ -3,8 +3,8 @@ if(VCDEPS_BUILD_SPDLOG)
 externalproject_add(
     spdlog
     DEPENDS ${GLOBAL_DEPENDS}
-    URL https://github.com/gabime/spdlog/archive/v1.8.0.tar.gz
-    URL_HASH SHA256=1e68e9b40cf63bb022a4b18cdc1c9d88eb5d97e4fd64fa981950a9cacf57a4bf
+    URL https://github.com/gabime/spdlog/archive/v1.8.5.tar.gz
+    URL_HASH SHA512=77cc9df0c40bbdbfe1f3e5818dccf121918bfceac28f2608f39e5bf944968b7e8e24a6fc29f01bc58a9bae41b8892d49cfb59c196935ec9868884320b50f130c
     DOWNLOAD_NO_PROGRESS true
     CMAKE_CACHE_ARGS
         ${GLOBAL_CMAKE_ARGS}

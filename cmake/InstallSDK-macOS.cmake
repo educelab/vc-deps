@@ -10,7 +10,7 @@ if (BUILD_UNIVERSAL_LIBS)
   set(MACOS_SDK_BASENAME MacOSX${CMAKE_OSX_DEPLOYMENT_TARGET}.sdk)
   externalproject_add(
       osx-sdk
-      URL https://github.com/phracker/MacOSX-SDKs/releases/download/10.15/${MACOS_SDK_BASENAME}.tar.xz
+      URL https://github.com/phracker/MacOSX-SDKs/releases/download/11.3/${MACOS_SDK_BASENAME}.tar.xz
       SOURCE_DIR osx-sdk-prefix/SDKs/${MACOS_SDK_BASENAME}/
       DOWNLOAD_NO_PROGRESS true
       CONFIGURE_COMMAND ""
@@ -35,5 +35,5 @@ if (BUILD_UNIVERSAL_LIBS)
   message(STATUS "Using macOS SDK: ${CMAKE_OSX_SYSROOT}")
 
   # Setup the Boost arguments and files
-  set(BOOST_OSX_SDK macosx-version=${CMAKE_OSX_DEPLOYMENT_TARGET} macosx-version-min=${CMAKE_OSX_DEPLOYMENT_TARGET})
+  set(BOOST_OSX_SDK "-mmacosx-version-min=${CMAKE_OSX_DEPLOYMENT_TARGET} -isysroot ${CMAKE_OSX_SYSROOT}/")
 endif(BUILD_UNIVERSAL_LIBS)

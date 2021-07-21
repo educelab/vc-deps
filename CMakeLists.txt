@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.9 FATAL_ERROR)
 
-project(vc-deps VERSION 1.5.6)
+project(vc-deps VERSION 1.6.0)
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/)
 
@@ -71,15 +71,8 @@ include(BuildOpenCV)
 # ITK
 include(BuildITK)
 
-##### Optional libs #####
 # ACVD
 include(BuildACVD)
 
-# exiv2
-include(BuildExiv2)
-
 # spdlog
 include(BuildSpdlog)
-
-# VCG library
-include(BuildVCG)
