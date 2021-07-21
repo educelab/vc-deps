@@ -15,7 +15,7 @@ externalproject_add(
         ${GLOBAL_CMAKE_ARGS}
         -DITK_USE_SYSTEM_TIFF:BOOL=ON
         -DITK_USE_SYSTEM_ZLIB:BOOL=ON
-        -DModule_ITKVideoBridgeOpenCV:BOOL=ON
+        -DModule_ITKSmoothing:BOOL=ON
         -DBUILD_EXAMPLES:BOOL=OFF
 )
 else()

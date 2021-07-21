@@ -1,5 +1,6 @@
-using darwin : ${CMAKE_OSX_DEPLOYMENT_TARGET}
-: clang++ -arch x86_64
-: <striper> <root>${OSX_SDK_SYSROOT}/
-: <target-os>darwin
+using clang : ${CMAKE_OSX_DEPLOYMENT_TARGET} : clang++ :
+      <striper> <root>"${OSX_SDK_SYSROOT}/"
+      <target-os>"darwin"
+      <compileflags>"-arch x86_64 ${BOOST_OSX_SDK}"
+      <cxxflags>"-std=c++${CMAKE_CXX_STANDARD}"
 ;

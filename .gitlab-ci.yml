@@ -39,7 +39,7 @@ build:macos:static:
     stage: build
     needs: []
     variables:
-      EXTRA_CMAKE_FLAGS: "-DBUILD_WITH_QT5=ON -DCMAKE_PREFIX_PATH=/usr/local/opt/gettext/ -DQt5_DIR=/usr/local/opt/qt/lib/cmake/Qt5/"
+      EXTRA_CMAKE_FLAGS: "-DBUILD_WITH_QT5=ON -DQt5_DIR=/usr/local/opt/qt/lib/cmake/Qt5/"
     tags:
         - deploy
         - osx
@@ -49,7 +49,7 @@ build:macos:dynamic:
     stage: build
     needs: []
     variables:
-      EXTRA_CMAKE_FLAGS: "-DBUILD_WITH_QT5=ON -DBUILD_SHARED_LIBS=ON -DCMAKE_PREFIX_PATH=/usr/local/opt/gettext/ -DQt5_DIR=/usr/local/opt/qt/lib/cmake/Qt5/"
+      EXTRA_CMAKE_FLAGS: "-DBUILD_WITH_QT5=ON -DBUILD_SHARED_LIBS=ON -DQt5_DIR=/usr/local/opt/qt/lib/cmake/Qt5/"
     tags:
         - deploy
         - osx
@@ -60,7 +60,7 @@ collect:macos:universal:
     needs: []
     variables:
       MACOSX_DEPLOYMENT_TARGET: "10.13"
-      EXTRA_CMAKE_FLAGS: "-DBUILD_UNIVERSAL_LIBS=ON -DCMAKE_PREFIX_PATH=/usr/local/opt/gettext/"
+      EXTRA_CMAKE_FLAGS: "-DBUILD_UNIVERSAL_LIBS=ON"
     artifacts:
       name: "${CI_BUILD_STAGE}_${CI_BUILD_REF_NAME}"
       paths:
@@ -69,20 +69,3 @@ collect:macos:universal:
     tags:
         - deploy
         - osx
-
-deploy:macos:
-    only:
-        - master
-    stage: deploy
-    needs: ["collect:macos:universal"]
-    script:
-        - directory=v$(utils/version-gen.sh)
-        - mkdir -p ${directory}
-        - tar -czf vcdeps-${directory}.tar.gz deps/
-        - cp vcdeps-${directory}.tar.gz ${directory}
-        - cp vcdeps-${directory}.tar.gz vcdeps-latest.tar.gz
-        - rclone -v copy ${directory}/ vc-deps:releases/${directory}/
-        - rclone -v copy vcdeps-latest.tar.gz vc-deps:releases/
-    environment: production
-    tags:
-        - rclone

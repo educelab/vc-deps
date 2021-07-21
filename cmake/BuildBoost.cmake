@@ -16,9 +16,9 @@ endif()
 
 # Set Boost toolset type based on the OS
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "AppleClang")
-    set(BOOST_TOOLSET_AUTO darwin)
+    set(BOOST_TOOLSET_AUTO clang)
     configure_file(${PROJECT_SOURCE_DIR}/patches/boost-macOS-user-config.jam.in ${CMAKE_CURRENT_BINARY_DIR}/user-config.jam)
-    set(BOOST_PATCH_CMD cp ${CMAKE_CURRENT_BINARY_DIR}/user-config.jam tools/build/src/ && patch -p1 -i ${CMAKE_SOURCE_DIR}/patches/boost-1.69-macOS-catalina.diff)
+    set(BOOST_PATCH_CMD cp ${CMAKE_CURRENT_BINARY_DIR}/user-config.jam tools/build/src/)
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     set(BOOST_TOOLSET_AUTO clang)
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
@@ -41,13 +41,11 @@ set(VCDEPS_BOOST_COMPONENTS
     regex
     serialization
     system
-    unit_test_framework
     thread
 )
 
 if(VCDEPS_BUILD_BOOST)
 string(REPLACE ";" "," BOOST_BUILD_LIBS "${VCDEPS_BOOST_COMPONENTS}")
-string(REPLACE "unit_test_framework" "test" BOOST_BUILD_LIBS ${BOOST_BUILD_LIBS})
 
 # Compiler flags
 set(BOOST_CXX_FLAGS "cxxflags=-std=c++${CMAKE_CXX_STANDARD}")
@@ -60,12 +58,12 @@ endif(CMAKE_POSITION_INDEPENDENT_CODE)
 externalproject_add(
     boost
     DEPENDS ${GLOBAL_DEPENDS}
-    URL https://boostorg.jfrog.io/artifactory/main/release/1.69.0/source/boost_1_69_0.tar.gz
-    URL_HASH SHA256=9a2c2819310839ea373f42d69e733c339b4e9a19deab6bfec448281554aa4dbb
+    URL https://boostorg.jfrog.io/artifactory/main/release/1.76.0/source/boost_1_76_0.tar.gz
+    URL_HASH SHA256=7bd7ddceec1a1dfdcbdb3e609b60d01739c38390a5f956385a12f3122049f0ca
     DOWNLOAD_NO_PROGRESS true
     PATCH_COMMAND ${BOOST_PATCH_CMD}
     CONFIGURE_COMMAND ./bootstrap.sh --prefix=${CMAKE_INSTALL_PREFIX} --with-libraries=${BOOST_BUILD_LIBS} --with-toolset=${BOOST_TOOLSET}
-    BUILD_COMMAND ./b2 ${BOOST_CXX_FLAGS} variant=${BOOST_LIB_TYPE} link=${BOOST_LINK_TYPE} toolset=${BOOST_TOOLSET} ${BOOST_OSX_SDK} install
+    BUILD_COMMAND ./b2 ${BOOST_CXX_FLAGS} variant=${BOOST_LIB_TYPE} link=${BOOST_LINK_TYPE} toolset=${BOOST_TOOLSET} install
     BUILD_IN_SOURCE true
     INSTALL_COMMAND ""
 )
