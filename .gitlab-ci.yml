@@ -17,7 +17,7 @@ stages:
 build:debian:10:static:
     extends: .build
     stage: build
-    image: volcart/vcbuilder-debian:10_v1.base
+    image: volcart/vcbuilder-debian:10_v2.base
     needs: []
     variables:
       EXTRA_CMAKE_FLAGS: "-DBUILD_WITH_QT5=ON"
@@ -27,7 +27,7 @@ build:debian:10:static:
 build:debian:10:dynamic:
     extends: .build
     stage: build
-    image: volcart/vcbuilder-debian:10_v1.base
+    image: volcart/vcbuilder-debian:10_v2.base
     needs: []
     variables:
       EXTRA_CMAKE_FLAGS: "-DBUILD_WITH_QT5=ON -DBUILD_SHARED_LIBS=ON"
