@@ -3,9 +3,9 @@ if(VCDEPS_BUILD_VTK)
 
 # Patch if Qt 5.15
 if(Qt5_VERSION VERSION_GREATER_EQUAL 5.15)
-  set(VTK_PATCH_CMD cat ${CMAKE_SOURCE_DIR}/patches/vtk-8.2.0-fix-gcc-10.diff ${CMAKE_SOURCE_DIR}/patches/vtk-8.2.0-fix-qt5.15.diff | patch -p1)
+  set(VTK_PATCH_CMD cat ${CMAKE_SOURCE_DIR}/patches/vtk-8.2.0-fix-gcc-10.diff ${CMAKE_SOURCE_DIR}/patches/vtk-8.2.0-fix-qt5.15.diff ${CMAKE_SOURCE_DIR}/patches/vtk-png-optimization.diff | patch -p1)
 else()
-  set(VTK_PATCH_CMD cat ${CMAKE_SOURCE_DIR}/patches/vtk-8.2.0-fix-gcc-10.diff | patch -p1)
+  set(VTK_PATCH_CMD cat ${CMAKE_SOURCE_DIR}/patches/vtk-8.2.0-fix-gcc-10.diff ${CMAKE_SOURCE_DIR}/patches/vtk-png-optimization.diff | patch -p1)
 endif()
 
 externalproject_add(
