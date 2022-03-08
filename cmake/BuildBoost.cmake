@@ -30,18 +30,9 @@ set(BOOST_TOOLSET ${BOOST_TOOLSET_AUTO} CACHE STRING "Boost Build toolset")
 
 # Required Boost components
 set(VCDEPS_BOOST_COMPONENTS
-    atomic
-    chrono
-    date_time
-    exception
-    iostreams
     filesystem
     program_options
-    random
-    regex
-    serialization
     system
-    thread
 )
 
 if(VCDEPS_BUILD_BOOST)
@@ -58,8 +49,8 @@ endif(CMAKE_POSITION_INDEPENDENT_CODE)
 externalproject_add(
     boost
     DEPENDS ${GLOBAL_DEPENDS}
-    URL https://boostorg.jfrog.io/artifactory/main/release/1.76.0/source/boost_1_76_0.tar.gz
-    URL_HASH SHA256=7bd7ddceec1a1dfdcbdb3e609b60d01739c38390a5f956385a12f3122049f0ca
+    URL https://boostorg.jfrog.io/artifactory/main/release/1.78.0/source/boost_1_78_0.tar.gz
+    URL_HASH SHA256=94ced8b72956591c4775ae2207a9763d3600b30d9d7446562c552f0a14a63be7
     DOWNLOAD_NO_PROGRESS true
     PATCH_COMMAND ${BOOST_PATCH_CMD}
     CONFIGURE_COMMAND ./bootstrap.sh --prefix=${CMAKE_INSTALL_PREFIX} --with-libraries=${BOOST_BUILD_LIBS} --with-toolset=${BOOST_TOOLSET}

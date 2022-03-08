@@ -14,23 +14,21 @@ stages:
       - $CMAKE_CMD
       - ninja
 
-build:debian:10:static:
+build:debian:11:static:
     extends: .build
     stage: build
-    image: volcart/vcbuilder-debian:10_v2.base
+    image: volcart/vcbuilder-debian:11_v1.base
     needs: []
-    variables:
-      EXTRA_CMAKE_FLAGS: "-DBUILD_WITH_QT5=ON"
     tags:
         - docker
 
-build:debian:10:dynamic:
+build:debian:11:dynamic:
     extends: .build
     stage: build
-    image: volcart/vcbuilder-debian:10_v2.base
+    image: volcart/vcbuilder-debian:11_v1.base
     needs: []
     variables:
-      EXTRA_CMAKE_FLAGS: "-DBUILD_WITH_QT5=ON -DBUILD_SHARED_LIBS=ON"
+      EXTRA_CMAKE_FLAGS: "-DBUILD_SHARED_LIBS=ON"
     tags:
         - docker
 
@@ -38,8 +36,6 @@ build:macos:static:
     extends: .build
     stage: build
     needs: []
-    variables:
-      EXTRA_CMAKE_FLAGS: "-DBUILD_WITH_QT5=ON -DQt5_DIR=/usr/local/opt/qt/lib/cmake/Qt5/"
     tags:
         - deploy
         - osx
@@ -49,7 +45,7 @@ build:macos:dynamic:
     stage: build
     needs: []
     variables:
-      EXTRA_CMAKE_FLAGS: "-DBUILD_WITH_QT5=ON -DBUILD_SHARED_LIBS=ON -DQt5_DIR=/usr/local/opt/qt/lib/cmake/Qt5/"
+      EXTRA_CMAKE_FLAGS: "-DBUILD_SHARED_LIBS=ON"
     tags:
         - deploy
         - osx

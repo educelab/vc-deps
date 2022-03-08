@@ -3,10 +3,9 @@ if(VCDEPS_BUILD_TIFF)
 externalproject_add(
     libtiff
     DEPENDS zlib ${GLOBAL_DEPENDS}
-    URL https://gitlab.com/libtiff/libtiff/-/archive/c824479e4c21974cd934502aa186d18bb548db9e/libtiff-c824479e4c21974cd934502aa186d18bb548db9e.tar.gz
-    URL_HASH SHA256=4eaf0668f6c8b3f0f35a2ee7f704c8a7b053eeed5db307b75a84b14cdc3ba965
+    URL https://gitlab.com/libtiff/libtiff/-/archive/5e18004500cda10d9074bdb6166b054e95b659ed/libtiff-5e18004500cda10d9074bdb6166b054e95b659ed.tar.gz
+    URL_HASH SHA512=cf19fbfcc278fe9d113035db0aa4df56f461ba311394c40d43dd5da9f9a3e4a399acf885c57c3511e16cc396a90db0965e99440cebc40f45ac1e404e59196d08
     DOWNLOAD_NO_PROGRESS true
-    PATCH_COMMAND patch -p1 -i ${CMAKE_SOURCE_DIR}/patches/libtiff-c824479e-private-deps.diff
     CMAKE_CACHE_ARGS
         ${GLOBAL_CMAKE_ARGS}
         -Dlzma:BOOL=OFF
