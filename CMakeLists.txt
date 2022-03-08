@@ -6,12 +6,11 @@ set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/)
 
 include(ExternalProject)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 #### Options ####
 option(BUILD_SHARED_LIBS "Build libraries as shared" OFF)
-option(BUILD_WITH_QT5 "Build supported libraries with Qt5 support" OFF)
 
 #### Setup output directory if not specified ####
 if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
@@ -28,11 +27,6 @@ set(GLOBAL_CMAKE_ARGS
     "-DCMAKE_CXX_STANDARD_REQUIRED:BOOL=${CMAKE_CXX_STANDARD_REQUIRED}"
 )
 set(GLOBAL_DEPENDS "")
-
-if(BUILD_WITH_QT5)
-  find_package(Qt5 REQUIRED COMPONENTS Widgets Gui Core OpenGL)
-  list(APPEND GLOBAL_CMAKE_ARGS "-DQt5_DIR:PATH=${Qt5_DIR}")
-endif()
 
 #### Build dependencies with same release type as root project ####
 if(CMAKE_BUILD_TYPE)
