@@ -38,7 +38,7 @@ build:macos:static:
     needs: []
     tags:
         - deploy
-        - osx
+        - macos
 
 build:macos:dynamic:
     extends: .build
@@ -48,14 +48,14 @@ build:macos:dynamic:
       EXTRA_CMAKE_FLAGS: "-DBUILD_SHARED_LIBS=ON"
     tags:
         - deploy
-        - osx
+        - macos
 
 collect:macos:universal:
     extends: .build
     stage: collect
     needs: []
     variables:
-      MACOSX_DEPLOYMENT_TARGET: "10.13"
+      MACOSX_DEPLOYMENT_TARGET: "11.3"
       EXTRA_CMAKE_FLAGS: "-DBUILD_UNIVERSAL_LIBS=ON"
     artifacts:
       name: "${CI_BUILD_STAGE}_${CI_BUILD_REF_NAME}"
@@ -64,4 +64,4 @@ collect:macos:universal:
       expire_in: 1 day
     tags:
         - deploy
-        - osx
+        - macos
