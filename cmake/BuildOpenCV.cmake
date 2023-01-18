@@ -15,6 +15,7 @@ externalproject_add(
         -DBUILD_TESTS:BOOL=OFF
         -DWITH_FFMPEG:BOOL=OFF
         -DWITH_EIGEN:BOOL=OFF
+        -DWITH_OPENEXR:BOOL=OFF
 )
 else()
   find_package(OpenCV 3 QUIET)
