@@ -11,7 +11,7 @@ Requirements
 Get The Source
 --------------
 ```shell
-git clone https://gitlab.com/educelab/vc-deps.git
+git clone https://github.com/educelab/vc-deps.git
 cd vc-deps/
 ```
 
