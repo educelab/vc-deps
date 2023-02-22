@@ -46,6 +46,11 @@ if(CMAKE_POSITION_INDEPENDENT_CODE)
   string(APPEND BOOST_CXX_FLAGS " -fPIC")
 endif(CMAKE_POSITION_INDEPENDENT_CODE)
 
+# Honor quiet request
+if(DCMAKE_INSTALL_MESSAGE STREQUAL NEVER)
+    set(BOOST_VERBOSE -d0)
+endif()
+
 externalproject_add(
     boost
     DEPENDS ${GLOBAL_DEPENDS}
@@ -54,7 +59,7 @@ externalproject_add(
     DOWNLOAD_NO_PROGRESS true
     PATCH_COMMAND ${BOOST_PATCH_CMD}
     CONFIGURE_COMMAND ./bootstrap.sh --prefix=${CMAKE_INSTALL_PREFIX} --with-libraries=${BOOST_BUILD_LIBS} --with-toolset=${BOOST_TOOLSET}
-    BUILD_COMMAND ./b2 ${BOOST_CXX_FLAGS} variant=${BOOST_LIB_TYPE} link=${BOOST_LINK_TYPE} toolset=${BOOST_TOOLSET} install
+    BUILD_COMMAND ./b2 ${BOOST_CXX_FLAGS} variant=${BOOST_LIB_TYPE} link=${BOOST_LINK_TYPE} toolset=${BOOST_TOOLSET} ${BOOST_VERBOSE} install
     BUILD_IN_SOURCE true
     INSTALL_COMMAND ""
 )
