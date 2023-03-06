@@ -17,7 +17,7 @@ stages:
 build:debian:11:static:
     extends: .build
     stage: build
-    image: volcart/vcbuilder-debian:11_v1.base
+    image: ghcr.io/educelab/ci-docker:11_v2.base
     needs: []
     tags:
         - docker
@@ -25,7 +25,7 @@ build:debian:11:static:
 build:debian:11:dynamic:
     extends: .build
     stage: build
-    image: volcart/vcbuilder-debian:11_v1.base
+    image: ghcr.io/educelab/ci-docker:11_v2.base
     needs: []
     variables:
       EXTRA_CMAKE_FLAGS: "-DBUILD_SHARED_LIBS=ON"
@@ -46,22 +46,6 @@ build:macos:dynamic:
     needs: []
     variables:
       EXTRA_CMAKE_FLAGS: "-DBUILD_SHARED_LIBS=ON"
-    tags:
-        - deploy
-        - macos
-
-collect:macos:universal:
-    extends: .build
-    stage: collect
-    needs: []
-    variables:
-      MACOSX_DEPLOYMENT_TARGET: "11.3"
-      EXTRA_CMAKE_FLAGS: "-DBUILD_UNIVERSAL_LIBS=ON"
-    artifacts:
-      name: "${CI_BUILD_STAGE}_${CI_BUILD_REF_NAME}"
-      paths:
-        - deps/
-      expire_in: 1 day
     tags:
         - deploy
         - macos
