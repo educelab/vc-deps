@@ -10,6 +10,7 @@ externalproject_add(
     URL https://github.com/InsightSoftwareConsortium/ITK/releases/download/v5.2.1/InsightToolkit-5.2.1.tar.gz
     URL_HASH SHA512=6786e39cdf3d0c3a31abd1e23481e30f6dc9dac189ffe372dde3db688f2f57686a8beb321778327e1ff683ed844d41f1dee937b0ba542b2365e2195dfca398c7
     DOWNLOAD_NO_PROGRESS true
+    DOWNLOAD_EXTRACT_TIMESTAMP ON
     PATCH_COMMAND ${ITK_PATCH_CMD}
     CMAKE_CACHE_ARGS
         ${GLOBAL_CMAKE_ARGS}

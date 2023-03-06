@@ -6,7 +6,7 @@ CMake project to build Volume Cartographer dependencies.
 Requirements
 ------------
  * C++17 compiler
- * CMake 3.19+
+ * CMake 3.24+
 
 Get The Source
 --------------
