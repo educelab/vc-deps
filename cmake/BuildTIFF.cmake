@@ -3,8 +3,8 @@ if(VCDEPS_BUILD_TIFF)
 externalproject_add(
     libtiff
     DEPENDS zlib ${GLOBAL_DEPENDS}
-    URL https://gitlab.com/libtiff/libtiff/-/archive/5e18004500cda10d9074bdb6166b054e95b659ed/libtiff-5e18004500cda10d9074bdb6166b054e95b659ed.tar.gz
-    URL_HASH SHA512=cf19fbfcc278fe9d113035db0aa4df56f461ba311394c40d43dd5da9f9a3e4a399acf885c57c3511e16cc396a90db0965e99440cebc40f45ac1e404e59196d08
+    URL https://gitlab.com/libtiff/libtiff/-/archive/v4.6.0/libtiff-v4.6.0.tar.gz
+    URL_HASH SHA512=ef2f1d424219d9e245069b7d23e78f5e817cf6ee516d46694915ab6c8909522166f84997513d20a702f4e52c3f18467813935b328fafa34bea5156dee00f66fa
     DOWNLOAD_NO_PROGRESS true
     DOWNLOAD_EXTRACT_TIMESTAMP ON
     CMAKE_CACHE_ARGS

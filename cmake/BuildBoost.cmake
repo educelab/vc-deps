@@ -30,7 +30,6 @@ set(BOOST_TOOLSET ${BOOST_TOOLSET_AUTO} CACHE STRING "Boost Build toolset")
 
 # Required Boost components
 set(VCDEPS_BOOST_COMPONENTS
-    filesystem
     program_options
     system
 )
@@ -54,8 +53,8 @@ endif()
 externalproject_add(
     boost
     DEPENDS ${GLOBAL_DEPENDS}
-    URL https://boostorg.jfrog.io/artifactory/main/release/1.78.0/source/boost_1_78_0.tar.gz
-    URL_HASH SHA256=94ced8b72956591c4775ae2207a9763d3600b30d9d7446562c552f0a14a63be7
+    URL https://boostorg.jfrog.io/artifactory/main/release/1.83.0/source/boost_1_83_0.tar.gz
+    URL_HASH SHA512=231acce3021ef790ee0355e620faf375439c3f2ece0facac681acfc7be60a792c8404bd8c5920cd68c0d9dbcf8b8ac923afdd8d6e8f653306eef974b070e4490
     DOWNLOAD_NO_PROGRESS true
     DOWNLOAD_EXTRACT_TIMESTAMP ON
     PATCH_COMMAND ${BOOST_PATCH_CMD}
