@@ -67,5 +67,8 @@ include(BuildOpenCV)
 # ITK
 include(BuildITK)
 
+# ACVD
+include(BuildACVD)
+
 # spdlog
 include(BuildSpdlog)
