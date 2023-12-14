@@ -3,8 +3,8 @@ if(VCDEPS_BUILD_ACVD)
 externalproject_add(
     acvd
     DEPENDS vtk ${GLOBAL_DEPENDS}
-    URL https://gitlab.com/educelab/acvd/-/archive/v1.2/acvd-v1.2.tar.gz
-    URL_HASH SHA512=9ab02d65e11c014060ee831ad51f342eb0b72c0f0a09e0e496167f42741d0c35e9ac450b49b3eefc2952cb70330883a18c5565f149d80e47931b0844a705da5a
+    URL https://gitlab.com/educelab/acvd/-/archive/9efaeb4d18f66d484b52d6088b09b94f0ae97c5c/acvd-9efaeb4d18f66d484b52d6088b09b94f0ae97c5c.tar.gz
+    URL_HASH SHA512=9fac34f07df999be8f289c9dbd51310c59f4be14020c861408d0947ac7fb4d0a7c2a8fa97e194298b1ee183231bd2914081d9416ab4b636ea936f8707dd27d94
     DOWNLOAD_NO_PROGRESS true
     DOWNLOAD_EXTRACT_TIMESTAMP ON
     CMAKE_CACHE_ARGS

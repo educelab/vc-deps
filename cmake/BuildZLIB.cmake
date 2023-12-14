@@ -3,8 +3,8 @@ if(VCDEPS_BUILD_ZLIB)
 externalproject_add(
     zlib
     DEPENDS ${GLOBAL_DEPENDS}
-    URL https://github.com/madler/zlib/archive/v1.2.11.tar.gz
-    URL_HASH SHA256=629380c90a77b964d896ed37163f5c3a34f6e6d897311f1df2a7016355c45eff
+    URL https://github.com/madler/zlib/archive/v1.3.tar.gz
+    URL_HASH SHA512=78eecf335b14af1f7188c039a4d5297b74464d61156e4f12a485c74beec7d62c4159584ad482a07ec57ae2616d58873e45b09cb8ea822bb5b17e43d163df84e9
     DOWNLOAD_NO_PROGRESS true
     DOWNLOAD_EXTRACT_TIMESTAMP ON
     CMAKE_CACHE_ARGS
