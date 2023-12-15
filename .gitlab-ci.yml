@@ -32,6 +32,24 @@ build:debian:11:dynamic:
     tags:
         - docker
 
+build:debian:12:static:
+    extends: .build
+    stage: build
+    image: ghcr.io/educelab/ci-docker:base.12.0
+    needs: []
+    tags:
+        - docker
+
+build:debian:12:dynamic:
+    extends: .build
+    stage: build
+    image: ghcr.io/educelab/ci-docker:base.12.0
+    needs: []
+    variables:
+      EXTRA_CMAKE_FLAGS: "-DBUILD_SHARED_LIBS=ON"
+    tags:
+        - docker
+
 build:macos:static:
     extends: .build
     stage: build
