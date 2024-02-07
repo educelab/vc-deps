@@ -7,8 +7,8 @@ set(ITK_PATCH_CMD patch -p1 -i ${CMAKE_SOURCE_DIR}/patches/itk-5.2.0-fix-gdcm-gc
 externalproject_add(
     itk
     DEPENDS eigen zlib libtiff opencv ${GLOBAL_DEPENDS}
-    URL https://github.com/InsightSoftwareConsortium/ITK/releases/download/v5.3.0/InsightToolkit-5.3.0.tar.gz
-    URL_HASH SHA512=29359839c0fb13acd430410e6adadbecb4d9d8cb4871a0aba0ac67b539c235354a591655dd654f43daa5f035a33721671d665eee8a4a129a9d0d3419e2356e97
+    URL https://github.com/InsightSoftwareConsortium/ITK/releases/download/v5.4rc02/InsightToolkit-5.4rc02.tar.gz
+    URL_HASH SHA512=01e36218182220bcd3ec8975243cd7c65cce751092b3a85a2f3bb94d5ba7c5e196effa4bb797c8bca3ec5e84c8feeae59157ef1410c7b9df8a974482bf64f284
     DOWNLOAD_NO_PROGRESS true
     DOWNLOAD_EXTRACT_TIMESTAMP ON
     PATCH_COMMAND ${ITK_PATCH_CMD}
