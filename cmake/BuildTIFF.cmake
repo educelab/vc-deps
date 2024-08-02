@@ -4,7 +4,7 @@ externalproject_add(
     libtiff
     DEPENDS zlib ${GLOBAL_DEPENDS}
     GIT_REPOSITORY https://gitlab.com/libtiff/libtiff.git
-    GIT_TAG origin/cmake-cmath-avoid-imported-target
+    GIT_TAG 2653d1f8
     DOWNLOAD_NO_PROGRESS true
     DOWNLOAD_EXTRACT_TIMESTAMP ON
     CMAKE_CACHE_ARGS
