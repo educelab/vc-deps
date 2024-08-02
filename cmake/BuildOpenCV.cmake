@@ -17,6 +17,8 @@ externalproject_add(
         -DWITH_FFMPEG:BOOL=OFF
         -DWITH_EIGEN:BOOL=OFF
         -DWITH_OPENEXR:BOOL=OFF
+        -DOBSENSOR_USE_ORBBEC_SDK=OFF
+        -DWITH_OBSENSOR:BOOL=OFF
 )
 else()
   find_package(OpenCV 3 QUIET)
