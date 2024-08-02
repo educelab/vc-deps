@@ -43,7 +43,7 @@ if(CMAKE_POSITION_INDEPENDENT_CODE)
 endif()
 
 #### Setup a legacy macOS build using an SDK ####
-include(InstallSDK-macOS)
+# include(InstallSDK-macOS)
 
 #### Required libs ####
 # zlib

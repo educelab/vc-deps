@@ -3,8 +3,8 @@ if(VCDEPS_BUILD_VTK)
 externalproject_add(
     vtk
     DEPENDS zlib libtiff ${GLOBAL_DEPENDS}
-    URL https://www.vtk.org/files/release/9.3/VTK-9.3.0.tar.gz
-    URL_HASH SHA256=fdc7b9295225b34e4fdddc49cd06e66e94260cb00efee456e0f66568c9681be9
+    URL https://www.vtk.org/files/release/9.3/VTK-9.3.1.tar.gz
+    URL_HASH SHA256=8354ec084ea0d2dc3d23dbe4243823c4bfc270382d0ce8d658939fd50061cab8
     DOWNLOAD_NO_PROGRESS true
     DOWNLOAD_EXTRACT_TIMESTAMP ON
     PATCH_COMMAND ${VTK_PATCH_CMD}
