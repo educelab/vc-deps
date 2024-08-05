@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.24 FATAL_ERROR)
 
-project(vc-deps VERSION 1.8.1)
+project(vc-deps VERSION 1.9.0)
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/)
 
@@ -43,7 +43,7 @@ if(CMAKE_POSITION_INDEPENDENT_CODE)
 endif()
 
 #### Setup a legacy macOS build using an SDK ####
-include(InstallSDK-macOS)
+# include(InstallSDK-macOS)
 
 #### Required libs ####
 # zlib

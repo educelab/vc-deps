@@ -53,8 +53,8 @@ endif()
 externalproject_add(
     boost
     DEPENDS ${GLOBAL_DEPENDS}
-    URL https://boostorg.jfrog.io/artifactory/main/release/1.83.0/source/boost_1_83_0.tar.gz
-    URL_HASH SHA512=231acce3021ef790ee0355e620faf375439c3f2ece0facac681acfc7be60a792c8404bd8c5920cd68c0d9dbcf8b8ac923afdd8d6e8f653306eef974b070e4490
+    URL https://archives.boost.io/release/1.85.0/source/boost_1_85_0.tar.gz
+    URL_HASH SHA512=77d182e5b2e9683aa25e9cd64708f590b32760053e30e7251e1c50041230850da0e68619839bc93e91e215257db293a3b96370beaa5e653e1cab747fff25ae20
     DOWNLOAD_NO_PROGRESS true
     DOWNLOAD_EXTRACT_TIMESTAMP ON
     PATCH_COMMAND ${BOOST_PATCH_CMD}

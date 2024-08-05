@@ -3,8 +3,8 @@ if(VCDEPS_BUILD_OPENCV)
 externalproject_add(
     opencv
     DEPENDS zlib libtiff ${GLOBAL_DEPENDS}
-    URL https://github.com/opencv/opencv/archive/4.8.1.tar.gz
-    URL_HASH SHA512=b98d89b8e7b8ae8138bce00c5226816b761b53fbeb8f28ca516e08c5d130f216f9388a81785cd6684034530f768e097cbe12f19a9361f362b7d2048bfc427a65
+    URL https://github.com/opencv/opencv/archive/4.10.0.tar.gz
+    URL_HASH SHA512=b4f7248f89f1cd146dbbae7860a17131cd29bd3cb81db1e678abfcfbf2d8fa4a7633bfd0edbf50afae7b838c8700e8c0d0bb05828139d5cb5662df6bbf3eb92c
     DOWNLOAD_NO_PROGRESS true
     DOWNLOAD_EXTRACT_TIMESTAMP ON
     CMAKE_CACHE_ARGS
@@ -17,6 +17,8 @@ externalproject_add(
         -DWITH_FFMPEG:BOOL=OFF
         -DWITH_EIGEN:BOOL=OFF
         -DWITH_OPENEXR:BOOL=OFF
+        -DOBSENSOR_USE_ORBBEC_SDK:BOOL=OFF
+        -DWITH_OBSENSOR:BOOL=OFF
 )
 else()
   find_package(OpenCV 3 QUIET)
