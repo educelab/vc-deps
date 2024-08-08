@@ -11,6 +11,7 @@ externalproject_add(
         ${GLOBAL_CMAKE_ARGS}
         -DPNG_TESTS:BOOL=OFF
         -DPNG_TOOLS:BOOL=ON
+        -DPNG_HARDWARE_OPTIMIZATIONS:BOOL=OFF
 )
 else()
   find_package(PNG REQUIRED)
