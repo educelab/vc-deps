@@ -11,6 +11,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 #### Options ####
 option(BUILD_SHARED_LIBS "Build libraries as shared" OFF)
+if(APPLE)
+  option(BUILD_UNIVERSAL_LIBRARIES "Build macOS universal libraries (Intel and Apple Silicon)" OFF)
+endif()
 
 #### Setup output directory if not specified ####
 if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
@@ -42,9 +45,9 @@ if(CMAKE_POSITION_INDEPENDENT_CODE)
   )
 endif()
 
-if(CMAKE_OSX_ARCHITECTURES)
+if(BUILD_UNIVERSAL_LIBRARIES)
   list(APPEND GLOBAL_CMAKE_ARGS
-    "-DCMAKE_OSX_ARCHITECTURES:STRING=${CMAKE_OSX_ARCHITECTURES}"
+    "-DCMAKE_OSX_ARCHITECTURES:STRING=x86_64;arm64"
   )
 endif()
 

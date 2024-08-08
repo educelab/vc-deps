@@ -14,6 +14,12 @@ else()
     set(BOOST_LINK_TYPE static)
 endif()
 
+if(BUILD_UNIVERSAL_LIBRARIES)
+    set(BOOST_ARCH "-arch arm64 -arch x86_64")
+else()
+    set(BOOST_ARCH "-arch ${CMAKE_HOST_SYSTEM_PROCESSOR}")
+endif()
+
 # Set Boost toolset type based on the OS
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "AppleClang")
     set(BOOST_TOOLSET_AUTO clang)
@@ -38,7 +44,7 @@ if(VCDEPS_BUILD_BOOST)
 string(REPLACE ";" "," BOOST_BUILD_LIBS "${VCDEPS_BOOST_COMPONENTS}")
 
 # Compiler flags
-set(BOOST_CXX_FLAGS "cxxflags=-std=c++${CMAKE_CXX_STANDARD}")
+set(BOOST_CXX_FLAGS "cxxflags=-std=c++${CMAKE_CXX_STANDARD} ${BOOST_ARCH}")
 
 # Mimic project PIC flag
 if(CMAKE_POSITION_INDEPENDENT_CODE)
