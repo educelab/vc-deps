@@ -42,6 +42,12 @@ if(CMAKE_POSITION_INDEPENDENT_CODE)
   )
 endif()
 
+if(CMAKE_OSX_ARCHITECTURES)
+  list(APPEND GLOBAL_CMAKE_ARGS
+    "-CMAKE_OSX_ARCHITECTURES:STRING=${CMAKE_OSX_ARCHITECTURES}"
+  )
+endif()
+
 #### Setup a legacy macOS build using an SDK ####
 # include(InstallSDK-macOS)
 
