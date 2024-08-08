@@ -14,7 +14,7 @@ else()
     set(BOOST_LINK_TYPE static)
 endif()
 
-if(BUILD_UNIVERSAL_LIBRARIES)
+if(BUILD_MACOS_MULTIARCH)
     set(BOOST_ARCH "-arch arm64 -arch x86_64")
 else()
     set(BOOST_ARCH "-arch ${CMAKE_HOST_SYSTEM_PROCESSOR}")
