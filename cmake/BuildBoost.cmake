@@ -15,7 +15,7 @@ else()
 endif()
 
 if(BUILD_MACOS_MULTIARCH)
-    set(BOOST_ARCH "-arch arm64 -arch x86_64")
+    set(BOOST_ARCH "-arch x86_64 -arch arm64")
 else()
     set(BOOST_ARCH "-arch ${CMAKE_HOST_SYSTEM_PROCESSOR}")
 endif()
