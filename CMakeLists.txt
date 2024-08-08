@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.24 FATAL_ERROR)
 
-project(vc-deps VERSION 1.9.1)
+project(vc-deps VERSION 1.10.0)
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/)
 
@@ -60,6 +60,9 @@ include(BuildZLIB)
 
 # libtiff
 include(BuildTIFF)
+
+# libpng
+include(BuildPNG)
 
 # Boost
 include(BuildBoost)
