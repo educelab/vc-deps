@@ -7,8 +7,6 @@ if(BUILD_MACOS_MULTIARCH)
   list(APPEND PNG_GLOBAL_CMAKE_ARGS "-DCMAKE_OSX_ARCHITECTURES:STRING=arm64;x86_64")
 endif()
 
-message(${PNG_GLOBAL_CMAKE_ARGS})
-
 externalproject_add(
     libpng
     DEPENDS zlib ${GLOBAL_DEPENDS}

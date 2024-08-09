@@ -1,4 +1,10 @@
 option(VCDEPS_BUILD_OPENCV "Build OpenCV" ON)
+
+set(OPENCV_BUILD_DNN ON)
+if(BUILD_MACOS_MULTIARCH)
+  set(OPENCV_BUILD_DNN OFF)
+endif()
+
 if(VCDEPS_BUILD_OPENCV)
 externalproject_add(
     opencv
@@ -22,6 +28,7 @@ externalproject_add(
         -DWITH_OPENEXR:BOOL=OFF
         -DOBSENSOR_USE_ORBBEC_SDK:BOOL=OFF
         -DWITH_OBSENSOR:BOOL=OFF
+        -DBUILD_opencv_dnn:BOOL=${OPENCV_BUILD_DNN}
 )
 else()
   find_package(OpenCV 3 QUIET)
