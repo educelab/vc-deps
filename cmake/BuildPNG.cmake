@@ -3,7 +3,7 @@ if(VCDEPS_BUILD_PNG)
 
 if(BUILD_MACOS_MULTIARCH)
   set(PNG_PATCH_CMD patch -p1 -i ${CMAKE_SOURCE_DIR}/patches/png16-fix-arm.diff)
-endid()
+endif()
 
 externalproject_add(
     libpng
