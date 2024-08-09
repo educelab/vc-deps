@@ -1,5 +1,10 @@
 option(VCDEPS_BUILD_PNG "Build libpng" ON)
 if(VCDEPS_BUILD_PNG)
+
+if(BUILD_MACOS_MULTIARCH)
+  set(PNG_PATCH_CMD patch -p1 -i ${CMAKE_SOURCE_DIR}/patches/png16-fix-arm.diff)
+endid()
+
 externalproject_add(
     libpng
     DEPENDS zlib ${GLOBAL_DEPENDS}
@@ -7,6 +12,7 @@ externalproject_add(
     URL_HASH SHA512=cc8ebe4b806b7f4e8b2b90b9ca1a997bc44731e568d06dcbebd8682350ac636c0f72d659eb2aa416bad1423795ea3d45ae338aa7c44e86f0e2d55475fba6366f
     DOWNLOAD_NO_PROGRESS true
     DOWNLOAD_EXTRACT_TIMESTAMP ON
+    PATCH_COMMAND ${PNG_PATCH_CMD}
     CMAKE_CACHE_ARGS
         ${GLOBAL_CMAKE_ARGS}
         -DPNG_TESTS:BOOL=OFF
