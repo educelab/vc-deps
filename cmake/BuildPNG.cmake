@@ -2,10 +2,12 @@ option(VCDEPS_BUILD_PNG "Build libpng" ON)
 if(VCDEPS_BUILD_PNG)
 
 if(BUILD_MACOS_MULTIARCH)
-  string(REPLACE "x86_64;arm64" "arm64;x86_64" PNG_GLOBAL_CMAKE_ARGS GLOBAL_CMAKE_ARGS)
+  string(REPLACE "x86_64;arm64" "arm64;x86_64" PNG_GLOBAL_CMAKE_ARGS ${GLOBAL_CMAKE_ARGS})
 else()
   set(PNG_GLOBAL_CMAKE_ARGS ${GLOBAL_CMAKE_ARGS})
 endif()
+
+message(${PNG_GLOBAL_CMAKE_ARGS})
 
 externalproject_add(
     libpng
