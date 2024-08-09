@@ -2,7 +2,9 @@ option(VCDEPS_BUILD_PNG "Build libpng" ON)
 if(VCDEPS_BUILD_PNG)
 
 if(BUILD_MACOS_MULTIARCH)
-  set(PNG_PATCH_CMD patch -p1 -i ${CMAKE_SOURCE_DIR}/patches/png16-fix-arm.diff)
+  string(REPLACE "x86_64;arm64" "arm64;x86_64" PNG_GLOBAL_CMAKE_ARGS GLOBAL_CMAKE_ARGS)
+else()
+  set(PNG_GLOBAL_CMAKE_ARGS ${GLOBAL_CMAKE_ARGS})
 endif()
 
 externalproject_add(
@@ -14,7 +16,7 @@ externalproject_add(
     DOWNLOAD_EXTRACT_TIMESTAMP ON
     PATCH_COMMAND ${PNG_PATCH_CMD}
     CMAKE_CACHE_ARGS
-        ${GLOBAL_CMAKE_ARGS}
+        ${PNG_GLOBAL_CMAKE_ARGS}
         -DPNG_TESTS:BOOL=OFF
         -DPNG_TOOLS:BOOL=ON
         -DPNG_HARDWARE_OPTIMIZATIONS:BOOL=OFF
