@@ -29,6 +29,8 @@ externalproject_add(
         -DOBSENSOR_USE_ORBBEC_SDK:BOOL=OFF
         -DWITH_OBSENSOR:BOOL=OFF
         -DBUILD_opencv_dnn:BOOL=${OPENCV_BUILD_DNN}
+        -DWITH_PROTOBUF:BOOL=${OPENCV_BUILD_DNN}
+        -DBUILD_PROTOBUF:BOOL=${OPENCV_BUILD_DNN}
 )
 else()
   find_package(OpenCV 3 QUIET)
