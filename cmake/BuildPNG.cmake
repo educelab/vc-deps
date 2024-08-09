@@ -31,6 +31,6 @@ externalproject_add(
         -DPNG_STATIC:BOOL=${PNG_STATIC}
 )
 else()
-  find_package(PNG REQUIRED)
+  # Nothing to do. OpenCV will build it.
   add_custom_target(libpng)
 endif()
