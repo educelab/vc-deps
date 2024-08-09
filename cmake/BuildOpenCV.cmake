@@ -20,6 +20,9 @@ externalproject_add(
         -DWITH_OPENEXR:BOOL=OFF
         -DOBSENSOR_USE_ORBBEC_SDK:BOOL=OFF
         -DWITH_OBSENSOR:BOOL=OFF
+        -DOPENCV_DNN_OPENCL:BOOL=OFF
+        -DWITH_PROTOBUF:BOOL=OFF
+        -DBUILD_PROTOBUF:BOOL=OFF
 )
 else()
   find_package(OpenCV 3 QUIET)
