@@ -1,4 +1,5 @@
-option(VCDEPS_BUILD_PNG "Build libpng" ON)
+option(VCDEPS_BUILD_PNG "Build libpng" ${BUILD_MACOS_MULTIARCH})
+
 if(VCDEPS_BUILD_PNG)
 
 set(PNG_SHARED ${BUILD_SHARED_LIBS})
