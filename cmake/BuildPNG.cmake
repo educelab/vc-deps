@@ -20,6 +20,7 @@ externalproject_add(
         -DPNG_TESTS:BOOL=OFF
         -DPNG_TOOLS:BOOL=ON
         -DPNG_HARDWARE_OPTIMIZATIONS:BOOL=OFF
+        -DPNG_FRAMEWORK:BOOL=OFF
 )
 else()
   find_package(PNG REQUIRED)
