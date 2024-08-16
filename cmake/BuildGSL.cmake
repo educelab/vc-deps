@@ -1,18 +1,20 @@
 option(VCDEPS_BUILD_GSL "Build GNU Scientific Library" ON)
-if(VCDEPS_BUILD_GSL)
 
+if(VCDEPS_BUILD_GSL)
 # make sure the prefix is an absolute path
 file(REAL_PATH ${CMAKE_INSTALL_PREFIX} GSL_INSTALL_PREFIX EXPAND_TILDE)
 
+# enable PIC
 if(CMAKE_POSITION_INDEPENDENT_CODE)
     set(GSL_WITH_PIC "--with-pic")
 endif()
 
-
+# (macOS) universal libraries
 if(BUILD_MACOS_MULTIARCH)
     set(GSL_CFLAGS "-arch x86_64 -arch arm64")
 endif()
 
+# build and install
 externalproject_add(
     gsl
     DEPENDS ${GLOBAL_DEPENDS}
