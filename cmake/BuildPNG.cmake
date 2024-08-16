@@ -9,6 +9,8 @@ else()
   set(PNG_STATIC OFF)
 endif()
 
+set(PNG_PATCH_CMD patch -p1 -i ${CMAKE_SOURCE_DIR}/patches/libpng-auto-sse.diff)
+
 externalproject_add(
     libpng
     DEPENDS zlib ${GLOBAL_DEPENDS}
