@@ -1,5 +1,14 @@
 option(VCDEPS_BUILD_BOOST "Build Boost" ON)
 
+# Required Boost components
+set(VCDEPS_BOOST_COMPONENTS
+    program_options
+    system
+)
+
+if(VCDEPS_BUILD_BOOST)
+string(REPLACE ";" "," BOOST_BUILD_LIBS "${VCDEPS_BOOST_COMPONENTS}")
+
 # Set Boost build type to match provided release type
 if(CMAKE_BUILD_TYPE MATCHES DEBUG)
     set(BOOST_LIB_TYPE debug)
@@ -32,15 +41,6 @@ elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
     set(BOOST_TOOLSET_AUTO msvc)
 endif()
 set(BOOST_TOOLSET ${BOOST_TOOLSET_AUTO} CACHE STRING "Boost Build toolset")
-
-# Required Boost components
-set(VCDEPS_BOOST_COMPONENTS
-    program_options
-    system
-)
-
-if(VCDEPS_BUILD_BOOST)
-string(REPLACE ";" "," BOOST_BUILD_LIBS "${VCDEPS_BOOST_COMPONENTS}")
 
 # Compiler flags
 set(BOOST_CXX_FLAGS "cxxflags=-std=c++${CMAKE_CXX_STANDARD} ${BOOST_ARCH}")

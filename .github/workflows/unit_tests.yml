@@ -1,0 +1,78 @@
+name: Test build
+on:
+  workflow_dispatch:
+  push:
+    branches: ["develop"]
+  pull_request:
+    branches:
+      - "develop"
+
+jobs:
+  debian:
+    name: Debian 12
+    runs-on: ubuntu-latest
+    container: ghcr.io/educelab/ci-docker:base.12.1
+    if: ${{ github.event_name }} == "merge_request_event" || !(${{ github.ref }} && $CI_OPEN_MERGE_REQUESTS) || ${{ github.ref }}
+    timeout-minutes: 180
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Build vc-deps
+      run: |
+        cmake -S . -B build/ -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_MESSAGE=NEVER
+        cmake --build build/
+
+  macos:
+    name: macOS
+    runs-on: macos-14
+    timeout-minutes: 180
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Homebrew dependencies
+        run: |
+          brew update
+          brew unlink libtiff libpng
+          brew install ninja
+
+      - name: Remove conflicting packages
+        run: |
+          sudo rm -rf /Library/Frameworks/Mono.framework/
+
+      - name: Use the Command Line Tools
+        run: |
+          sudo xcode-select -s /Library/Developer/CommandLineTools
+
+      - name: Build vc-deps
+        run: |
+          cmake -S . -B build/ -GNinja -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_MESSAGE=NEVER
+          cmake --build build/
+
+  macos_universal:
+    name: macOS Universal
+    runs-on: macos-14
+    timeout-minutes: 180
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Homebrew dependencies
+        run: |
+          brew update
+          brew unlink libtiff libpng
+          brew install ninja
+
+      - name: Remove conflicting packages
+        run: |
+          sudo rm -rf /Library/Frameworks/Mono.framework/
+
+      - name: Use the Command Line Tools
+        run: |
+          sudo xcode-select -s /Library/Developer/CommandLineTools
+
+      - name: Build vc-deps
+        run: |
+          cmake -S . -B build/ -GNinja -GNinja -DCMAKE_BUILD_TYPE=Release -DBUILD_MACOS_MULTIARCH=ON -DCMAKE_INSTALL_MESSAGE=NEVER
+          cmake --build build/
