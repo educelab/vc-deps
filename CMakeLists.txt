@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.24 FATAL_ERROR)
 
-project(vc-deps VERSION 1.9.1)
+project(vc-deps VERSION 1.9.2)
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/)
 
@@ -11,6 +11,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 #### Options ####
 option(BUILD_SHARED_LIBS "Build libraries as shared" OFF)
+if(APPLE)
+  option(BUILD_MACOS_MULTIARCH "Build macOS universal libraries (Intel and Apple Silicon)" OFF)
+endif()
 
 #### Setup output directory if not specified ####
 if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
@@ -42,6 +45,12 @@ if(CMAKE_POSITION_INDEPENDENT_CODE)
   )
 endif()
 
+if(BUILD_MACOS_MULTIARCH)
+  list(APPEND GLOBAL_CMAKE_ARGS
+    "-DCMAKE_OSX_ARCHITECTURES:STRING=x86_64;arm64"
+  )
+endif()
+
 #### Setup a legacy macOS build using an SDK ####
 # include(InstallSDK-macOS)
 
@@ -51,6 +60,9 @@ include(BuildZLIB)
 
 # libtiff
 include(BuildTIFF)
+
+# libpng
+include(BuildPNG)
 
 # Boost
 include(BuildBoost)
