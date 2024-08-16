@@ -21,7 +21,9 @@ externalproject_add(
     DOWNLOAD_NO_PROGRESS true
     DOWNLOAD_EXTRACT_TIMESTAMP ON
     PATCH_COMMAND ${GSL_PATCH_CMD}
-    CONFIGURE_COMMAND "${CMAKE_COMMAND} -E env ${GSL_CFLAGS} ./configure --prefix=${GSL_INSTALL_PREFIX} ${GSL_WITH_PIC}"
+    CONFIGURE_COMMAND 
+        ${CMAKE_COMMAND} -E ${GSL_CFLAGS} 
+        ./configure --prefix=${GSL_INSTALL_PREFIX} ${GSL_WITH_PIC}
     BUILD_COMMAND make install
     BUILD_IN_SOURCE true
     INSTALL_COMMAND ""
