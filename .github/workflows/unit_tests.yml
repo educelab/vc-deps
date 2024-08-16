@@ -2,10 +2,10 @@ name: Test build
 on:
   workflow_dispatch:
   push:
-    branches: ["main"]
+    branches: ["develop"]
   pull_request:
     branches:
-      - "main"
+      - "develop"
 
 concurrency:
   group: "${{ github.ref }}"
@@ -23,7 +23,7 @@ jobs:
 
     - name: Build vc-deps
       run: |
-        cmake -S . -B build/ -GNinja -DVCDEPS_BUILD_ACVD=ON
+        cmake -S . -B build/ -GNinja -DCMAKE_BUILD_TYPE=Release
         cmake --build build/
 
   macos:
@@ -50,5 +50,5 @@ jobs:
 
       - name: Build vc-deps
         run: |
-          cmake -S . -B build/ -GNinja -DVCDEPS_BUILD_ACVD=ON
+          cmake -S . -B build/ -GNinja -GNinja -DCMAKE_BUILD_TYPE=Release
           cmake --build build/
