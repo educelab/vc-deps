@@ -10,7 +10,7 @@ endif()
 
 
 if(BUILD_MACOS_MULTIARCH)
-    set(GSL_CFLAGS "CFLAGS=\"-arch x86_64 -arch arm64\"")
+    set(GSL_CFLAGS "export CFLAGS=\"-arch x86_64 -arch arm64\";")
 endif()
 
 externalproject_add(
