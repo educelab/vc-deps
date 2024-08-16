@@ -55,6 +55,9 @@ endif()
 # include(InstallSDK-macOS)
 
 #### Required libs ####
+# gsl
+include(BuildGSL)
+
 # zlib
 include(BuildZLIB)
 
