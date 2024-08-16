@@ -20,7 +20,7 @@ jobs:
 
     - name: Build vc-deps
       run: |
-        cmake -S . -B build/ -GNinja -DCMAKE_BUILD_TYPE=Release
+        cmake -S . -B build/ -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_MESSAGE=NEVER
         cmake --build build/
 
   macos:
@@ -47,7 +47,7 @@ jobs:
 
       - name: Build vc-deps
         run: |
-          cmake -S . -B build/ -GNinja -GNinja -DCMAKE_BUILD_TYPE=Release
+          cmake -S . -B build/ -GNinja -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_MESSAGE=NEVER
           cmake --build build/
 
   macos_universal:
@@ -74,5 +74,5 @@ jobs:
 
       - name: Build vc-deps
         run: |
-          cmake -S . -B build/ -GNinja -GNinja -DCMAKE_BUILD_TYPE=Release -DBUILD_MACOS_MULTIARCH=ON
+          cmake -S . -B build/ -GNinja -GNinja -DCMAKE_BUILD_TYPE=Release -DBUILD_MACOS_MULTIARCH=ON -DCMAKE_INSTALL_MESSAGE=NEVER
           cmake --build build/
