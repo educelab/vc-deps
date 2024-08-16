@@ -24,7 +24,9 @@ externalproject_add(
     CONFIGURE_COMMAND 
         ${CMAKE_COMMAND} -E env CFLAGS=${GSL_CFLAGS} 
         ./configure --prefix=${GSL_INSTALL_PREFIX} ${GSL_WITH_PIC}
-    BUILD_COMMAND make install
+    BUILD_COMMAND 
+        make
+        make install
     BUILD_IN_SOURCE true
     INSTALL_COMMAND ""
 )
