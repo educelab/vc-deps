@@ -7,9 +7,6 @@ on:
     branches:
       - "develop"
 
-concurrency:
-  group: "${{ github.ref }}"
-  cancel-in-progress: true
 jobs:
   debian:
     name: Debian 12
@@ -51,4 +48,31 @@ jobs:
       - name: Build vc-deps
         run: |
           cmake -S . -B build/ -GNinja -GNinja -DCMAKE_BUILD_TYPE=Release
+          cmake --build build/
+
+  macos_universal:
+    name: macOS Universal
+    runs-on: macos-14
+    timeout-minutes: 180
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Homebrew dependencies
+        run: |
+          brew update
+          brew unlink libtiff libpng
+          brew install ninja
+
+      - name: Remove conflicting packages
+        run: |
+          sudo rm -rf /Library/Frameworks/Mono.framework/
+
+      - name: Use the Command Line Tools
+        run: |
+          sudo xcode-select -s /Library/Developer/CommandLineTools
+
+      - name: Build vc-deps
+        run: |
+          cmake -S . -B build/ -GNinja -GNinja -DCMAKE_BUILD_TYPE=Release -DBUILD_MACOS_MULTIARCH=ON
           cmake --build build/
