@@ -10,7 +10,7 @@ endif()
 
 
 if(BUILD_MACOS_MULTIARCH)
-    set(GSL_CFLAGS "CFLAGS='-arch x86_64 -arch arm64'")
+    set(GSL_CFLAGS "CFLAGS=\"-arch x86_64 -arch arm64\"")
 endif()
 
 externalproject_add(
@@ -21,7 +21,7 @@ externalproject_add(
     DOWNLOAD_NO_PROGRESS true
     DOWNLOAD_EXTRACT_TIMESTAMP ON
     PATCH_COMMAND ${GSL_PATCH_CMD}
-    CONFIGURE_COMMAND ${GSL_CFLAGS} ./configure --prefix=${GSL_INSTALL_PREFIX} ${GSL_WITH_PIC}
+    CONFIGURE_COMMAND "${GSL_CFLAGS} ./configure --prefix=${GSL_INSTALL_PREFIX} ${GSL_WITH_PIC}"
     BUILD_COMMAND make install
     BUILD_IN_SOURCE true
     INSTALL_COMMAND ""
