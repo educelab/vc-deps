@@ -52,8 +52,10 @@ jobs:
 
   macos_universal:
     name: macOS Universal
-    runs-on: macos-14
-    timeout-minutes: 180
+    strategy:
+      matrix:
+        os: [macos-14, macos-15]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
