@@ -14,8 +14,8 @@ set(PNG_PATCH_CMD patch -p1 -i ${CMAKE_SOURCE_DIR}/patches/libpng-auto-sse.diff)
 externalproject_add(
     libpng
     DEPENDS zlib ${GLOBAL_DEPENDS}
-    GIT_REPOSITORY https://github.com/csparker247/libpng.git
-    GIT_TAG cmake-fix-macos-universal
+    GIT_REPOSITORY https://github.com/pnggroup/libpng.git
+    GIT_TAG fdc54a7
     DOWNLOAD_NO_PROGRESS true
     DOWNLOAD_EXTRACT_TIMESTAMP ON
     PATCH_COMMAND ${PNG_PATCH_CMD}
