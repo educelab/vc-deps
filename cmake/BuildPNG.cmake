@@ -9,8 +9,6 @@ else()
   set(PNG_STATIC OFF)
 endif()
 
-set(PNG_PATCH_CMD patch -p1 -i ${CMAKE_SOURCE_DIR}/patches/libpng-auto-sse.diff)
-
 externalproject_add(
     libpng
     DEPENDS zlib ${GLOBAL_DEPENDS}
@@ -18,7 +16,6 @@ externalproject_add(
     GIT_TAG fdc54a7
     DOWNLOAD_NO_PROGRESS true
     DOWNLOAD_EXTRACT_TIMESTAMP ON
-    PATCH_COMMAND ${PNG_PATCH_CMD}
     CMAKE_CACHE_ARGS
         ${GLOBAL_CMAKE_ARGS}
         -DPNG_TESTS:BOOL=OFF
