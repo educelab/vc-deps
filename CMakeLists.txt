@@ -51,9 +51,6 @@ if(BUILD_MACOS_MULTIARCH)
   )
 endif()
 
-#### Setup a legacy macOS build using an SDK ####
-# include(InstallSDK-macOS)
-
 #### Required libs ####
 # gsl
 include(BuildGSL)

@@ -15,8 +15,8 @@ if(VCDEPS_BUILD_OPENCV)
 externalproject_add(
     opencv
     DEPENDS zlib libtiff libpng ${GLOBAL_DEPENDS}
-    URL https://github.com/opencv/opencv/archive/4.10.0.tar.gz
-    URL_HASH SHA512=b4f7248f89f1cd146dbbae7860a17131cd29bd3cb81db1e678abfcfbf2d8fa4a7633bfd0edbf50afae7b838c8700e8c0d0bb05828139d5cb5662df6bbf3eb92c
+    URL https://github.com/opencv/opencv/archive/refs/tags/4.12.0.tar.gz
+    URL_HASH SHA512=8ac63ddd61e22cc0eaeafee4f30ae6e1cab05fc4929e2cea29070203b9ca8dfead12cc0fd7c4a87b65c1e20ec6b9ab4865a1b83fad33d114fc0708fdf107c51b
     DOWNLOAD_NO_PROGRESS true
     DOWNLOAD_EXTRACT_TIMESTAMP ON
     CMAKE_CACHE_ARGS
