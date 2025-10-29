@@ -12,7 +12,7 @@ jobs:
     name: Debian
     strategy:
       matrix:
-        ci_docker_version: [12.1, 12.2]
+        ci_docker_version: [12.1, 12.2, 13.0]
     runs-on: ubuntu-22.04-arm
     container: ghcr.io/educelab/ci-docker:base.${{ matrix.ci_docker_version }}
     if: ${{ github.event_name }} == "merge_request_event" || !(${{ github.ref }} && $CI_OPEN_MERGE_REQUESTS) || ${{ github.ref }}
