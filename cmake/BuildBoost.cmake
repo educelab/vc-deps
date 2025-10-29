@@ -58,8 +58,8 @@ endif()
 externalproject_add(
     boost
     DEPENDS ${GLOBAL_DEPENDS}
-    URL https://archives.boost.io/release/1.85.0/source/boost_1_85_0.tar.gz
-    URL_HASH SHA512=77d182e5b2e9683aa25e9cd64708f590b32760053e30e7251e1c50041230850da0e68619839bc93e91e215257db293a3b96370beaa5e653e1cab747fff25ae20
+    URL https://archives.boost.io/release/1.89.0/source/boost_1_89_0.tar.gz
+    URL_HASH SHA512=94221253facfac1a99dc7cb6e6b4760c8ba7fed959b53c62c54816ffd7c034690dfb1958767bd7ce3e2f4ba81dfde21bbf3728ca834be08e5bd7c2f63cb570cb
     DOWNLOAD_NO_PROGRESS true
     DOWNLOAD_EXTRACT_TIMESTAMP ON
     PATCH_COMMAND ${BOOST_PATCH_CMD}

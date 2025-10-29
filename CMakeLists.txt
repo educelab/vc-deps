@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.24 FATAL_ERROR)
 
-project(vc-deps VERSION 1.9.2)
+project(vc-deps VERSION 1.10.0)
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/)
 
@@ -50,9 +50,6 @@ if(BUILD_MACOS_MULTIARCH)
     "-DCMAKE_OSX_ARCHITECTURES:STRING=x86_64;arm64"
   )
 endif()
-
-#### Setup a legacy macOS build using an SDK ####
-# include(InstallSDK-macOS)
 
 #### Required libs ####
 # gsl

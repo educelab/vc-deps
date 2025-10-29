@@ -9,9 +9,12 @@ on:
 
 jobs:
   debian:
-    name: Debian 12
-    runs-on: ubuntu-latest
-    container: ghcr.io/educelab/ci-docker:base.12.1
+    name: Debian
+    strategy:
+      matrix:
+        ci_docker_version: [12.1, 12.2, 13.0]
+    runs-on: ubuntu-22.04-arm
+    container: ghcr.io/educelab/ci-docker:base.${{ matrix.ci_docker_version }}
     if: ${{ github.event_name }} == "merge_request_event" || !(${{ github.ref }} && $CI_OPEN_MERGE_REQUESTS) || ${{ github.ref }}
     timeout-minutes: 180
     steps:
@@ -25,7 +28,10 @@ jobs:
 
   macos:
     name: macOS
-    runs-on: macos-14
+    strategy:
+      matrix:
+        os: [macos-14, macos-15]
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 180
     steps:
       - name: Checkout code
@@ -52,8 +58,10 @@ jobs:
 
   macos_universal:
     name: macOS Universal
-    runs-on: macos-14
-    timeout-minutes: 180
+    strategy:
+      matrix:
+        os: [macos-14, macos-15]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
